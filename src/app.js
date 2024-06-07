@@ -4,6 +4,7 @@ const auth = require('./middleware/auth'); // Import the auth middleware
 const logger = require('./middleware/logger'); // Import the logger middleware
 const authRoutes = require('./routes/authRoute'); // Import authentication routes
 const userRoutes = require('./routes/userRoute');
+const stockRoutes = require('./routes/stockRoute');
 const userController = require('./controllers/userController');
 const app = express();
 const port = 3000;
@@ -19,15 +20,11 @@ app.use(express.json());
 // Logger middleware
 app.use(logger);
 
+
+app.use('/api', stockRoutes);
 app.use('/api/auth', authRoutes);
 
-// Use auth middleware for all routes except POST /api/users (for registration)
-app.use('/api/users', (req, res, next) => {
-  if (req.method === 'POST') {
-    return next();
-  }
-  auth(req, res, next);
-});
+
 
 // Use user routes
 app.use('/api', userRoutes);
