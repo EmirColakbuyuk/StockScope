@@ -1,10 +1,12 @@
 const Stock = require('../models/stock');
+const moment = require('moment-timezone'); // Add this line to import moment-timezone
 
 // Add a new stock
 exports.addStock = async (req, res) => {
   try {
-    const { type, weight, date, price } = req.body;
-    const newStock = new Stock({ type, weight, date, price });
+    const { type, koli, ton, lengthMeters, grammage, company, date } = req.body;
+    const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
+    const newStock = new Stock({ type, koli, ton, lengthMeters, grammage, company, date: dateInTurkey });
     const savedStock = await newStock.save();
     res.status(201).json({ message: 'Stock added successfully', stock: savedStock });
   } catch (error) {
@@ -32,8 +34,9 @@ exports.deleteStock = async (req, res) => {
 exports.updateStock = async (req, res) => {
   try {
     const { id } = req.params;
-    const { type, weight, date, price } = req.body;
-    const updatedStock = await Stock.findByIdAndUpdate(id, { type, weight, date, price }, { new: true });
+    const { type, koli, ton, lengthMeters, grammage, company, date } = req.body;
+    const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
+    const updatedStock = await Stock.findByIdAndUpdate(id, { type, koli, ton, lengthMeters, grammage, company, date: dateInTurkey }, { new: true });
     if (!updatedStock) {
       return res.status(404).json({ message: 'Stock not found' });
     }
@@ -59,7 +62,8 @@ exports.getAllStock = async (req, res) => {
 exports.byDateStock = async (req, res) => {
   try {
     const { date } = req.query;
-    const stocks = await Stock.find({ date: new Date(date) });
+    const dateInTurkey = moment.tz(date, "Europe/Istanbul").startOf('day').toDate();
+    const stocks = await Stock.find({ date: dateInTurkey });
     res.status(200).json(stocks);
   } catch (error) {
     console.error('Error getting stocks by date:', error);

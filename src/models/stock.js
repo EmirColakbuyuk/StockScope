@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const moment = require('moment-timezone');
 
 const stockSchema = new mongoose.Schema({
 
@@ -7,19 +7,36 @@ const stockSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    weight : {
+
+    koli: {
+        type:Number
+    },
+
+    ton : {
         type: Number,
         required: true
     },
-    date : {
-        type: Date,
+
+    lengthMeters : {
+        type: Number,
         required: true
     },
-    price : {
+
+    grammage : {
         type: Number,
+        required: true
+    },
+   
+    company : {
+        type: String,
         required: true
     },
     
+    date: {
+        type: Date,
+        required: true,
+        default: () => moment().tz("Europe/Istanbul").toDate()
+    },
 
 });
 

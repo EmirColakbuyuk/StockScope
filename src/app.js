@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoute'); // Import authentication route
 const userRoutes = require('./routes/userRoute');
 const stockRoutes = require('./routes/stockRoute');
 const userController = require('./controllers/userController');
+const rawRoutes = require('./routes/rawRoute');
 const app = express();
 const port = 3000;
 
@@ -23,6 +24,7 @@ app.use(logger);
 
 app.use('/api', stockRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api', rawRoutes);
 
 
 
