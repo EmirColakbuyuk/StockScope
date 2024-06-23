@@ -47,7 +47,7 @@ const rawSchema = new mongoose.Schema({
     updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false
+        required: false 
     }
 }, { timestamps: true });
 

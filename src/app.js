@@ -5,6 +5,7 @@ const logger = require('./middleware/logger'); // Import the logger middleware
 const authRoutes = require('./routes/authRoute'); // Import authentication routes
 const userRoutes = require('./routes/userRoute');
 const stockRoutes = require('./routes/stockRoute');
+const customerRoutes = require('./routes/customerRoute');
 const userController = require('./controllers/userController');
 const rawRoutes = require('./routes/rawRoute');
 const app = express();
@@ -25,6 +26,7 @@ app.use(logger);
 app.use('/api', stockRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', rawRoutes);
+app.use('/api', customerRoutes);
 
 
 

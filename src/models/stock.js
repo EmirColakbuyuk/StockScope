@@ -2,43 +2,32 @@ const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 
 const stockSchema = new mongoose.Schema({
-
-    type : {
+    size: {
         type: String,
         required: true
     },
-
-    koli: {
-        type:Number
-    },
-
-    ton : {
+    koliCount: {
         type: Number,
         required: true
     },
-
-    lengthMeters : {
+    packageCount: {
         type: Number,
         required: true
     },
-
-    grammage : {
+    packageContain: {
         type: Number,
         required: true
     },
-   
-    company : {
-        type: String,
-        required: true
-    },
-    
     date: {
         type: Date,
         required: true,
         default: () => moment().tz("Europe/Istanbul").toDate()
     },
-
-});
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Stock', stockSchema);
-    
