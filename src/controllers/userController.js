@@ -50,23 +50,24 @@ exports.updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, surname, username, email, password } = req.body;
 
-    
-    const passwordRegex = /^(?=.*\d).{7,}$/; // At least 7 characters with at least 1 number
-    if (password && !passwordRegex.test(password)) {
-      return res.status(400).json({ message: 'Password must be at least 7 characters long and contain at least one number.' });
+    const updateData = { name, surname, username, email };
+
+    if (password) {
+      const passwordRegex = /^(?=.*\d).{7,}$/; // At least 7 characters with at least 1 number
+      if (!passwordRegex.test(password)) {
+        return res.status(400).json({ message: 'Password must be at least 7 characters long and contain at least one number.' });
+      }
+      updateData.password = await bcrypt.hash(password, 10);
     }
 
-    // Check if user with the same surname or email already exists (except for the current user)
     const existingUser = await User.findOne({
-      $or: [{ surname }, { email }],
-      _id: { $ne: id } 
+      $or: [{ email }],
+      _id: { $ne: id }
     });
 
     if (existingUser) {
-      return res.status(400).json({ message: 'User with the same surname or email already exists.' });
+      return res.status(400).json({ message: 'User with the same email already exists.' });
     }
-
-    const updateData = { name, surname, username, email, password };
 
     const updatedUser = await User.findByIdAndUpdate(id, { $set: updateData }, { new: true });
     if (!updatedUser) {
@@ -75,5 +76,18 @@ exports.updateUser = async (req, res) => {
     res.status(200).json({ message: 'Updated user', updatedUser });
   } catch (error) {
     res.status(500).json({ message: 'Error updating user', error });
+  }
+};
+// Get user by ID
+exports.getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error getting user', error });
   }
 };

@@ -8,5 +8,6 @@ router.post('/users', userController.addUser);  // Public route (assuming regist
 router.delete('/users/:id', auth, userController.deleteUser);  // Protected route
 router.put('/users/:id/role', auth, userController.updateUserAccessLevel);  // Protected route
 router.put('/users/:id', auth, userController.updateUser);  // Protected route
+router.get('/users/:id', auth, userController.getUser);  // Protected route to get user info
 
 module.exports = router;
