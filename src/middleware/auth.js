@@ -27,7 +27,7 @@ const auth = async (req, res, next) => {
     if (error instanceof jwt.JsonWebTokenError) {
       return res.status(401).json({ message: 'Token is invalid' });
     } else if (error instanceof jwt.TokenExpiredError) {
-      return res.status(401).json({ message: 'Token has expired' });
+      return res.status(401).json({ message: 'Token has expired', error: 'token_expired' });
     } else {
       return res.status(401).json({ message: 'Token is not valid' });
     }
