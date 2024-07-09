@@ -105,6 +105,30 @@ exports.updateRawMaterial = async (req, res) => {
 // Get all raw materials
 exports.getAllRawMaterials = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 5; // Default to 5 items per page if not provided
+
+    const rawMaterials = await RawMaterial.find()
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+    const totalItems = await RawMaterial.countDocuments();
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(totalItems / limit),
+      totalItems,
+      currentPage: page
+    });
+  } catch (error) {
+    console.error('Error getting raw materials:', error);
+    res.status(500).json({ message: 'Error getting raw materials', error: error.message });
+  }
+};
+
+// Get all raw materials without pagination
+exports.getAllRawMaterialsNoPagination = async (req, res) => {
+  try {
     const rawMaterials = await RawMaterial.find();
     res.status(200).json(rawMaterials);
   } catch (error) {
@@ -112,6 +136,7 @@ exports.getAllRawMaterials = async (req, res) => {
     res.status(500).json({ message: 'Error getting raw materials', error: error.message });
   }
 };
+
 
 // Get raw materials by date
 exports.getRawMaterialsByDate = async (req, res) => {
