@@ -23,6 +23,10 @@ const stockSchema = new mongoose.Schema({
         required: true,
         default: () => moment().tz("Europe/Istanbul").toDate()
     },
+    notes: {
+        type: String,
+        reqired : false
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

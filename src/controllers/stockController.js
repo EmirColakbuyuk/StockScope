@@ -10,7 +10,8 @@ exports.addStock = async (req, res) => {
       size,
       koliCount,
       packageCount,
-      packageContain
+      packageContain,
+      notes
     } = req.body;
 
     const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
@@ -19,6 +20,7 @@ exports.addStock = async (req, res) => {
       koliCount,
       packageCount,
       packageContain,
+      notes,
       date: dateInTurkey,
       createdBy: req.user._id
     });
@@ -86,7 +88,8 @@ exports.updateStock = async (req, res) => {
       koliCount,
       packageCount,
       packageContain,
-      date
+      date,
+      notes
     } = req.body;
 
     const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
@@ -109,6 +112,7 @@ exports.updateStock = async (req, res) => {
         koliCount,
         packageCount,
         packageContain,
+        notes,
         date: dateInTurkey,
         createdBy: existingStock.createdBy
       },

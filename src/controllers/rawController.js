@@ -14,7 +14,8 @@ exports.addRawMaterial = async (req, res) => {
       bobinNumber,
       bobinHeight,
       bobinDiameter,
-      MasuraLength
+      MasuraLength,
+      notes
     } = req.body;
 
     // Create new raw material
@@ -29,6 +30,7 @@ exports.addRawMaterial = async (req, res) => {
       bobinHeight,
       bobinDiameter,
       MasuraLength,
+      notes,
       createdBy: req.user ? req.user._id : null // Ensure `req.user` is available or remove if not needed
     });
 

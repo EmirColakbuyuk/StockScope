@@ -5,8 +5,8 @@ const moment = require('moment-timezone');
 // Create a new customer
 exports.createCustomer = async (req, res) => {
   try {
-    const { name, email, phone, address } = req.body;
-    const newCustomer = new Customer({ name, email, phone, address });
+    const { name, email, phone, address, notes} = req.body;
+    const newCustomer = new Customer({ name, email, phone, address, notes });
     const savedCustomer = await newCustomer.save();
     res.status(201).json({ message: 'Customer created successfully', customer: savedCustomer });
   } catch (error) {
@@ -34,8 +34,8 @@ exports.getCustomerById = async (req, res) => {
 exports.updateCustomer = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, phone, address } = req.body;
-    const updatedCustomer = await Customer.findByIdAndUpdate(id, { name, email, phone, address }, { new: true });
+    const { name, email, phone, address, notes } = req.body;
+    const updatedCustomer = await Customer.findByIdAndUpdate(id, { name, email, phone, address, notes}, { new: true });
     if (!updatedCustomer) {
       return res.status(404).json({ message: 'Customer not found' });
     }
