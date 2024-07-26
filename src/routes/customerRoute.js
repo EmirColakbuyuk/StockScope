@@ -7,5 +7,7 @@ router.post('/addCustomer', auth, customerController.createCustomer);
 router.get('/getCustomer/:id', auth, customerController.getCustomerById);
 router.put('/updateCustomer/:id', auth, customerController.updateCustomer);
 router.delete('/deleteCustomer/:id', auth, customerController.deleteCustomer);
+router.get('/allCustomers', auth, customerController.getCustomers);
+router.get('/allPurchaseHistory', auth, customerController.getAllPurchaseHistory);
 
 module.exports = router;

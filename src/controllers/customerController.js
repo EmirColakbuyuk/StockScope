@@ -2,7 +2,6 @@ const Customer = require('../models/customer');
 const Stock = require('../models/stock');
 const Product = require('../models/product');
 const moment = require('moment-timezone');
-
 // Create a new customer
 exports.createCustomer = async (req, res) => {
   try {
@@ -15,7 +14,6 @@ exports.createCustomer = async (req, res) => {
     res.status(500).json({ message: 'Error creating customer', error: error.message });
   }
 };
-
 
 // Get customer by ID
 exports.getCustomerById = async (req, res) => {
@@ -31,7 +29,6 @@ exports.getCustomerById = async (req, res) => {
     res.status(500).json({ message: 'Error getting customer', error: error.message });
   }
 };
-
 
 // Update a customer by ID
 exports.updateCustomer = async (req, res) => {
@@ -116,5 +113,27 @@ exports.sellStock = async (req, res) => {
   } catch (error) {
     console.error('Error selling stock:', error);
     res.status(500).json({ message: 'Error selling stock', error: error.message });
+  }
+};
+
+// Get all purchase history
+exports.getAllPurchaseHistory = async (req, res) => {
+  try {
+    const customers = await Customer.find().populate('purchases.stockId');
+    res.status(200).json(customers);
+  } catch (error) {
+    console.error('Error getting purchase history:', error);
+    res.status(500).json({ message: 'Error getting purchase history', error: error.message });
+  }
+};
+
+// Get all customers
+exports.getCustomers = async (req, res) => {
+  try {
+    const customers = await Customer.find().populate('purchases.stockId');
+    res.status(200).json(customers);
+  } catch (error) {
+    console.error('Error getting customers:', error);
+    res.status(500).json({ message: 'Error getting customers', error: error.message });
   }
 };

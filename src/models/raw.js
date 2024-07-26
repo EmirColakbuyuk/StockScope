@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
-const moment = require('moment-timezone');
 
 const rawSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
     supplier: {
         type: String,
         required: true
@@ -38,7 +41,11 @@ const rawSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-   
+    notes: {
+        type: String,
+        required: false
+    },
+ 
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -47,8 +54,10 @@ const rawSchema = new mongoose.Schema({
     updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false 
+        required: false
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Raw Material', rawSchema);
+const RawMaterial = mongoose.model('RawMaterial', rawSchema);
+
+module.exports = { RawMaterial };
