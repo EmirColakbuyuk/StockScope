@@ -361,3 +361,7 @@
 2024-07-27T12:46:18.214Z - POST /api/addCustomer - User: Unknown
 2024-07-27T12:46:22.896Z - POST /api/addstocks - User: Unknown
 2024-07-27T12:46:49.194Z - POST /api/sellStock - User: Unknown
+2024-07-27T12:56:56.698Z - POST /api/auth/login - User: Anonymous
+2024-07-27T12:57:14.096Z - POST /api/addstocks - User: Anonymous
+2024-07-27T13:04:48.796Z - POST /api/addRaw - User: BlackRose
+2024-07-27T13:05:08.466Z - DELETE /api/deleteRaw/66a4f0701731a9a8cf9f6ce3 - User: BlackRose

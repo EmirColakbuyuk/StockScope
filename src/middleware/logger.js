@@ -9,7 +9,8 @@ if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
 }
 
 const logger = (req, res, next) => {
-  const log = `${new Date().toISOString()} - ${req.method} ${req.originalUrl} - User: ${req.user ? req.user.username : 'Unknown'}\n`;
+  const username = req.user ? req.user.username : 'Anonymous';
+  const log = `${new Date().toISOString()} - ${req.method} ${req.originalUrl} - User: ${username}\n`;
   fs.appendFileSync(logFilePath, log);
   next();
 };

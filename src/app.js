@@ -11,26 +11,20 @@ const rawRoutes = require('./routes/rawRoute');
 const app = express();
 const port = 3000;
 
-
-
 // Load environment variables from .env file
 require('dotenv').config();
-
 // Middleware to parse JSON
 app.use(express.json());
 
+app.use(auth);
+
 // Logger middleware
 app.use(logger);
-
 
 app.use('/api', stockRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', rawRoutes);
 app.use('/api', customerRoutes);
-
-
-
-// Use user routes
 app.use('/api', userRoutes);
 
 // MongoDB connection

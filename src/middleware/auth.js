@@ -20,7 +20,7 @@ const auth = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid token, authorization denied' });
     }
-    req.user = user; // Attach user to the request object
+    req.user = user; 
     next();
   } catch (error) {
     console.error('JWT Verification Error:', error);
