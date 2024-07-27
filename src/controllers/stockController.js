@@ -7,6 +7,7 @@ const moment = require('moment-timezone');
 exports.addStock = async (req, res) => {
   try {
     const {
+      uniqueId,
       size,
       koliCount,
       packageCount,
@@ -16,6 +17,7 @@ exports.addStock = async (req, res) => {
 
     const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
     const newStock = new Stock({
+      uniqueId,
       size,
       koliCount,
       packageCount,
@@ -84,6 +86,7 @@ exports.updateStock = async (req, res) => {
   try {
     const { id } = req.params;
     const {
+      uniqueId ,
       size,
       koliCount,
       packageCount,
@@ -106,8 +109,9 @@ exports.updateStock = async (req, res) => {
     const newTotalItems = koliCount * packageCount * packageContain;
 
     const updatedStock = await Stock.findByIdAndUpdate(
-      id,
+     id,
       {
+        uniqueId,
         size,
         koliCount,
         packageCount,
@@ -179,12 +183,14 @@ exports.sellStock = async (req, res) => {
       return res.status(404).json({ message: 'Customer not found' });
     }
 
+    console.log(stock);
     // Calculate the total items for this stock entry
     const totalItems = stock.koliCount * stock.packageCount * stock.packageContain;
 
     // Add the sold stock details to the customer's purchases
     customer.purchases.push({
       stockId: stock._id,
+      uniqueId : stock.uniqueId,
       size: stock.size,
       koliCount: stock.koliCount,
       packageCount: stock.packageCount,

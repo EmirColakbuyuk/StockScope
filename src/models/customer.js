@@ -28,6 +28,10 @@ const customerSchema = new mongoose.Schema({
             ref: 'Stock',
             required: true
         },
+        uniqueId: {
+            type: String,
+            required: true
+        },
         size: {
             type: String,
             required: true
