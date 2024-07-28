@@ -23,11 +23,6 @@ const customerSchema = new mongoose.Schema({
         required: false
     },
     purchases: [{
-        stockId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Stock',
-            required: true
-        },
         uniqueId: {
             type: String,
             required: true
