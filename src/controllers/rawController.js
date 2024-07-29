@@ -123,6 +123,29 @@ exports.getAllRawMaterials = async (req, res) => {
   }
 };
 
+// Get all raw materials with pagination
+exports.getAllRawMaterialPagination = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const rawMaterials = await RawMaterial.find()
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+
+    const count = await RawMaterial.countDocuments();
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count
+    });
+  } catch (error) {
+    console.error('Error getting raw materials:', error);
+    res.status(500).json({ message: 'Error getting raw materials', error: error.message });
+  }
+};
+
 // Get raw materials by date
 exports.getRawMaterialsByDate = async (req, res) => {
   try {

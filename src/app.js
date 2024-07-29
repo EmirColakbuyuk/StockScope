@@ -8,8 +8,9 @@ const stockRoutes = require('./routes/stockRoute');
 const customerRoutes = require('./routes/customerRoute');
 const userController = require('./controllers/userController');
 const rawRoutes = require('./routes/rawRoute');
+const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = 3008;
 
 
 
@@ -19,6 +20,13 @@ require('dotenv').config();
 // Middleware to parse JSON
 app.use(express.json());
 
+
+// Enable CORS for all routes
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
+// app.use(cors());
 // Logger middleware
 app.use(logger);
 
