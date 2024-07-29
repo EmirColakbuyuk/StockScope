@@ -18,10 +18,13 @@ const customerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    notes: {
+        type: String,
+        required: false
+    },
     purchases: [{
-        stockId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Stock',
+        uniqueId: {
+            type: String,
             required: true
         },
         size: {
@@ -45,7 +48,10 @@ const customerSchema = new mongoose.Schema({
             required: true,
             default: () => moment().tz("Europe/Istanbul").toDate()
         }
-    }]
+    }],
+
+  
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('Customer', customerSchema);

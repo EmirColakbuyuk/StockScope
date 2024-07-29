@@ -2,12 +2,11 @@ const Customer = require('../models/customer');
 const Stock = require('../models/stock');
 const Product = require('../models/product');
 const moment = require('moment-timezone');
-
 // Create a new customer
 exports.createCustomer = async (req, res) => {
   try {
-    const { name, email, phone, address } = req.body;
-    const newCustomer = new Customer({ name, email, phone, address });
+    const { name, email, phone, address, notes} = req.body;
+    const newCustomer = new Customer({ name, email, phone, address, notes });
     const savedCustomer = await newCustomer.save();
     res.status(201).json({ message: 'Customer created successfully', customer: savedCustomer });
   } catch (error) {
@@ -15,7 +14,6 @@ exports.createCustomer = async (req, res) => {
     res.status(500).json({ message: 'Error creating customer', error: error.message });
   }
 };
-
 
 // Get customer by ID
 exports.getCustomerById = async (req, res) => {
@@ -32,13 +30,12 @@ exports.getCustomerById = async (req, res) => {
   }
 };
 
-
 // Update a customer by ID
 exports.updateCustomer = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, phone, address } = req.body;
-    const updatedCustomer = await Customer.findByIdAndUpdate(id, { name, email, phone, address }, { new: true });
+    const { name, email, phone, address, notes } = req.body;
+    const updatedCustomer = await Customer.findByIdAndUpdate(id, { name, email, phone, address, notes}, { new: true });
     if (!updatedCustomer) {
       return res.status(404).json({ message: 'Customer not found' });
     }
@@ -116,5 +113,27 @@ exports.sellStock = async (req, res) => {
   } catch (error) {
     console.error('Error selling stock:', error);
     res.status(500).json({ message: 'Error selling stock', error: error.message });
+  }
+};
+
+// Get all purchase history
+exports.getAllPurchaseHistory = async (req, res) => {
+  try {
+    const customers = await Customer.find().populate('purchases.stockId');
+    res.status(200).json(customers);
+  } catch (error) {
+    console.error('Error getting purchase history:', error);
+    res.status(500).json({ message: 'Error getting purchase history', error: error.message });
+  }
+};
+
+// Get all customers
+exports.getCustomers = async (req, res) => {
+  try {
+    const customers = await Customer.find().populate('purchases.stockId');
+    res.status(200).json(customers);
+  } catch (error) {
+    console.error('Error getting customers:', error);
+    res.status(500).json({ message: 'Error getting customers', error: error.message });
   }
 };

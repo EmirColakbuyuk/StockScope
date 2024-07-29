@@ -1,12 +1,13 @@
-const RawMaterial = require('../models/raw');
+const { RawMaterial } = require('../models/raw');
 const moment = require('moment-timezone');
 
 // Add a new raw material
 exports.addRawMaterial = async (req, res) => {
   try {
     const {
+      name,
       supplier,
-      type,
+      type, // Type name, e.g., 'A4'
       grammage,
       totalBobinweight,
       meter,
@@ -14,11 +15,12 @@ exports.addRawMaterial = async (req, res) => {
       bobinHeight,
       bobinDiameter,
       MasuraLength,
-      date
+      notes
     } = req.body;
 
-    const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
+    // Create new raw material
     const newRawMaterial = new RawMaterial({
+      name,
       supplier,
       type,
       grammage,
@@ -28,10 +30,11 @@ exports.addRawMaterial = async (req, res) => {
       bobinHeight,
       bobinDiameter,
       MasuraLength,
-      date: dateInTurkey,
-      createdBy: req.user._id
+      notes,
+      createdBy: req.user ? req.user._id : null // Ensure `req.user` is available or remove if not needed
     });
 
+    // Save to database
     const savedRawMaterial = await newRawMaterial.save();
     res.status(201).json({ message: 'Raw material added successfully', rawMaterial: savedRawMaterial });
   } catch (error) {
@@ -60,8 +63,9 @@ exports.updateRawMaterial = async (req, res) => {
   try {
     const { id } = req.params;
     const {
+      name,
       supplier,
-      type,
+      type, // Type name, e.g., 'A4'
       grammage,
       totalBobinweight,
       meter,
@@ -69,6 +73,7 @@ exports.updateRawMaterial = async (req, res) => {
       bobinHeight,
       bobinDiameter,
       MasuraLength,
+      notes, // Optional notes field
       date
     } = req.body;
 
@@ -76,6 +81,7 @@ exports.updateRawMaterial = async (req, res) => {
     const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
       id,
       {
+        name,
         supplier,
         type,
         grammage,
@@ -85,7 +91,8 @@ exports.updateRawMaterial = async (req, res) => {
         bobinHeight,
         bobinDiameter,
         MasuraLength,
-        date: dateInTurkey,
+        notes, // Include notes field
+        createdAt: dateInTurkey, // Update createdAt date
         updatedBy: req.user._id
       },
       { new: true }
@@ -105,48 +112,61 @@ exports.updateRawMaterial = async (req, res) => {
 // Get all raw materials
 exports.getAllRawMaterials = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
-    const limit = parseInt(req.query.limit) || 5; // Default to 5 items per page if not provided
-
-    const rawMaterials = await RawMaterial.find()
-        .skip((page - 1) * limit)
-        .limit(limit);
-
-    const totalItems = await RawMaterial.countDocuments();
-
-    res.status(200).json({
-      rawMaterials,
-      totalPages: Math.ceil(totalItems / limit),
-      totalItems,
-      currentPage: page
+    const rawMaterials = await RawMaterial.find().populate({
+      path: 'type',
+      select: 'name'
     });
-  } catch (error) {
-    console.error('Error getting raw materials:', error);
-    res.status(500).json({ message: 'Error getting raw materials', error: error.message });
-  }
-};
-
-// Get all raw materials without pagination
-exports.getAllRawMaterialsNoPagination = async (req, res) => {
-  try {
-    const rawMaterials = await RawMaterial.find();
     res.status(200).json(rawMaterials);
   } catch (error) {
     console.error('Error getting raw materials:', error);
     res.status(500).json({ message: 'Error getting raw materials', error: error.message });
   }
 };
-
 
 // Get raw materials by date
 exports.getRawMaterialsByDate = async (req, res) => {
   try {
     const { date } = req.query;
     const dateInTurkey = moment.tz(date, "Europe/Istanbul").startOf('day').toDate();
-    const rawMaterials = await RawMaterial.find({ date: dateInTurkey });
+    const rawMaterials = await RawMaterial.find({ createdAt: dateInTurkey }).populate({
+      path: 'type',
+      select: 'name'
+    });
     res.status(200).json(rawMaterials);
   } catch (error) {
     console.error('Error getting raw materials by date:', error);
     res.status(500).json({ message: 'Error getting raw materials by date', error: error.message });
   }
 };
+
+exports.getDistinctValuesByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+
+    // Fields to get distinct values for
+    const fields = [
+      'type',
+      'supplier',
+      'grammage',
+      'totalBobinweight',
+      'meter',
+      'bobinNumber',
+      'bobinHeight',
+      'bobinDiameter',
+      'MasuraLength'
+    ];
+
+    // Object to hold distinct values for each field
+    const distinctValues = {};
+
+    for (const field of fields) {
+      distinctValues[field] = await RawMaterial.find({ name }).distinct(field);
+    }
+
+    res.status(200).json(distinctValues);
+  } catch (error) {
+    console.error('Error getting distinct values by name:', error);
+    res.status(500).json({ message: 'Error getting distinct values by name', error: error.message });
+  }
+};
+

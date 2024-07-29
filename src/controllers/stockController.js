@@ -7,18 +7,22 @@ const moment = require('moment-timezone');
 exports.addStock = async (req, res) => {
   try {
     const {
-      size,
-      koliCount,
-      packageCount,
-      packageContain
-    } = req.body;
-
-    const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
-    const newStock = new Stock({
+      uniqueId,
       size,
       koliCount,
       packageCount,
       packageContain,
+      notes
+    } = req.body;
+
+    const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
+    const newStock = new Stock({
+      uniqueId,
+      size,
+      koliCount,
+      packageCount,
+      packageContain,
+      notes,
       date: dateInTurkey,
       createdBy: req.user._id
     });
@@ -34,6 +38,7 @@ exports.addStock = async (req, res) => {
       product.total += totalItems;
     } else {
       product = new Product({
+        uniqueId,
         size,
         total: totalItems
       });
@@ -61,7 +66,7 @@ exports.deleteStock = async (req, res) => {
     const totalItems = deletedStock.koliCount * deletedStock.packageCount * deletedStock.packageContain;
 
     // Update the product entry
-    let product = await Product.findOne({ size: deletedStock.size });
+    let product = await Product.findOne({ size: deletedStock.uniqueId });
     if (product) {
       product.total -= totalItems;
       if (product.total < 0) {
@@ -82,11 +87,13 @@ exports.updateStock = async (req, res) => {
   try {
     const { id } = req.params;
     const {
+      uniqueId ,
       size,
       koliCount,
       packageCount,
       packageContain,
-      date
+      date,
+      notes
     } = req.body;
 
     const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
@@ -103,12 +110,14 @@ exports.updateStock = async (req, res) => {
     const newTotalItems = koliCount * packageCount * packageContain;
 
     const updatedStock = await Stock.findByIdAndUpdate(
-      id,
+     id,
       {
+        uniqueId,
         size,
         koliCount,
         packageCount,
         packageContain,
+        notes,
         date: dateInTurkey,
         createdBy: existingStock.createdBy
       },
@@ -120,7 +129,7 @@ exports.updateStock = async (req, res) => {
     }
 
     // Update the product entry
-    let product = await Product.findOne({ size });
+    let product = await Product.findOne({ uniqueId });
     if (product) {
       product.total = product.total - oldTotalItems + newTotalItems;
       await product.save();
@@ -158,15 +167,15 @@ exports.byDateStock = async (req, res) => {
 };
 
 
-// Sell a stock
-exports.sellStock = async (req, res) => {
+// Sell a  product
+exports.sellProduct = async (req, res) => {
   try {
-    const { stockId, customerId } = req.body;
+    const { uniqueId, customerId, koliCount, packageCount, packageContain } = req.body;
 
-    // Find the stock by its ID
-    const stock = await Stock.findById(stockId);
-    if (!stock) {
-      return res.status(404).json({ message: 'Stock not found' });
+    // Find the product by its ID
+    const product = await Product.findOne({uniqueId});
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
     }
 
     // Find the customer by their ID
@@ -175,33 +184,30 @@ exports.sellStock = async (req, res) => {
       return res.status(404).json({ message: 'Customer not found' });
     }
 
-    // Calculate the total items for this stock entry
-    const totalItems = stock.koliCount * stock.packageCount * stock.packageContain;
+    // Calculate the total items to be sold
+    const totalItems = koliCount * packageCount * packageContain;
+
+    // Check if there is enough stock to sell
+    if (product.total < totalItems) {
+      return res.status(400).json({ message: 'Not enough stock to sell' });
+    }
 
     // Add the sold stock details to the customer's purchases
     customer.purchases.push({
-      stockId: stock._id,
-      size: stock.size,
-      koliCount: stock.koliCount,
-      packageCount: stock.packageCount,
-      packageContain: stock.packageContain,
+      productId: product._id,
+      uniqueId: product.uniqueId,
+      size: product.size,
+      koliCount: koliCount,
+      packageCount: packageCount,
+      packageContain: packageContain,
       date: moment.tz("Europe/Istanbul").toDate()
     });
 
     await customer.save();
 
-    // Delete the stock
-    await Stock.findByIdAndDelete(stockId);
-
     // Update the product entry
-    let product = await Product.findOne({ size: stock.size });
-    if (product) {
-      product.total -= totalItems;
-      if (product.total < 0) {
-        product.total = 0;
-      }
-      await product.save();
-    }
+    product.total -= totalItems;
+    await product.save();
 
     res.status(200).json({ message: 'Stock sold successfully', customer, product });
   } catch (error) {

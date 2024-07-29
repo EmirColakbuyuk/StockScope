@@ -8,6 +8,6 @@ router.delete('/deleteRaw/:id', auth,  rawController.deleteRawMaterial);
 router.put('/update/:id', auth,  rawController.updateRawMaterial);
 router.get('/allRaw', auth, rawController.getAllRawMaterials);
 router.get('/byDate', auth, rawController.getRawMaterialsByDate);
-router.get('/allRawNoPagination', auth, rawController.getAllRawMaterialsNoPagination); // Limitsiz
+router.get('/raw-materials/:name', auth, rawController.getDistinctValuesByName);
 
 module.exports = router;

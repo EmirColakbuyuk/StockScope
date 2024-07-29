@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const auth = require('./middleware/auth'); // Import the auth middleware
 const logger = require('./middleware/logger'); // Import the logger middleware
@@ -10,14 +9,12 @@ const customerRoutes = require('./routes/customerRoute');
 const userController = require('./controllers/userController');
 const rawRoutes = require('./routes/rawRoute');
 const app = express();
-const port = 3008;
+const port = 3000;
 
 
 
 // Load environment variables from .env file
 require('dotenv').config();
-
-app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
