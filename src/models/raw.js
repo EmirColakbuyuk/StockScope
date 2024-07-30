@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const rawSchema = new mongoose.Schema({
+    status: {
+        type: String,
+        required: true,
+        default: 'active',
+        enum: ['active', 'passive']
+    },
     name: {
         type: String,
         required: true

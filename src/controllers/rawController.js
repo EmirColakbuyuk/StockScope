@@ -43,20 +43,7 @@ exports.addRawMaterial = async (req, res) => {
   }
 };
 
-// Delete a raw material by ID
-exports.deleteRawMaterial = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedRawMaterial = await RawMaterial.findByIdAndDelete(id);
-    if (!deletedRawMaterial) {
-      return res.status(404).json({ message: 'Raw material not found' });
-    }
-    res.status(200).json({ message: 'Raw material deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting raw material:', error);
-    res.status(500).json({ message: 'Error deleting raw material', error: error.message });
-  }
-};
+
 
 // Update a raw material by ID
 exports.updateRawMaterial = async (req, res) => {
@@ -109,6 +96,45 @@ exports.updateRawMaterial = async (req, res) => {
   }
 };
 
+
+// Delete a raw material by ID
+exports.deleteRawMaterial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedRawMaterial = await RawMaterial.findByIdAndDelete(id);
+
+    if (!deletedRawMaterial) {
+      return res.status(404).json({ message: 'Raw material not found' });
+    }
+    return res.status(200).json({ message: 'Raw material deleted successfully', rawMaterial: deletedRawMaterial });
+  } catch (error) {
+    console.error('Error deleting raw material:', error);
+    res.status(500).json({ message: 'Error deleting raw material', error: error.message });
+  }
+};
+
+// Soft delete a raw material by ID (change status to 'passive')
+exports.softDeleteRawMaterial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
+      id,
+      { status: 'passive' },
+      { new: true } 
+    );
+
+    if (!updatedRawMaterial) {
+      return res.status(404).json({ message: 'Raw material not found' });
+    }
+
+    res.status(200).json({ message: 'Raw material status updated to passive', rawMaterial: updatedRawMaterial });
+  } catch (error) {
+    console.error('Error updating raw material status:', error);
+    res.status(500).json({ message: 'Error updating raw material status', error: error.message });
+  }
+};
+
+
 // Get all raw materials
 exports.getAllRawMaterials = async (req, res) => {
   try {
@@ -120,6 +146,31 @@ exports.getAllRawMaterials = async (req, res) => {
   } catch (error) {
     console.error('Error getting raw materials:', error);
     res.status(500).json({ message: 'Error getting raw materials', error: error.message });
+  }
+};
+
+
+exports.getAllActiveRawMaterials = async (req, res) => {
+  try {
+    const rawMaterials = await RawMaterial.find({ status: 'active' }).populate({
+       path: 'type',
+       select: 'name' });
+    res.status(200).json(rawMaterials);
+  } catch (error) {
+    console.error('Error getting active raw materials:', error);
+    res.status(500).json({ message: 'Error getting active raw materials', error: error.message });
+  }
+};
+
+exports.getAllPassiveRawMaterials = async (req, res) => {
+  try {
+    const rawMaterials = await RawMaterial.find({ status: 'passive' }).populate({
+       path: 'type',
+       select: 'name' });
+    res.status(200).json(rawMaterials);
+  } catch (error) {
+    console.error('Error getting passive raw materials:', error);
+    res.status(500).json({ message: 'Error getting passive raw materials', error: error.message });
   }
 };
 
