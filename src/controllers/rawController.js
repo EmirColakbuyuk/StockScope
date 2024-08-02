@@ -244,3 +244,24 @@ exports.getDistinctValuesByName = async (req, res) => {
   }
 };
 
+exports.getAllActiveRawMaterialPagination = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const rawMaterials = await RawMaterial.find({ status: 'active' })
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+
+    const count = await RawMaterial.countDocuments({ status: 'active' });
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count
+    });
+  } catch (error) {
+    console.error('Error getting raw materials:', error);
+    res.status(500).json({ message: 'Error getting raw materials', error: error.message });
+  }
+};
