@@ -13,8 +13,8 @@ const rawSchema = new mongoose.Schema({
     },
     supplier: {
         type: String,
-        required: true
-    },
+        required: true 
+    }, 
     type: {
         type: String,
         required: true
@@ -64,6 +64,6 @@ const rawSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const RawMaterial = mongoose.model('RawMaterial', rawSchema);
+module.exports = mongoose.model('RawMaterial', rawSchema);
 
-module.exports = { RawMaterial };
+

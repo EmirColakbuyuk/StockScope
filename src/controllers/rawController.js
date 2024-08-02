@@ -1,13 +1,13 @@
-const { RawMaterial } = require('../models/raw');
+const RawMaterial = require('../models/raw');
+const Supplier = require('../models/supplier');
 const moment = require('moment-timezone');
 
-// Add a new raw material
 exports.addRawMaterial = async (req, res) => {
   try {
     const {
       name,
-      supplier,
-      type, // Type name, e.g., 'A4'
+      supplier: supplierCode, // Supplier code
+      type,
       grammage,
       totalBobinweight,
       meter,
@@ -18,10 +18,16 @@ exports.addRawMaterial = async (req, res) => {
       notes
     } = req.body;
 
+    // Check if supplier exists
+    const supplierDoc = await Supplier.findOne({ code: supplierCode });
+    if (!supplierDoc) {
+      return res.status(404).json({ message: 'Supplier not found' });
+    }
+
     // Create new raw material
     const newRawMaterial = new RawMaterial({
       name,
-      supplier,
+      supplier: supplierCode, // Save supplier code
       type,
       grammage,
       totalBobinweight,
@@ -31,7 +37,7 @@ exports.addRawMaterial = async (req, res) => {
       bobinDiameter,
       MasuraLength,
       notes,
-      createdBy: req.user ? req.user._id : null // Ensure `req.user` is available or remove if not needed
+      createdBy: req.user ? req.user._id : null
     });
 
     // Save to database
@@ -44,15 +50,13 @@ exports.addRawMaterial = async (req, res) => {
 };
 
 
-
-// Update a raw material by ID
 exports.updateRawMaterial = async (req, res) => {
   try {
     const { id } = req.params;
     const {
       name,
-      supplier,
-      type, // Type name, e.g., 'A4'
+      supplier: supplierCode, // Supplier code
+      type,
       grammage,
       totalBobinweight,
       meter,
@@ -60,16 +64,22 @@ exports.updateRawMaterial = async (req, res) => {
       bobinHeight,
       bobinDiameter,
       MasuraLength,
-      notes, // Optional notes field
+      notes,
       date
     } = req.body;
+
+    // Find supplier by code
+    const supplierDoc = await Supplier.findOne({ code: supplierCode });
+    if (!supplierDoc) {
+      return res.status(404).json({ message: 'Supplier not found' });
+    }
 
     const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
     const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
       id,
       {
         name,
-        supplier,
+        supplier: supplierCode, // Update supplier code
         type,
         grammage,
         totalBobinweight,
@@ -78,8 +88,8 @@ exports.updateRawMaterial = async (req, res) => {
         bobinHeight,
         bobinDiameter,
         MasuraLength,
-        notes, // Include notes field
-        createdAt: dateInTurkey, // Update createdAt date
+        notes,
+        createdAt: dateInTurkey,
         updatedBy: req.user._id
       },
       { new: true }
@@ -95,6 +105,7 @@ exports.updateRawMaterial = async (req, res) => {
     res.status(500).json({ message: 'Error updating raw material', error: error.message });
   }
 };
+
 
 
 // Delete a raw material by ID
@@ -120,7 +131,7 @@ exports.softDeleteRawMaterial = async (req, res) => {
     const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
       id,
       { status: 'passive' },
-      { new: true } 
+      { new: true }
     );
 
     if (!updatedRawMaterial) {
@@ -134,11 +145,13 @@ exports.softDeleteRawMaterial = async (req, res) => {
   }
 };
 
-
 // Get all raw materials
 exports.getAllRawMaterials = async (req, res) => {
   try {
     const rawMaterials = await RawMaterial.find().populate({
+      path: 'supplier',
+      select: 'code'
+    }).populate({
       path: 'type',
       select: 'name'
     });
@@ -149,12 +162,16 @@ exports.getAllRawMaterials = async (req, res) => {
   }
 };
 
-
+// Get all active raw materials
 exports.getAllActiveRawMaterials = async (req, res) => {
   try {
     const rawMaterials = await RawMaterial.find({ status: 'active' }).populate({
-       path: 'type',
-       select: 'name' });
+      path: 'supplier',
+      select: 'code'
+    }).populate({
+      path: 'type',
+      select: 'name'
+    });
     res.status(200).json(rawMaterials);
   } catch (error) {
     console.error('Error getting active raw materials:', error);
@@ -162,11 +179,16 @@ exports.getAllActiveRawMaterials = async (req, res) => {
   }
 };
 
+// Get all passive raw materials
 exports.getAllPassiveRawMaterials = async (req, res) => {
   try {
     const rawMaterials = await RawMaterial.find({ status: 'passive' }).populate({
-       path: 'type',
-       select: 'name' });
+      path: 'supplier',
+      select: 'code'
+    }).populate({
+      path: 'type',
+      select: 'name'
+    });
     res.status(200).json(rawMaterials);
   } catch (error) {
     console.error('Error getting passive raw materials:', error);
@@ -179,9 +201,13 @@ exports.getAllRawMaterialPagination = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const rawMaterials = await RawMaterial.find()
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .exec();
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .populate({
+        path: 'supplier',
+        select: 'code'
+      })
+      .exec();
 
     const count = await RawMaterial.countDocuments();
 
@@ -203,6 +229,9 @@ exports.getRawMaterialsByDate = async (req, res) => {
     const { date } = req.query;
     const dateInTurkey = moment.tz(date, "Europe/Istanbul").startOf('day').toDate();
     const rawMaterials = await RawMaterial.find({ createdAt: dateInTurkey }).populate({
+      path: 'supplier',
+      select: 'code'
+    }).populate({
       path: 'type',
       select: 'name'
     });
@@ -213,6 +242,7 @@ exports.getRawMaterialsByDate = async (req, res) => {
   }
 };
 
+// Get distinct values by name
 exports.getDistinctValuesByName = async (req, res) => {
   try {
     const { name } = req.params;
@@ -244,13 +274,18 @@ exports.getDistinctValuesByName = async (req, res) => {
   }
 };
 
+// Get all active raw materials with pagination
 exports.getAllActiveRawMaterialPagination = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const rawMaterials = await RawMaterial.find({ status: 'active' })
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .exec();
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .populate({
+        path: 'supplier',
+        select: 'code'
+      })
+      .exec();
 
     const count = await RawMaterial.countDocuments({ status: 'active' });
 
@@ -266,7 +301,7 @@ exports.getAllActiveRawMaterialPagination = async (req, res) => {
   }
 };
 
-
+// Get all distinct names
 exports.getAllNames = async (req, res) => {
   try {
     const names = await RawMaterial.find().distinct('name');
@@ -276,6 +311,3 @@ exports.getAllNames = async (req, res) => {
     res.status(500).json({ message: 'Error getting names', error: error.message });
   }
 };
-
-
-

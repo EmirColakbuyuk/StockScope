@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoute'); // Import authentication route
 const userRoutes = require('./routes/userRoute');
 const stockRoutes = require('./routes/stockRoute');
 const customerRoutes = require('./routes/customerRoute');
+const supplierRoutes = require('./routes/supplierRoute');
 const userController = require('./controllers/userController');
 const rawRoutes = require('./routes/rawRoute');
 const cors = require('cors');
@@ -35,10 +36,7 @@ app.use('/api', stockRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', rawRoutes);
 app.use('/api', customerRoutes);
-
-
-
-// Use user routes
+app.use('/api', supplierRoutes);
 app.use('/api', userRoutes);
 
 // MongoDB connection
