@@ -796,3 +796,5 @@
 2024-08-02T09:33:16.404Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
 2024-08-02T09:34:23.612Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
 2024-08-02T09:34:23.765Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:33:04.513Z - POST /api/auth/login - User: Anonymous
+2024-08-02T11:33:08.888Z - GET /api/getAllNames - User: Anonymous

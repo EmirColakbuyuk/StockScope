@@ -265,3 +265,17 @@ exports.getAllActiveRawMaterialPagination = async (req, res) => {
     res.status(500).json({ message: 'Error getting raw materials', error: error.message });
   }
 };
+
+
+exports.getAllNames = async (req, res) => {
+  try {
+    const names = await RawMaterial.find().distinct('name');
+    res.status(200).json(names);
+  } catch (error) {
+    console.error('Error getting names:', error);
+    res.status(500).json({ message: 'Error getting names', error: error.message });
+  }
+};
+
+
+

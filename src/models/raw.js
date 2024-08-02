@@ -5,7 +5,7 @@ const rawSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'active',
-        enum: ['active', 'passive']
+        enum: ['active', 'passive, dummy']
     },
     name: {
         type: String,
