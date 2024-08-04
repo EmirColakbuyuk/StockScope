@@ -941,3 +941,589 @@
 2024-08-02T12:58:16.983Z - POST /api/addRaw - User: Anonymous
 2024-08-02T12:58:31.330Z - POST /api/addRaw - User: Anonymous
 2024-08-02T13:00:34.656Z - POST /api/addRaw - User: Anonymous
+2024-08-02T13:23:52.008Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T13:23:52.021Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T13:23:56.586Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T13:23:56.595Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T13:24:03.044Z - POST /api/auth/login - User: Anonymous
+2024-08-02T13:24:04.346Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T13:24:04.556Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T13:26:20.332Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-02T13:26:23.156Z - POST /api/auth/login - User: Anonymous
+2024-08-02T13:26:25.683Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-02T13:31:24.709Z - POST /api/auth/login - User: Anonymous
+2024-08-02T13:32:12.323Z - POST /api/addRaw - User: Anonymous
+2024-08-02T13:34:20.165Z - POST /api/addRaw - User: Anonymous
+2024-08-02T13:34:58.425Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-02T13:55:42.969Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T13:55:55.467Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:02:05.478Z - GET /api/getAllNames - User: Anonymous
+2024-08-02T14:02:36.601Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-02T14:02:54.906Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-02T14:06:11.933Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:06:12.128Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:13:55.026Z - POST /api/auth/login - User: Anonymous
+2024-08-02T14:18:51.674Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-02T14:19:17.348Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:19:17.354Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:20:22.859Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-02T14:21:19.199Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:21:19.204Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:21:23.552Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:21:23.556Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:22:18.593Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:22:18.600Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:25:14.532Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:25:14.712Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:25:15.955Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:25:16.122Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:27:43.397Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T14:27:43.572Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:08:39.288Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:20:22.452Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:20:24.598Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:25:42.633Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:25:42.651Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:25:46.152Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T16:25:46.159Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T16:25:47.449Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T16:25:47.453Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T18:19:30.560Z - POST /api/auth/login - User: Anonymous
+2024-08-02T18:19:32.417Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T18:19:32.603Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:44:09.025Z - POST /api/auth/login - User: Anonymous
+2024-08-03T11:44:10.747Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:44:10.942Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:49:06.551Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:49:06.718Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:56:29.188Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:56:29.350Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:56:29.695Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:56:29.698Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:59:32.271Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:59:32.449Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:59:57.165Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T11:59:57.170Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T12:14:59.759Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T12:14:59.772Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T12:15:03.848Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T12:15:03.863Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T21:59:23.126Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T21:59:23.140Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T21:59:32.540Z - POST /api/auth/login - User: Anonymous
+2024-08-03T21:59:34.460Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T21:59:34.652Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:14.089Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:14.094Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:30.046Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:30.065Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:37.264Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:37.275Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:42.021Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:03:42.025Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:06:04.082Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:06:04.090Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:06:29.584Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:06:29.587Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:07:22.077Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:07:22.081Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:09:22.051Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:09:22.058Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:09:24.729Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:09:24.732Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:14:44.243Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:14:44.413Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:14:45.375Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:14:45.378Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:15:51.536Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:15:51.539Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:16:12.883Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:16:12.887Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:16:25.740Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:16:25.743Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:19:00.543Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:19:00.547Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:21:09.119Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:21:09.125Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:23:09.893Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:23:10.064Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:25:00.736Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:25:00.738Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:27:11.948Z - PUT /api/update/66acd76e94eb246195dda43a - User: Anonymous
+2024-08-03T22:39:21.823Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:39:21.991Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:39:33.196Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:39:33.198Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:41:02.404Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:41:02.409Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:41:19.922Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:41:19.927Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:43:07.690Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:43:07.694Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:43:27.525Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:43:27.529Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:44:27.805Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:44:27.812Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:51:07.052Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:51:07.071Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:51:11.604Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:51:11.608Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:51:22.265Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-03T22:51:22.270Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:17:02.148Z - POST /api/auth/login - User: Anonymous
+2024-08-04T09:17:05.335Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:17:05.341Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:18:44.135Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:20:20.137Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:20:20.291Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:20:38.135Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:20:38.283Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:22:31.140Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:22:31.331Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:22.146Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:24:22.161Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:24:22.166Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:22.272Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:24:22.282Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:24:22.589Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:24.364Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:24:24.368Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:24.370Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:24:24.373Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:24:24.377Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:24.380Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:24:32.532Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:24:32.534Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:24:32.535Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:32.644Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:24:32.645Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:24:32.696Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:54.874Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:24:55.365Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:29:55.133Z - GET /api/api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:29:55.137Z - GET /api/api/getAllNames - User: Anonymous
+2024-08-04T09:29:55.138Z - GET /api/api/getAllSuppliers - User: Anonymous
+2024-08-04T09:29:55.153Z - GET /api/api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:29:55.155Z - GET /api/api/getAllNames - User: Anonymous
+2024-08-04T09:29:55.159Z - GET /api/api/getAllSuppliers - User: Anonymous
+2024-08-04T09:29:58.335Z - GET /api/api/getAllNames - User: Anonymous
+2024-08-04T09:29:58.338Z - GET /api/api/getAllSuppliers - User: Anonymous
+2024-08-04T09:29:58.341Z - GET /api/api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:29:58.345Z - GET /api/api/getAllSuppliers - User: Anonymous
+2024-08-04T09:29:58.346Z - GET /api/api/getAllNames - User: Anonymous
+2024-08-04T09:29:58.351Z - GET /api/api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:30:04.663Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-04T09:30:04.780Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-04T09:30:05.882Z - GET /api/api/getAllSuppliers - User: Anonymous
+2024-08-04T09:30:05.883Z - GET /api/api/getAllNames - User: Anonymous
+2024-08-04T09:30:05.884Z - GET /api/api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:30:05.888Z - GET /api/api/getAllSuppliers - User: Anonymous
+2024-08-04T09:30:05.889Z - GET /api/api/getAllNames - User: Anonymous
+2024-08-04T09:30:05.890Z - GET /api/api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:33:00.159Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:33:00.170Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:33:03.194Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:33:03.197Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:33:52.834Z - PUT /api/update/66acd76e94eb246195dda43a - User: Anonymous
+2024-08-04T09:34:10.747Z - PUT /api/update/66acd76e94eb246195dda43a - User: Anonymous
+2024-08-04T09:34:16.312Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:16.317Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:18.218Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:18.221Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:32.614Z - PUT /api/update/66acd76e94eb246195dda43a - User: Anonymous
+2024-08-04T09:34:39.348Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:39.352Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:43.845Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:43.849Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:34:53.084Z - PUT /api/update/66acd76e94eb246195dda43a - User: Anonymous
+2024-08-04T09:40:35.170Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:40:35.184Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:40:35.187Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:40:35.189Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:40:35.191Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:40:35.192Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:40:38.629Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:40:38.647Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:40:38.648Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:40:38.649Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:40:38.651Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:40:38.652Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:41:06.825Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:41:19.571Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:42:31.172Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:42:35.608Z - GET /api/raw-materials/Emire - User: Anonymous
+2024-08-04T09:43:18.212Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:43:23.730Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:43:25.412Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:43:28.135Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:43:47.626Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:47:35.154Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:47:35.167Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:47:35.170Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:47:38.981Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:47:39.012Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:47:39.021Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:47:39.021Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:47:39.022Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:47:39.022Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:47:44.574Z - GET /api/raw-materials/Emire - User: Anonymous
+2024-08-04T09:47:50.928Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:47:56.198Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:47:59.110Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:48:04.391Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:48:17.463Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:48:20.583Z - POST /api/auth/login - User: Anonymous
+2024-08-04T09:48:25.515Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:49:24.156Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:50:52.233Z - POST /api/addRaw - User: Anonymous
+2024-08-04T09:50:56.109Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:50:56.121Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:50:56.129Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:50:56.135Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:50:56.137Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:50:56.142Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:51:01.597Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:51:05.281Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:54:09.157Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T09:54:09.170Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T09:54:09.174Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T09:54:15.195Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:54:25.586Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:54:41.857Z - POST /api/addRaw - User: Anonymous
+2024-08-04T09:54:51.835Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:55:11.129Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:55:25.617Z - PUT /api/update/66af4fe1754e6a3ae27af0a9 - User: Anonymous
+2024-08-04T09:55:50.249Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:55:52.988Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:55:55.777Z - GET /api/raw-materials/Emire - User: Anonymous
+2024-08-04T09:56:03.459Z - GET /api/raw-materials/Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T09:56:05.463Z - GET /api/raw-materials/Kartona - User: Anonymous
+2024-08-04T09:56:07.407Z - GET /api/raw-materials/Karton - User: Anonymous
+2024-08-04T09:56:29.700Z - POST /api/addRaw - User: Anonymous
+2024-08-04T09:57:24.389Z - GET /api/raw-materials/Emire - User: Anonymous
+2024-08-04T12:00:08.771Z - POST /api/auth/login - User: Anonymous
+2024-08-04T12:00:12.701Z - GET /api/getAllTypes - User: Anonymous
+2024-08-04T12:00:24.686Z - GET /api/getAllTypes - User: Anonymous
+2024-08-04T12:00:27.705Z - POST /api/auth/login - User: Anonymous
+2024-08-04T12:00:32.086Z - GET /api/getAllTypes - User: Anonymous
+2024-08-04T12:00:49.060Z - GET /api/getAllTypes - User: Anonymous
+2024-08-04T12:04:12.252Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-04T12:04:12.267Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-04T12:04:13.519Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:04:13.546Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:04:13.555Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:04:13.562Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:04:13.569Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:04:13.576Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:04:41.545Z - POST /api/auth/login - User: Anonymous
+2024-08-04T12:04:42.978Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:04:43.016Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:04:43.029Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:04:43.359Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:04:43.366Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:04:43.390Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:14:33.581Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:14:33.609Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:14:33.623Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:14:33.626Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:14:33.629Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:14:33.634Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:15:21.887Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:15:21.903Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:15:21.909Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:15:21.913Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:15:21.919Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:15:21.926Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:18:19.605Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:18:27.242Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:18:30.661Z - POST /api/auth/login - User: Anonymous
+2024-08-04T12:18:34.214Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:19:33.728Z - GET /api/filterRawMaterials%0A%0A?grammageValue1=26 - User: Anonymous
+2024-08-04T12:19:38.105Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:21:51.517Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:21:58.819Z - GET /api/filterRawMaterials%0A%0A - User: Anonymous
+2024-08-04T12:22:07.414Z - GET /api/filterRawMaterials%0A%0A - User: Anonymous
+2024-08-04T12:22:24.895Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:23:51.639Z - GET /api/filterRawMaterials%0A%0A?name=Kartona&grammageValue1=26 - User: Anonymous
+2024-08-04T12:24:15.452Z - GET /api/filterRawMaterials?name=Kartona&grammageValue1=26 - User: Anonymous
+2024-08-04T12:24:15.484Z - GET /favicon.ico - User: Anonymous
+2024-08-04T12:25:08.373Z - POST /api/auth/login - User: Anonymous
+2024-08-04T12:25:15.205Z - GET /api/filterRawMaterials%0A%0A?name=Kartona - User: Anonymous
+2024-08-04T12:25:33.082Z - GET /api/filterRawMaterials - User: Anonymous
+2024-08-04T12:25:57.332Z - GET /api/filterRawMaterials?supplier=FB11 - User: Anonymous
+2024-08-04T12:26:08.010Z - GET /api/filterRawMaterials?supplier=BB22 - User: Anonymous
+2024-08-04T12:26:26.964Z - GET /api/filterRawMaterials?supplier=BB22&name=Karton - User: Anonymous
+2024-08-04T12:26:50.265Z - GET /api/filterRawMaterials?supplier=BB22&name=Karton - User: Anonymous
+2024-08-04T12:27:30.668Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:27:30.682Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-04T12:27:30.686Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:27:38.539Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:27:38.552Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:27:38.560Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:27:48.595Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-04T12:27:48.609Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:27:48.620Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:27:51.096Z - GET /api/filterRawMaterials?supplier=BB22&name=Ka%C4%9F%C4%B1t - User: Anonymous
+2024-08-04T12:28:42.392Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-04T12:28:42.398Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:28:42.402Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:28:44.917Z - GET /api/getAllNames - User: Anonymous
+2024-08-04T12:28:44.922Z - GET /api/getAllSuppliers - User: Anonymous
+2024-08-04T12:28:44.925Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-04T12:31:13.540Z - GET /api/filterRawMaterials?grammageComparison1=gte&grammageValue1=5&grammageComparison2=lt&grammageValue2=12 - User: Anonymous
+2024-08-04T12:31:45.241Z - GET /api/filterRawMaterials?grammageComparison1=gte&grammageValue1=5&grammageComparison2=lt&grammageValue2=27 - User: Anonymous
+2024-08-04T12:32:50.892Z - GET /api/filterRawMaterials?grammageComparison1=gte&grammageValue1=5&grammageComparison2=&grammageValue2=27 - User: Anonymous
+2024-08-04T12:32:58.724Z - GET /api/filterRawMaterials?grammageComparison1=gte&grammageValue1=5&grammageComparison2=&grammageValue2= - User: Anonymous
+2024-08-04T12:33:07.516Z - GET /api/filterRawMaterials?grammageComparison1=gte&grammageValue1=5&grammageComparison2=&grammageValue2=10 - User: Anonymous
+2024-08-04T13:16:45.564Z - POST /api/addRaw - User: Anonymous
+{
+  "requestBody": {
+    "name": "Karton",
+    "supplier": "BB22",
+    "type": "A7",
+    "grammage": 5,
+    "totalBobinweight": 100,
+    "meter": 1000,
+    "bobinNumber": 2,
+    "bobinHeight": 1.2,
+    "bobinDiameter": 0.3,
+    "MasuraLength": 0.5,
+    "notes": "çizgili"
+  },
+  "responseBody": "{\"message\":\"Raw material added successfully\",\"rawMaterial\":{\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A7\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"_id\":\"66af7f3d1b524ff19935865a\",\"createdAt\":\"2024-08-04T13:16:45.490Z\",\"updatedAt\":\"2024-08-04T13:16:45.490Z\",\"__v\":0}}"
+}
+2024-08-04T13:17:53.861Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:53.895Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:53.947Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:17:56.139Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:56.167Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:56.182Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:56.191Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:17:56.300Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:56.320Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:56.322Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:56.629Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:56.664Z - GET /api/getAllNames - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"Emire\",\"Karton\",\"Kartona\",\"Kağıt\"]"
+}
+2024-08-04T13:17:56.982Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:57.097Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:57.106Z - GET /api/getAllTypes - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"A4\",\"A5\",\"A6\",\"A7\"]"
+}
+2024-08-04T13:17:57.225Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:57.227Z - GET /api/getAllTypes - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"A4\",\"A5\",\"A6\",\"A7\"]"
+}
+2024-08-04T13:17:57.243Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:17:57.351Z - GET /api/getAllTypes - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"A4\",\"A5\",\"A6\",\"A7\"]"
+}
+2024-08-04T13:17:57.360Z - GET /api/getAllSuppliers - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[{\"_id\":\"66acd1fb9dac6899a528afca\",\"name\":\"Faber-Castel\",\"code\":\"FB11\",\"notes\":\"Abc abc abc ab\",\"createdAt\":\"2024-08-02T12:32:59.504Z\",\"updatedAt\":\"2024-08-02T12:34:29.995Z\",\"__v\":0},{\"_id\":\"66acd7d994eb246195dda461\",\"name\":\"BIC\",\"code\":\"BB22\",\"notes\":\"Abc abc abc abc\",\"createdAt\":\"2024-08-02T12:58:01.890Z\",\"updatedAt\":\"2024-08-02T12:58:01.890Z\",\"__v\":0}]"
+}
+2024-08-04T13:17:57.372Z - GET /api/filterRawMaterials?page=2&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66af4fe1754e6a3ae27af0a9\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":9,\"bobinDiameter\":7,\"MasuraLength\":12,\"notes\":\"as\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:54:41.981Z\",\"updatedAt\":\"2024-08-04T09:55:25.762Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0},{\"_id\":\"66af7372bd7cf8b6eaedebe7\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:26:26.095Z\",\"updatedAt\":\"2024-08-04T12:26:26.095Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":2,\"totalItems\":14}"
+}
+2024-08-04T13:17:57.483Z - GET /api/getAllTypes - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "[\"A4\",\"A5\",\"A6\",\"A7\"]"
+}
+2024-08-04T13:17:58.448Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:18:03.084Z - GET /api/filterRawMaterials?page=1&limit=5&name=Emire - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0}],\"totalPages\":1,\"currentPage\":1,\"totalItems\":1}"
+}
+2024-08-04T13:18:03.274Z - GET /api/filterRawMaterials?page=1&limit=5&name=Emire - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0}],\"totalPages\":1,\"currentPage\":1,\"totalItems\":1}"
+}
+2024-08-04T13:18:08.587Z - GET /api/filterRawMaterials?page=1&limit=5&name=Kartona - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"}],\"totalPages\":1,\"currentPage\":1,\"totalItems\":1}"
+}
+2024-08-04T13:18:08.776Z - GET /api/filterRawMaterials?page=1&limit=5&name=Kartona - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"}],\"totalPages\":1,\"currentPage\":1,\"totalItems\":1}"
+}
+2024-08-04T13:18:13.134Z - GET /api/filterRawMaterials?page=1&limit=5&name=Karton - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0}],\"totalPages\":2,\"currentPage\":1,\"totalItems\":10}"
+}
+2024-08-04T13:18:13.320Z - GET /api/filterRawMaterials?page=1&limit=5&name=Karton - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0}],\"totalPages\":2,\"currentPage\":1,\"totalItems\":10}"
+}
+2024-08-04T13:18:15.306Z - GET /api/filterRawMaterials?page=2&limit=5&name=Karton - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66af7372bd7cf8b6eaedebe7\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:26:26.095Z\",\"updatedAt\":\"2024-08-04T12:26:26.095Z\",\"__v\":0},{\"_id\":\"66af768586e237e6dd44e62d\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:39:33.957Z\",\"updatedAt\":\"2024-08-04T12:39:33.957Z\",\"__v\":0},{\"_id\":\"66af789e4d09f571b0362cdd\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:48:30.227Z\",\"updatedAt\":\"2024-08-04T12:48:30.227Z\",\"__v\":0},{\"_id\":\"66af7d294a4bfb49acbd6f59\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"FB11\",\"type\":\"A5\",\"grammage\":11,\"totalBobinweight\":11,\"meter\":11,\"bobinNumber\":11,\"bobinHeight\":11,\"bobinDiameter\":11,\"MasuraLength\":11,\"notes\":\"11\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T13:07:53.927Z\",\"updatedAt\":\"2024-08-04T13:07:53.927Z\",\"__v\":0},{\"_id\":\"66af7f3d1b524ff19935865a\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A7\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T13:16:45.490Z\",\"updatedAt\":\"2024-08-04T13:16:45.490Z\",\"__v\":0}],\"totalPages\":2,\"currentPage\":2,\"totalItems\":10}"
+}
+2024-08-04T13:18:16.835Z - GET /api/filterRawMaterials?page=1&limit=5&name=Karton - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0}],\"totalPages\":2,\"currentPage\":1,\"totalItems\":10}"
+}
+2024-08-04T13:19:02.417Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:02.954Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:03.573Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:04.055Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:04.361Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:04.531Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:04.804Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:05.039Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:08.301Z - GET /api/filterRawMaterials?page=2&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66af4fe1754e6a3ae27af0a9\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":9,\"bobinDiameter\":7,\"MasuraLength\":12,\"notes\":\"as\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:54:41.981Z\",\"updatedAt\":\"2024-08-04T09:55:25.762Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0},{\"_id\":\"66af7372bd7cf8b6eaedebe7\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:26:26.095Z\",\"updatedAt\":\"2024-08-04T12:26:26.095Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":2,\"totalItems\":14}"
+}
+2024-08-04T13:19:09.721Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:11.381Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:11.551Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:16.128Z - GET /api/filterRawMaterials?page=1&limit=5&name=Karton - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0}],\"totalPages\":2,\"currentPage\":1,\"totalItems\":10}"
+}
+2024-08-04T13:19:16.291Z - GET /api/filterRawMaterials?page=1&limit=5&name=Karton - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0},{\"_id\":\"66af504e754e6a3ae27af100\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":12,\"totalBobinweight\":12,\"meter\":12,\"bobinNumber\":12,\"bobinHeight\":12,\"bobinDiameter\":12,\"MasuraLength\":12,\"notes\":\"assa\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:56:30.365Z\",\"updatedAt\":\"2024-08-04T09:56:30.365Z\",\"__v\":0},{\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0},{\"_id\":\"66af70f52eda027ed9d1a81f\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:15:49.911Z\",\"updatedAt\":\"2024-08-04T12:15:49.911Z\",\"__v\":0}],\"totalPages\":2,\"currentPage\":1,\"totalItems\":10}"
+}
+2024-08-04T13:19:17.936Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}
+2024-08-04T13:19:18.103Z - GET /api/filterRawMaterials?page=1&limit=5 - User: Anonymous
+{
+  "requestBody": {},
+  "responseBody": "{\"rawMaterials\":[{\"_id\":\"66acd76e94eb246195dda43a\",\"status\":\"active\",\"name\":\"Kartona\",\"supplier\":\"FB11\",\"type\":\"A4\",\"grammage\":26,\"totalBobinweight\":100,\"meter\":17,\"bobinNumber\":18,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"fazla mal\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:56:14.828Z\",\"updatedAt\":\"2024-08-04T09:34:53.184Z\",\"__v\":0,\"updatedBy\":\"666325bd842d7e5f17f546d9\"},{\"_id\":\"66acd7f794eb246195dda467\",\"status\":\"active\",\"name\":\"Kağıt\",\"supplier\":\"BB22\",\"type\":\"A4\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T12:58:31.437Z\",\"updatedAt\":\"2024-08-02T12:58:31.437Z\",\"__v\":0},{\"_id\":\"66acd87294eb246195dda46b\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:00:34.766Z\",\"updatedAt\":\"2024-08-02T13:00:34.766Z\",\"__v\":0},{\"_id\":\"66ace05c754e6a3ae27aedcd\",\"status\":\"active\",\"name\":\"Emire\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-02T13:34:20.327Z\",\"updatedAt\":\"2024-08-02T13:34:20.327Z\",\"__v\":0},{\"_id\":\"66af4efc754e6a3ae27af068\",\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A6\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T09:50:52.359Z\",\"updatedAt\":\"2024-08-04T09:50:52.359Z\",\"__v\":0}],\"totalPages\":3,\"currentPage\":1,\"totalItems\":14}"
+}

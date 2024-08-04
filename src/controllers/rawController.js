@@ -324,9 +324,105 @@ exports.getAllTypes = async (req, res) => {
 };
 
 
+// exports.filterRawMaterials = async (req, res) => {
+//   try {
+//     const {
+//       name,
+//       supplier,
+//       type,
+//       grammageComparison1,
+//       grammageValue1,
+//       grammageComparison2,
+//       grammageValue2,
+//       totalBobinweightComparison1,
+//       totalBobinweightValue1,
+//       totalBobinweightComparison2,
+//       totalBobinweightValue2,
+//       meterComparison1,
+//       meterValue1,
+//       meterComparison2,
+//       meterValue2,
+//       bobinNumberComparison1,
+//       bobinNumberValue1,
+//       bobinNumberComparison2,
+//       bobinNumberValue2,
+//       bobinHeightComparison1,
+//       bobinHeightValue1,
+//       bobinHeightComparison2,
+//       bobinHeightValue2,
+//       bobinDiameterComparison1,
+//       bobinDiameterValue1,
+//       bobinDiameterComparison2,
+//       bobinDiameterValue2,
+//       MasuraLengthComparison1,
+//       MasuraLengthValue1,
+//       MasuraLengthComparison2,
+//       MasuraLengthValue2,
+//     } = req.query;
+//
+//     let filterCriteria = {};
+//
+//     if (name) filterCriteria.name = name;
+//     if (supplier) filterCriteria.supplier = supplier;
+//     if (type) filterCriteria.type = type;
+//
+//     // Comparison criteria
+//     if (grammageValue1 && grammageComparison1) {
+//       filterCriteria.grammage = { ...filterCriteria.grammage, [`$${grammageComparison1}`]: grammageValue1 };
+//     }
+//     if (grammageValue2 && grammageComparison2) {
+//       filterCriteria.grammage = { ...filterCriteria.grammage, [`$${grammageComparison2}`]: grammageValue2 };
+//     }
+//     if (totalBobinweightValue1 && totalBobinweightComparison1) {
+//       filterCriteria.totalBobinweight = { ...filterCriteria.totalBobinweight, [`$${totalBobinweightComparison1}`]: totalBobinweightValue1 };
+//     }
+//     if (totalBobinweightValue2 && totalBobinweightComparison2) {
+//       filterCriteria.totalBobinweight = { ...filterCriteria.totalBobinweight, [`$${totalBobinweightComparison2}`]: totalBobinweightValue2 };
+//     }
+//     if (meterValue1 && meterComparison1) {
+//       filterCriteria.meter = { ...filterCriteria.meter, [`$${meterComparison1}`]: meterValue1 };
+//     }
+//     if (meterValue2 && meterComparison2) {
+//       filterCriteria.meter = { ...filterCriteria.meter, [`$${meterComparison2}`]: meterValue2 };
+//     }
+//     if (bobinNumberValue1 && bobinNumberComparison1) {
+//       filterCriteria.bobinNumber = { ...filterCriteria.bobinNumber, [`$${bobinNumberComparison1}`]: bobinNumberValue1 };
+//     }
+//     if (bobinNumberValue2 && bobinNumberComparison2) {
+//       filterCriteria.bobinNumber = { ...filterCriteria.bobinNumber, [`$${bobinNumberComparison2}`]: bobinNumberValue2 };
+//     }
+//     if (bobinHeightValue1 && bobinHeightComparison1) {
+//       filterCriteria.bobinHeight = { ...filterCriteria.bobinHeight, [`$${bobinHeightComparison1}`]: bobinHeightValue1 };
+//     }
+//     if (bobinHeightValue2 && bobinHeightComparison2) {
+//       filterCriteria.bobinHeight = { ...filterCriteria.bobinHeight, [`$${bobinHeightComparison2}`]: bobinHeightValue2 };
+//     }
+//     if (bobinDiameterValue1 && bobinDiameterComparison1) {
+//       filterCriteria.bobinDiameter = { ...filterCriteria.bobinDiameter, [`$${bobinDiameterComparison1}`]: bobinDiameterValue1 };
+//     }
+//     if (bobinDiameterValue2 && bobinDiameterComparison2) {
+//       filterCriteria.bobinDiameter = { ...filterCriteria.bobinDiameter, [`$${bobinDiameterComparison2}`]: bobinDiameterValue2 };
+//     }
+//     if (MasuraLengthValue1 && MasuraLengthComparison1) {
+//       filterCriteria.MasuraLength = { ...filterCriteria.MasuraLength, [`$${MasuraLengthComparison1}`]: MasuraLengthValue1 };
+//     }
+//     if (MasuraLengthValue2 && MasuraLengthComparison2) {
+//       filterCriteria.MasuraLength = { ...filterCriteria.MasuraLength, [`$${MasuraLengthComparison2}`]: MasuraLengthValue2 };
+//     }
+//
+//     const rawMaterials = await RawMaterial.find(filterCriteria);
+//     res.status(200).json({ rawMaterials });
+//   } catch (error) {
+//     console.error('Error filtering raw materials:', error);
+//     res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
+//   }
+// };
+
 exports.filterRawMaterials = async (req, res) => {
   try {
     const {
+      page = 1,
+      limit = 10,
       name,
       supplier,
       type,
@@ -410,8 +506,19 @@ exports.filterRawMaterials = async (req, res) => {
       filterCriteria.MasuraLength = { ...filterCriteria.MasuraLength, [`$${MasuraLengthComparison2}`]: MasuraLengthValue2 };
     }
 
-    const rawMaterials = await RawMaterial.find(filterCriteria);
-    res.status(200).json({ rawMaterials });
+    const rawMaterials = await RawMaterial.find(filterCriteria)
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+
+    const count = await RawMaterial.countDocuments(filterCriteria);
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count
+    });
   } catch (error) {
     console.error('Error filtering raw materials:', error);
     res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
