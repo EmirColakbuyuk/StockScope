@@ -15,5 +15,7 @@ router.get('/allRawActivePaginated', auth, rawController.getAllActiveRawMaterial
 router.get('/byDate', auth, rawController.getRawMaterialsByDate);
 router.get('/raw-materials/:name', auth, rawController.getDistinctValuesByName);
 router.get('/getAllNames', auth, rawController.getAllNames);
+router.get('/getAllTypes', auth, rawController.getAllTypes);
+router.get('/filterRawMaterials', auth, rawController.filterRawMaterials);
 
 module.exports = router;
