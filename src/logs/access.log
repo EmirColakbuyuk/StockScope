@@ -796,6 +796,102 @@
 2024-08-02T09:33:16.404Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
 2024-08-02T09:34:23.612Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
 2024-08-02T09:34:23.765Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:40:05.892Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:40:05.901Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:41:08.832Z - POST /api/auth/login - User: Anonymous
+2024-08-02T10:41:11.732Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:41:11.907Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:45:11.487Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:45:11.651Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:45:13.047Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:45:13.202Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:49:24.092Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:49:24.098Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:49:38.211Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:49:38.213Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:49:48.346Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:49:48.349Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:50:12.340Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T10:50:12.513Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:02:34.920Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:02:35.113Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:03:01.383Z - POST /api/addRaw - User: Anonymous
+2024-08-02T11:03:16.903Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:03:17.502Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:03:21.228Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:03:21.905Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:03:28.654Z - PATCH /api/softDeleteRaw/66acbce54b19c355f7980aa8 - User: Anonymous
+2024-08-02T11:18:13.261Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:18:13.447Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:19:06.244Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:19:06.364Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:19:17.553Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:19:17.715Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:21:07.684Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:21:07.794Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:23:13.248Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:23:13.412Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:23:17.504Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:23:17.616Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:23:23.130Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:23:23.296Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:23:36.267Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:23:36.459Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:25:39.014Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:25:39.183Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:25:57.487Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:25:57.690Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:27:48.255Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:27:48.463Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:29:41.140Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:29:41.261Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:30:17.864Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:30:18.060Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:30:24.355Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:30:24.458Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:30:26.529Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:30:26.685Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:33:36.206Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:33:36.331Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:34:47.655Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:34:47.902Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:23.009Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:23.023Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:26.002Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:26.026Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:27.426Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:50:27.430Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:50:37.800Z - POST /api/auth/login - User: Anonymous
+2024-08-02T11:50:40.106Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:50:40.246Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:50:41.371Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:41.544Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:50:45.700Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:50:45.840Z - GET /api/users/666325bd842d7e5f17f546d9 - User: Anonymous
+2024-08-02T11:51:35.901Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:51:36.116Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T11:58:24.834Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:00:33.068Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:00:33.340Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:00:52.944Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:00:57.410Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:06.276Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:14.324Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:16.425Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-02T12:01:16.899Z - GET /api/allRawActivePaginated?page=3&limit=5 - User: Anonymous
+2024-08-02T12:01:18.365Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-02T12:01:34.643Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-02T12:01:38.473Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:42.155Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:42.648Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:42.832Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:42.986Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:01:43.149Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:15:57.543Z - GET /api/allRawActivePaginated?page=3&limit=5 - User: Anonymous
+2024-08-02T12:16:16.267Z - GET /api/allRawActivePaginated?page=1&limit=5 - User: Anonymous
+2024-08-02T12:16:18.236Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
+2024-08-02T12:16:19.359Z - GET /api/allRawActivePaginated?page=3&limit=5 - User: Anonymous
+2024-08-02T12:16:21.240Z - GET /api/allRawActivePaginated?page=2&limit=5 - User: Anonymous
 2024-08-02T11:33:04.513Z - POST /api/auth/login - User: Anonymous
 2024-08-02T11:33:08.888Z - GET /api/getAllNames - User: Anonymous
 2024-08-02T12:00:56.254Z - POST /api/addRaw - User: Anonymous
@@ -845,52 +941,3 @@
 2024-08-02T12:58:16.983Z - POST /api/addRaw - User: Anonymous
 2024-08-02T12:58:31.330Z - POST /api/addRaw - User: Anonymous
 2024-08-02T13:00:34.656Z - POST /api/addRaw - User: Anonymous
-{"timestamp":"2024-08-04T12:10:30.455Z","method":"POST","url":"/api/auth/login","user":"Anonymous","body":{"email":"brose@example.com","password":"qwerty1907"},"response":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjMyNWJkODQyZDdlNWYxN2Y1NDZkOSIsInVzZXJuYW1lIjoiQmxhY2tSb3NlIiwiaWF0IjoxNzIyNzczNDMwLCJleHAiOjE3MjI3NzcwMzB9.VpqKgIWKmOZ985boCVTjBLAFWfSxVfW5lb9X_4xNu-I\",\"user\":{\"id\":\"666325bd842d7e5f17f546d9\",\"name\":\"Emirene\",\"surname\":\"Çolakbüyük\",\"username\":\"BlackRose\",\"email\":\"brose@example.com\",\"role\":1}}"}
-{"timestamp":"2024-08-04T12:12:50.117Z","method":"POST","url":"/api/auth/login","user":"Anonymous","requestBody":{"email":"brose@example.com","password":"qwerty1907"},"responseBody":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjMyNWJkODQyZDdlNWYxN2Y1NDZkOSIsInVzZXJuYW1lIjoiQmxhY2tSb3NlIiwiaWF0IjoxNzIyNzczNTcwLCJleHAiOjE3MjI3NzcxNzB9.1U3gzRtkLJ7dFfjyj-ja4AXySPesEecOReZPbSH4Xaw\",\"user\":{\"id\":\"666325bd842d7e5f17f546d9\",\"name\":\"Emirene\",\"surname\":\"Çolakbüyük\",\"username\":\"BlackRose\",\"email\":\"brose@example.com\",\"role\":1}}"}
-{"timestamp":"2024-08-04T12:13:26.006Z","method":"POST","url":"/api/addRaw","user":"Anonymous","requestBody":{"name":"Karton","supplier":"BB22","type":"A5","grammage":5,"totalBobinweight":100,"meter":1000,"bobinNumber":2,"bobinHeight":1.2,"bobinDiameter":0.3,"MasuraLength":0.5,"notes":"çizgili"},"responseBody":"{\"message\":\"Raw material added successfully\",\"rawMaterial\":{\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"_id\":\"66af7065ab7f2f2b5c593d3e\",\"createdAt\":\"2024-08-04T12:13:25.923Z\",\"updatedAt\":\"2024-08-04T12:13:25.923Z\",\"__v\":0}}"}
-2024-08-04T12:14:21.767Z - POST /api/addRaw - User: Anonymous
-2024-08-04T12:14:44.882Z - POST /api/addRaw - User: Anonymous
-2024-08-04T12:15:00.558Z - POST /api/auth/login - User: Anonymous
-2024-08-04T12:15:41.084Z - POST /api/auth/login - User: Anonymous
-2024-08-04T12:15:49.785Z - POST /api/addRaw - User: Anonymous
-2024-08-04T12:26:26.164Z - POST /api/addRaw - User: Anonymous
-{
-  "requestBody": {
-    "name": "Karton",
-    "supplier": "BB22",
-    "type": "A5",
-    "grammage": 5,
-    "totalBobinweight": 100,
-    "meter": 1000,
-    "bobinNumber": 2,
-    "bobinHeight": 1.2,
-    "bobinDiameter": 0.3,
-    "MasuraLength": 0.5,
-    "notes": "çizgili"
-  },
-  "responseBody": "{\"message\":\"Raw material added successfully\",\"rawMaterial\":{\"status\":\"active\",\"name\":\"Karton\",\"supplier\":\"BB22\",\"type\":\"A5\",\"grammage\":5,\"totalBobinweight\":100,\"meter\":1000,\"bobinNumber\":2,\"bobinHeight\":1.2,\"bobinDiameter\":0.3,\"MasuraLength\":0.5,\"notes\":\"çizgili\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"_id\":\"66af7372bd7cf8b6eaedebe7\",\"createdAt\":\"2024-08-04T12:26:26.095Z\",\"updatedAt\":\"2024-08-04T12:26:26.095Z\",\"__v\":0}}"
-}
-2024-08-04T12:27:20.409Z - POST /api/addstocks - User: Anonymous
-{
-  "requestBody": {
-    "uniqueId": "TX11",
-    "size": "3x4",
-    "koliCount": 5,
-    "packageCount": 10,
-    "packageContain": 10,
-    "notes": "abc abc"
-  },
-  "responseBody": "{\"message\":\"Stock added successfully\",\"stock\":{\"uniqueId\":\"TX11\",\"size\":\"3x4\",\"koliCount\":5,\"packageCount\":10,\"packageContain\":10,\"date\":\"2024-08-04T12:27:20.218Z\",\"notes\":\"abc abc\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"_id\":\"66af73a8bd7cf8b6eaedebea\",\"createdAt\":\"2024-08-04T12:27:20.225Z\",\"updatedAt\":\"2024-08-04T12:27:20.225Z\",\"__v\":0},\"product\":{\"_id\":\"66a64818805d981e29852975\",\"uniqueId\":\"TX11\",\"size\":\"3x4\",\"total\":6350,\"createdAt\":\"2024-07-28T13:31:04.516Z\",\"updatedAt\":\"2024-08-04T12:27:20.343Z\",\"__v\":0}}"
-}
-2024-08-04T12:27:45.010Z - PUT /api/updateStock/66af73a8bd7cf8b6eaedebea - User: Anonymous
-{
-  "requestBody": {
-    "uniqueId": "TX33",
-    "size": "3x4",
-    "koliCount": 10,
-    "packageCount": 5,
-    "packageContain": 5,
-    "notes": "bcd bcd"
-  },
-  "responseBody": "{\"message\":\"Stock updated successfully\",\"stock\":{\"_id\":\"66af73a8bd7cf8b6eaedebea\",\"uniqueId\":\"TX33\",\"size\":\"3x4\",\"koliCount\":10,\"packageCount\":5,\"packageContain\":5,\"date\":\"2024-08-04T12:27:44.830Z\",\"notes\":\"bcd bcd\",\"createdBy\":\"666325bd842d7e5f17f546d9\",\"createdAt\":\"2024-08-04T12:27:20.225Z\",\"updatedAt\":\"2024-08-04T12:27:44.887Z\",\"__v\":0}}"
-}
