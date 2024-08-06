@@ -42,7 +42,7 @@ exports.addRawMaterial = async (req, res) => {
 
     // Save to database
     const savedRawMaterial = await newRawMaterial.save();
-    res.status(201).json({ message: 'Raw material added successfully', rawMaterial: savedRawMaterial });
+    res.status(201).json({  rawMaterial: savedRawMaterial });
   } catch (error) {
     console.error('Error adding raw material:', error);
     res.status(500).json({ message: 'Error adding raw material', error: error.message });
