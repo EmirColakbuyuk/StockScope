@@ -130,7 +130,7 @@ exports.getAllPurchaseHistory = async (req, res) => {
 // Get all customers
 exports.getCustomers = async (req, res) => {
   try {
-    const customers = await Customer.find().populate('purchases.stockId');
+    const customers = await Customer.find();
     res.status(200).json(customers);
   } catch (error) {
     console.error('Error getting customers:', error);

@@ -18,3 +18,15 @@
 {"timestamp":"2024-08-06T17:52:22.592Z","method":"GET","url":"/api/filter-logs?userId=666325bd842d7e5f17f546d9","user":"Anonymous","objectId":null,"requestBody":{}}
 {"timestamp":"2024-08-06T17:54:15.368Z","method":"GET","url":"/api/filter-logs?userId=666325bd842d7e5f17f546d9","user":"Anonymous","objectId":null,"requestBody":{}}
 {"timestamp":"2024-08-06T17:54:15.371Z","method":"GET","url":"/api/filter-logs?userId=666325bd842d7e5f17f546d9","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-06T21:53:58.274Z","method":"GET","url":"/api/filter-logs?objectId=66b25cd6ea8d94645507e05d","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-06T21:54:01.442Z","method":"POST","url":"/api/auth/login","user":"Anonymous","objectId":"login","requestBody":{"email":"brose@example.com","password":"qwerty1907"}}
+{"timestamp":"2024-08-06T21:54:03.721Z","method":"GET","url":"/api/filter-logs?objectId=66b25cd6ea8d94645507e05d","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-06T21:54:03.722Z","method":"GET","url":"/api/filter-logs?objectId=66b25cd6ea8d94645507e05d","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-06T21:56:32.243Z","method":"POST","url":"/api/addRaw","user":"Anonymous","objectId":"66b29c1027b112f069b3921b","requestBody":{"name":"Karton","supplier":"BB22","type":"A5","grammage":5,"totalBobinweight":100,"meter":1000,"bobinNumber":2,"bobinHeight":1.2,"bobinDiameter":0.3,"MasuraLength":0.5,"notes":"çizgili"}}
+{"timestamp":"2024-08-06T21:56:34.044Z","method":"POST","url":"/api/addRaw","user":"Anonymous","objectId":"66b29c1127b112f069b3921f","requestBody":{"name":"Karton","supplier":"BB22","type":"A5","grammage":5,"totalBobinweight":100,"meter":1000,"bobinNumber":2,"bobinHeight":1.2,"bobinDiameter":0.3,"MasuraLength":0.5,"notes":"çizgili"}}
+{"timestamp":"2024-08-06T21:56:35.034Z","method":"POST","url":"/api/addRaw","user":"Anonymous","objectId":"66b29c1227b112f069b39223","requestBody":{"name":"Karton","supplier":"BB22","type":"A5","grammage":5,"totalBobinweight":100,"meter":1000,"bobinNumber":2,"bobinHeight":1.2,"bobinDiameter":0.3,"MasuraLength":0.5,"notes":"çizgili"}}
+{"timestamp":"2024-08-06T22:01:10.940Z","method":"GET","url":"/api/allCustomers","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-06T22:03:07.010Z","method":"GET","url":"/api/allCustomers","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-06T22:06:01.219Z","method":"GET","url":"/api/allCustomers","user":"Anonymous","objectId":null,"requestBody":{}}
+{"timestamp":"2024-08-10T18:37:29.376Z","method":"POST","url":"/api/auth/login","user":"Anonymous","objectId":"login","requestBody":{"email":"brose@example.com","password":"qwerty1907"}}
+{"timestamp":"2024-08-10T18:44:43.320Z","method":"POST","url":"/api/addstocks","user":"Anonymous","objectId":null,"requestBody":{"uniqueId":"TX11","size":"3x4","koliCount":5,"packageCount":10,"packageContain":10,"notes":"abc abc"}}
