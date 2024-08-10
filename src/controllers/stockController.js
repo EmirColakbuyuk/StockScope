@@ -199,7 +199,19 @@ exports.getStocksAddedInPeriod = (req, res) => {
       return log.method === 'POST' && log.url.includes('/api/addstocks') && logDate >= startJsDate && logDate <= endJsDate;
     });
 
-    res.status(200).json(filteredLogs);
+    // Calculate the total amount of stocks added
+    const totalAmount = filteredLogs.reduce((sum, log) => {
+      if (log.requestBody && log.requestBody.koliCount && log.requestBody.packageCount && log.requestBody.packageContain) {
+        const koliCount = log.requestBody.koliCount;
+        const packageCount = log.requestBody.packageCount;
+        const packageContain = log.requestBody.packageContain;
+        return sum + (koliCount * packageCount * packageContain);
+      }
+      return sum;
+    }, 0);
+
+    // Return filtered logs and total amount
+    res.status(200).json({ logs: filteredLogs, totalAmount });
   } catch (error) {
     console.error('Error getting stocks added in period:', error);
     res.status(500).json({ message: 'Error getting stocks added in period', error: error.message });
