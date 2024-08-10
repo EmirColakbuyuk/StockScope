@@ -45,7 +45,7 @@ const rawSchema = new mongoose.Schema({
     },
     MasuraLength: {
         type: Number,
-        required: true
+        required: false
     },
     notes: {
         type: String,

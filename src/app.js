@@ -10,7 +10,7 @@ const supplierRoutes = require('./routes/supplierRoute');
 const rawRoutes = require('./routes/rawRoute');
 const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = 3008;
 
 // Load environment variables from .env file
 require('dotenv').config();

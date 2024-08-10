@@ -195,19 +195,46 @@ exports.getAllPassiveRawMaterials = async (req, res) => {
     res.status(500).json({ message: 'Error getting passive raw materials', error: error.message });
   }
 };
+//
+// // Get all raw materials with pagination
+// exports.getAllRawMaterialPagination = async (req, res) => {
+//   try {
+//     const { page = 1, limit = 10 } = req.query;
+//     const rawMaterials = await RawMaterial.find()
+//       .limit(limit * 1)
+//       .skip((page - 1) * limit)
+//       .populate({
+//         path: 'supplier',
+//         select: 'code'
+//       })
+//       .exec();
+//
+//     const count = await RawMaterial.countDocuments();
+//
+//     res.status(200).json({
+//       rawMaterials,
+//       totalPages: Math.ceil(count / limit),
+//       currentPage: Number(page),
+//       totalItems: count
+//     });
+//   } catch (error) {
+//     console.error('Error getting raw materials:', error);
+//     res.status(500).json({ message: 'Error getting raw materials', error: error.message });
+//   }
+// };
 
 // Get all raw materials with pagination
 exports.getAllRawMaterialPagination = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 15 } = req.query; // Değeri 15 olarak ayarladık
     const rawMaterials = await RawMaterial.find()
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .populate({
-        path: 'supplier',
-        select: 'code'
-      })
-      .exec();
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .populate({
+          path: 'supplier',
+          select: 'code'
+        })
+        .exec();
 
     const count = await RawMaterial.countDocuments();
 
@@ -222,6 +249,7 @@ exports.getAllRawMaterialPagination = async (req, res) => {
     res.status(500).json({ message: 'Error getting raw materials', error: error.message });
   }
 };
+
 
 // Get raw materials by date
 exports.getRawMaterialsByDate = async (req, res) => {
@@ -417,7 +445,6 @@ exports.getAllTypes = async (req, res) => {
 //     res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
 //   }
 // };
-
 exports.filterRawMaterials = async (req, res) => {
   try {
     const {
@@ -456,7 +483,7 @@ exports.filterRawMaterials = async (req, res) => {
       MasuraLengthValue2,
     } = req.query;
 
-    let filterCriteria = {};
+    let filterCriteria = { status: 'active' }; // Yalnızca 'active' statüsündeki materyalleri filtrele
 
     if (name) filterCriteria.name = name;
     if (supplier) filterCriteria.supplier = supplier;
