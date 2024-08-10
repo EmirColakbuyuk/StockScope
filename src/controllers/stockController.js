@@ -1,151 +1,146 @@
 const Stock = require('../models/stock');
-const Product = require('../models/product');
 const Customer = require('../models/customer');
 const moment = require('moment-timezone');
+const { filterLogs } = require('../middleware/logger.js');
 
-// Add a new stock
+
+// Add or update stock
 exports.addStock = async (req, res) => {
   try {
-    const {
-      uniqueId,
-      size,
-      koliCount,
-      packageCount,
-      packageContain,
-      notes
-    } = req.body;
+    const { uniqueId, size, koliCount, packageCount, packageContain, notes } = req.body;
 
     const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
-    const newStock = new Stock({
-      uniqueId,
-      size,
-      koliCount,
-      packageCount,
-      packageContain,
-      notes,
-      date: dateInTurkey,
-      createdBy: req.user._id
-    });
+    const total = koliCount * packageCount * packageContain;
 
-    const savedStock = await newStock.save();
+    // Find the existing stock entry by uniqueId and size
+    let stock = await Stock.findOne({ uniqueId, size });
 
-    // Calculate the total items for this stock entry
-    const totalItems = koliCount * packageCount * packageContain;
-
-    // Update or create the product entry
-    let product = await Product.findOne({ size });
-    if (product) {
-      product.total += totalItems;
+    if (stock) {
+      // Update existing stock by adding the new quantities and recalculating the total
+      stock.total += total;
+      stock.notes = notes; // Update notes if needed
+      stock.date = dateInTurkey;
     } else {
-      product = new Product({
+      // Create a new stock entry if it doesn't exist
+      stock = new Stock({
         uniqueId,
         size,
-        total: totalItems
+        total,
+        notes,
+        date: dateInTurkey,
+        createdBy: req.user._id
       });
     }
 
-    await product.save();
+    const savedStock = await stock.save();
 
-    res.status(201).json({ message: 'Stock added successfully', stock: savedStock, product });
+    res.status(201).json({ message: 'Stock added or updated successfully', stock: savedStock });
   } catch (error) {
-    console.error('Error adding stock:', error);
-    res.status(500).json({ message: 'Error adding stock', error: error.message });
+    console.error('Error adding or updating stock:', error);
+    res.status(500).json({ message: 'Error adding or updating stock', error: error.message });
   }
 };
 
-// Delete a stock by ID
 exports.deleteStock = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedStock = await Stock.findByIdAndDelete(id);
-    if (!deletedStock) {
+    const stock = await
+    Stock.findByIdAndDelete(id);
+    if (!stock) {
       return res.status(404).json({ message: 'Stock not found' });
     }
-
-    // Calculate the total items for this stock entry
-    const totalItems = deletedStock.koliCount * deletedStock.packageCount * deletedStock.packageContain;
-
-    // Update the product entry
-    let product = await Product.findOne({ size: deletedStock.uniqueId });
-    if (product) {
-      product.total -= totalItems;
-      if (product.total < 0) {
-        product.total = 0;
-      }
-      await product.save();
-    }
-
-    res.status(200).json({ message: 'Stock deleted successfully' });
-  } catch (error) {
+    res.status(200).json({ message: 'Stock deleted successfully', stock });
+  }
+  catch (error) {
     console.error('Error deleting stock:', error);
     res.status(500).json({ message: 'Error deleting stock', error: error.message });
   }
 };
 
-// Update a stock by ID
+
 exports.updateStock = async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      uniqueId ,
-      size,
-      koliCount,
-      packageCount,
-      packageContain,
-      date,
-      notes
-    } = req.body;
+    const { uniqueId, size, total,  notes } = req.body;
 
-    const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
-    const existingStock = await Stock.findById(id);
-
-    if (!existingStock) {
+    const stock = await Stock.findById(id);
+    if (!stock) {
       return res.status(404).json({ message: 'Stock not found' });
     }
 
-    // Calculate the total items for the old stock entry
-    const oldTotalItems = existingStock.koliCount * existingStock.packageCount * existingStock.packageContain;
+    stock.uniqueId = uniqueId;
+    stock.size = size;
+    stock.total = total;
+    stock.notes = notes;
 
-    // Calculate the total items for the new stock entry
-    const newTotalItems = koliCount * packageCount * packageContain;
-
-    const updatedStock = await Stock.findByIdAndUpdate(
-     id,
-      {
-        uniqueId,
-        size,
-        koliCount,
-        packageCount,
-        packageContain,
-        notes,
-        date: dateInTurkey,
-        createdBy: existingStock.createdBy
-      },
-      { new: true }
-    );
-
-    if (!updatedStock) {
-      return res.status(404).json({ message: 'Stock not found' });
-    }
-
-    // Update the product entry
-    let product = await Product.findOne({ uniqueId });
-    if (product) {
-      product.total = product.total - oldTotalItems + newTotalItems;
-      await product.save();
-    }
+    const updatedStock = await stock.save();
 
     res.status(200).json({ message: 'Stock updated successfully', stock: updatedStock });
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error updating stock:', error);
-    res.status500.json({ message: 'Error updating stock', error: error.message });
+    res.status(500).json({ message: 'Error updating stock', error: error.message });
   }
 };
+
+// Sell stock
+exports.sellStock = async (req, res) => {
+  try {
+    const { uniqueId, size, koliCount, packageCount, packageContain, customerId } = req.body;
+
+    // Find the existing stock entry by uniqueId and size
+    let stock = await Stock.findOne({ uniqueId, size });
+
+    if (!stock) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
+
+    // Calculate the total items requested to be sold
+    const totalKoliRequested = koliCount;
+    const totalPackageRequested = packageCount;
+    const totalContainRequested = packageContain;
+    const totalRequested = totalKoliRequested * totalPackageRequested * totalContainRequested;
+
+    // Check if there is enough stock to sell
+    if (stock.total < totalRequested) {
+      return res.status(400).json({ message: 'Not enough stock to sell' });
+    }
+
+    // Decrease the stock quantities
+    stock.total -= totalRequested;
+
+    const updatedStock = await stock.save();
+
+    // Find the customer by their ID
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    // Add the sold stock details to the customer's purchases
+    customer.purchases.push({
+      uniqueId,
+      size,
+      koliCount: totalKoliRequested,
+      packageCount: totalPackageRequested,
+      packageContain: totalContainRequested,
+      date: moment.tz("Europe/Istanbul").toDate()
+    });
+
+    await customer.save();
+
+    res.status(200).json({ message: 'Stock sold successfully', stock: updatedStock, customer });
+  } catch (error) {
+    console.error('Error selling stock:', error);
+    res.status(500).json({ message: 'Error selling stock', error: error.message });
+  }
+};
+
 
 // Get all stocks
 exports.getAllStock = async (req, res) => {
   try {
-    const stocks = await Stock.find();
+    const stocks = await Stock.find().sort({ date: -1 }); // Sort by date, newest first
     res.status(200).json(stocks);
   } catch (error) {
     console.error('Error getting stocks:', error);
@@ -157,8 +152,20 @@ exports.getAllStock = async (req, res) => {
 exports.byDateStock = async (req, res) => {
   try {
     const { date } = req.query;
-    const dateInTurkey = moment.tz(date, "Europe/Istanbul").startOf('day').toDate();
-    const stocks = await Stock.find({ date: dateInTurkey });
+    if (!date) {
+      return res.status(400).json({ message: 'Date query parameter is required' });
+    }
+    
+    const startOfDay = moment.tz(date, "Europe/Istanbul").startOf('day').toDate();
+    const endOfDay = moment.tz(date, "Europe/Istanbul").endOf('day').toDate();
+    
+    const stocks = await Stock.find({
+      date: {
+        $gte: startOfDay,
+        $lte: endOfDay
+      }
+    }).sort({ date: -1 }); // Sort by date, newest first
+    
     res.status(200).json(stocks);
   } catch (error) {
     console.error('Error getting stocks by date:', error);
@@ -167,51 +174,34 @@ exports.byDateStock = async (req, res) => {
 };
 
 
-// Sell a  product
-exports.sellProduct = async (req, res) => {
+// Get the number of stocks added within a certain period
+exports.getStocksAddedInPeriod = (req, res) => {
   try {
-    const { uniqueId, customerId, koliCount, packageCount, packageContain } = req.body;
+    const { startDate, endDate } = req.query;
 
-    // Find the product by its ID
-    const product = await Product.findOne({uniqueId});
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+    // Convert dates to moment objects
+    const start = moment(startDate, 'YYYY-MM-DD').startOf('day');
+    const end = moment(endDate, 'YYYY-MM-DD').endOf('day');
+
+    // Validate dates using moment
+    if (!start.isValid() || !end.isValid()) {
+      return res.status(400).json({ message: 'Invalid date format' });
     }
 
-    // Find the customer by their ID
-    const customer = await Customer.findById(customerId);
-    if (!customer) {
-      return res.status(404).json({ message: 'Customer not found' });
-    }
+    // Convert to JavaScript Date objects for comparison
+    const startJsDate = start.toDate();
+    const endJsDate = end.toDate();
 
-    // Calculate the total items to be sold
-    const totalItems = koliCount * packageCount * packageContain;
-
-    // Check if there is enough stock to sell
-    if (product.total < totalItems) {
-      return res.status(400).json({ message: 'Not enough stock to sell' });
-    }
-
-    // Add the sold stock details to the customer's purchases
-    customer.purchases.push({
-      productId: product._id,
-      uniqueId: product.uniqueId,
-      size: product.size,
-      koliCount: koliCount,
-      packageCount: packageCount,
-      packageContain: packageContain,
-      date: moment.tz("Europe/Istanbul").toDate()
+    // Filter logs for stocks added in the specified period
+    const logs = filterLogs(null, null); // Modify if you need to filter by other criteria
+    const filteredLogs = logs.filter(log => {
+      const logDate = new Date(log.timestamp);
+      return log.method === 'POST' && log.url.includes('/api/addstocks') && logDate >= startJsDate && logDate <= endJsDate;
     });
 
-    await customer.save();
-
-    // Update the product entry
-    product.total -= totalItems;
-    await product.save();
-
-    res.status(200).json({ message: 'Stock sold successfully', customer, product });
+    res.status(200).json(filteredLogs);
   } catch (error) {
-    console.error('Error selling stock:', error);
-    res.status(500).json({ message: 'Error selling stock', error: error.message });
+    console.error('Error getting stocks added in period:', error);
+    res.status(500).json({ message: 'Error getting stocks added in period', error: error.message });
   }
 };

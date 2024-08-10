@@ -16,8 +16,8 @@ const logger = (req, res, next) => {
 
   // Wrap the send function to log the response
   res.send = function (body) {
-    // Extract the objectId from URL or response body if available
-    const objectId = extractObjectId(req, body);
+    // Extract the objectId and objectType from URL or response body if available
+    const { objectId, objectType } = extractObjectId(req, body);
 
     // Log details
     const logEntry = {
@@ -26,7 +26,9 @@ const logger = (req, res, next) => {
       url: req.originalUrl,
       user: username,
       objectId: objectId || null,
+      objectType: objectType || null,
       requestBody: req.body,
+      responseBody: body
     };
 
     // Write log entry as a single JSON string
@@ -38,25 +40,38 @@ const logger = (req, res, next) => {
   next();
 };
 
-// Function to extract the objectId from request URL or response body
+// Function to extract the objectId and objectType from request URL or response body
 const extractObjectId = (req, body) => {
-  // Example: Extract objectId from URL if it follows a specific pattern
-  const urlMatch = req.originalUrl.match(/\/api\/\w+\/([^\/]+)/);
-  if (urlMatch) return urlMatch[1];
+  let objectId = null;
+  let objectType = null;
 
-  // Example: Extract objectId from response body if it contains it
-  try {
-    const responseJson = JSON.parse(body);
-    if (responseJson.rawMaterial && responseJson.rawMaterial._id) return responseJson.rawMaterial._id;
-  } catch (e) {
-    // Handle JSON parse error
+  // Example: Extract objectId and objectType from URL
+  const urlMatch = req.originalUrl.match(/\/api\/(\w+)\/([^\/]+)/);
+  if (urlMatch) {
+    objectType = urlMatch[1]; // The first capture group is the type (e.g., "rawMaterial", "stock")
+    objectId = urlMatch[2];   // The second capture group is the objectId
+    return { objectId, objectType };
   }
 
-  return null;
+  // Example: Extract objectId and objectType from response body
+  try {
+    const responseJson = JSON.parse(body);
+    if (responseJson.rawMaterial && responseJson.rawMaterial._id) {
+      objectId = responseJson.rawMaterial._id;
+      objectType = 'rawMaterial';
+    } else if (responseJson.stock && responseJson.stock._id) {
+      objectId = responseJson.stock._id;
+      objectType = 'stock';
+    }
+  } catch (e) {
+    console.error('Error parsing response JSON:', e);
+  }
+
+  return { objectId, objectType };
 };
 
-// Function to filter logs based on objectId or username
-const filterLogs = (objectId, username) => {
+// Function to filter logs based on objectId, username, or objectType
+const filterLogs = (objectId, username, objectType) => {
   const logs = fs.readFileSync(logFilePath, 'utf-8').split('\n').filter(Boolean);
   const filteredLogs = logs
     .map(log => {
@@ -67,9 +82,13 @@ const filterLogs = (objectId, username) => {
         return null;
       }
     })
-    .filter(log => log && (objectId ? log.objectId === objectId : true) && (username ? log.user === username : true));
+    .filter(log => log &&
+      (objectId ? log.objectId === objectId : true) &&
+      (username ? log.user === username : true) &&
+      (objectType ? log.objectType === objectType : true)
+    );
   
   return filteredLogs;
 };
-module.exports = {logger,filterLogs};
 
+module.exports = { logger, filterLogs };

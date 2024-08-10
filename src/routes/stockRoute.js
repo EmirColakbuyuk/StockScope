@@ -9,6 +9,7 @@ router.delete('/deleteStock/:id',auth , stockController.deleteStock); // Delete 
 router.put('/updateStock/:id',auth , stockController.updateStock); // Update a stock by ID
 router.get('/getallStocks',auth , stockController.getAllStock); // Get all stocks
 router.get('/stocks/by-date',auth , stockController.byDateStock); // Get stocks by date
-router.post('/sellStock', auth, stockController.sellProduct); // Sell stock
+router.post('/sellStock', auth, stockController.sellStock); // Sell stock
+router.get('/stocks-added-in-period', auth,  stockController.getStocksAddedInPeriod);
 
 module.exports = router;

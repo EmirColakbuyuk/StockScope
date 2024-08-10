@@ -19,7 +19,7 @@ exports.createCustomer = async (req, res) => {
 exports.getCustomerById = async (req, res) => {
   try {
     const { id } = req.params;
-    const customer = await Customer.findById(id).populate('purchases.stockId');
+    const customer = await Customer.findById(id);
     if (!customer) {
       return res.status(404).json({ message: 'Customer not found' });
     }
@@ -119,7 +119,7 @@ exports.sellStock = async (req, res) => {
 // Get all purchase history
 exports.getAllPurchaseHistory = async (req, res) => {
   try {
-    const customers = await Customer.find().populate('purchases.stockId');
+    const customers = await Customer.find().populate('purchases');
     res.status(200).json(customers);
   } catch (error) {
     console.error('Error getting purchase history:', error);

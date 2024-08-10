@@ -10,15 +10,7 @@ const stockSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    koliCount: {
-        type: Number,
-        required: true
-    },
-    packageCount: {
-        type: Number,
-        required: true
-    },
-    packageContain: {
+    total : {
         type: Number,
         required: true
     },
