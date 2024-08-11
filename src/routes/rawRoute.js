@@ -12,6 +12,7 @@ router.get('/allRawActive', auth, rawController.getAllActiveRawMaterials);
 router.get('/allRawPassive', auth, rawController.getAllPassiveRawMaterials);
 router.get('/allRawPaginated', auth, rawController.getAllRawMaterialPagination);
 router.get('/allRawActivePaginated', auth, rawController.getAllActiveRawMaterialPagination);
+router.get('/allRawPassivePaginated', auth, rawController.getAllPassiveRawMaterialPagination);
 router.get('/byDate', auth, rawController.getRawMaterialsByDate);
 router.get('/raw-materials/:name', auth, rawController.getDistinctValuesByName);
 router.get('/getAllNames', auth, rawController.getAllNames);
