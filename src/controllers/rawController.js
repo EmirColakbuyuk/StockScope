@@ -55,6 +55,7 @@ exports.updateRawMaterial = async (req, res) => {
     const { id } = req.params;
     const {
       name,
+      status,
       supplier: supplierCode, // Supplier code
       type,
       grammage,
@@ -79,6 +80,7 @@ exports.updateRawMaterial = async (req, res) => {
       id,
       {
         name,
+        status,
         supplier: supplierCode, // Update supplier code
         type,
         grammage,

@@ -10,7 +10,7 @@ const supplierRoutes = require('./routes/supplierRoute');
 const rawRoutes = require('./routes/rawRoute');
 const cors = require('cors');
 const app = express();
-const port = 3008;
+const port = 3000;
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -20,7 +20,7 @@ app.use(express.json());
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: 'http://localhost:3008'
 }));
 
 // Logger middleware
