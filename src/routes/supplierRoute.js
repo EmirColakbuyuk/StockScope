@@ -8,6 +8,8 @@ router.post('/addSupplier', auth, supplierController.addSupplier); // Add a new 
 router.put('/updateSupplier/:id', auth, supplierController.updateSupplier); // Update a supplier by ID
 router.delete('/deleteSupplier/:id', auth, supplierController.deleteSupplier); // Delete a supplier by ID
 router.get('/getAllSuppliers', auth, supplierController.getAllSuppliers); // Get all suppliers
-router.get('/getSupplier/:id', auth, supplierController.getSupplierById); // Get a supplier by 
+router.get('/getAllSuppliersPaginated', auth, supplierController.getAllSuppliersPaginated);
+router.get('/getSupplier/:id', auth, supplierController.getSupplierById); // Get a supplier by
+
 
 module.exports = router;

@@ -39,9 +39,13 @@ const logger = (req, res, next) => {
       responseBody: body
     };
 
-    // If it's a PATCH method and the status is changed to "passive", add a custom message
-    if (req.method === 'PATCH' && responseJson && responseJson.rawMaterial && responseJson.rawMaterial.status === 'passive') {
-      logEntry.details = 'Stoktan çıkışı yapılmıştır';
+    // If it's a PATCH method and the status is changed, add a custom message
+    if (req.method === 'PATCH' && responseJson && responseJson.rawMaterial) {
+      if (responseJson.rawMaterial.status === 'active') {
+        logEntry.details = 'Stoğa girişi yapılmıştır';
+      } else if (responseJson.rawMaterial.status === 'passive') {
+        logEntry.details = 'Stoktan çıkışı yapılmıştır';
+      }
     }
 
     // Write log entry as a single JSON string

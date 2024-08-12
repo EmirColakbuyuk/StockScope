@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 router.post('/addRaw', auth, rawController.addRawMaterial);
 router.delete('/deleteRaw/:id', auth,  rawController.deleteRawMaterial);
 router.patch('/softDeleteRaw/:id', auth,  rawController.softDeleteRawMaterial);
+router.patch('/softActiveRaw/:id', auth,  rawController.softActiveRawMaterial);
 router.put('/update/:id', auth,  rawController.updateRawMaterial);
 router.get('/allRaw', auth, rawController.getAllRawMaterials);
 router.get('/allRawActive', auth, rawController.getAllActiveRawMaterials);

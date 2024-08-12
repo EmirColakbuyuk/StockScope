@@ -65,16 +65,42 @@ exports.deleteSupplier = async (req, res) => {
   }
 };
 
-// Get all suppliers
+// Get all suppliers for infinite scroll (with alphabetic sorting)
 exports.getAllSuppliers = async (req, res) => {
   try {
-    const suppliers = await Supplier.find();
+    const suppliers = await Supplier.find().sort({ name: 1 }).exec();
     res.status(200).json(suppliers);
   } catch (error) {
     console.error('Error getting suppliers:', error);
     res.status(500).json({ message: 'Error getting suppliers', error: error.message });
   }
 };
+
+// Get paginated suppliers (with alphabetic sorting)
+exports.getAllSuppliersPaginated = async (req, res) => {
+  try {
+    const { page = 1, limit = 5 } = req.query;
+    const suppliers = await Supplier.find()
+        .sort({ name: 1 }) // Alphabetical sorting by name
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+
+    const count = await Supplier.countDocuments();
+
+    res.status(200).json({
+      suppliers,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count
+    });
+  } catch (error) {
+    console.error('Error getting suppliers:', error);
+    res.status(500).json({ message: 'Error getting suppliers', error: error.message });
+  }
+};
+
+
 
 // Get a supplier by ID
 exports.getSupplierById = async (req, res) => {

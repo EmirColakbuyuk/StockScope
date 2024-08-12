@@ -149,6 +149,29 @@ exports.softDeleteRawMaterial = async (req, res) => {
   }
 };
 
+
+// Soft active a raw material by ID (change status to 'passive')
+exports.softActiveRawMaterial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
+        id,
+        { status: 'active' },
+        { new: true }
+    );
+
+    if (!updatedRawMaterial) {
+      return res.status(404).json({ message: 'Raw material not found' });
+    }
+
+    res.status(200).json({ message: 'Raw material status updated to active', rawMaterial: updatedRawMaterial });
+  } catch (error) {
+    console.error('Error updating raw material status:', error);
+    res.status(500).json({ message: 'Error updating raw material status', error: error.message });
+  }
+};
+
+
 // GET ALL //
 
 
