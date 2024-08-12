@@ -20,7 +20,7 @@ app.use(express.json());
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'http://localhost:3008'
+  origin: 'http://localhost:3001'
 }));
 
 // Logger middleware

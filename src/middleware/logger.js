@@ -19,6 +19,14 @@ const logger = (req, res, next) => {
     // Extract the objectId and objectType from URL or response body if available
     const { objectId, objectType } = extractObjectId(req, body);
 
+    // Parse response body to check for the status
+    let responseJson;
+    try {
+      responseJson = JSON.parse(body);
+    } catch (e) {
+      responseJson = null;
+    }
+
     // Log details
     const logEntry = {
       timestamp: new Date().toISOString(),
@@ -30,6 +38,11 @@ const logger = (req, res, next) => {
       requestBody: req.body,
       responseBody: body
     };
+
+    // If it's a PATCH method and the status is changed to "passive", add a custom message
+    if (req.method === 'PATCH' && responseJson && responseJson.rawMaterial && responseJson.rawMaterial.status === 'passive') {
+      logEntry.details = 'Stoktan çıkışı yapılmıştır';
+    }
 
     // Write log entry as a single JSON string
     fs.appendFileSync(logFilePath, JSON.stringify(logEntry) + '\n');
