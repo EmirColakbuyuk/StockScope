@@ -79,6 +79,12 @@ const extractObjectId = (req, body) => {
     } else if (responseJson.stock && responseJson.stock._id) {
       objectId = responseJson.stock._id;
       objectType = 'stock';
+    } else if (responseJson.customer && responseJson.customer._id) {
+      objectId = responseJson.customer._id;
+      objectType = 'customer';
+    } else if (responseJson.supplier && responseJson.supplier._id) {
+      objectId = responseJson.supplier._id;
+      objectType = 'supplier';
     }
   } catch (e) {
     console.error('Error parsing response JSON:', e);
