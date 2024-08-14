@@ -127,6 +127,23 @@ exports.getAllPurchaseHistory = async (req, res) => {
   }
 };
 
+
+exports.getPurchasesByCustomer = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const customer = await
+    Customer.findById(id).populate('purchases.uniqueId');
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+    res.status(200).json(customer.purchases);
+  }
+  catch (error) {
+    console.error('Error getting purchase history:', error);
+    res.status(500).json({ message: 'Error getting purchase history', error: error.message });
+  }
+};
+
 // Get all customers
 exports.getCustomers = async (req, res) => {
   try {

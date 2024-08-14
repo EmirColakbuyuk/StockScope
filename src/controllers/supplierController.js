@@ -1,4 +1,5 @@
 const Supplier = require('../models/supplier');
+const RawMaterial = require('../models/raw');
 const moment = require('moment-timezone');
 
 // Add a new supplier
@@ -117,5 +118,21 @@ exports.getSupplierById = async (req, res) => {
   } catch (error) {
     console.error('Error getting supplier:', error);
     res.status(500).json({ message: 'Error getting supplier', error: error.message });
+  }
+};
+
+
+
+exports.getPurchasesBySupplier = async (req, res) => {
+  try {
+    const { supplier } = req.body;
+    const rawMaterials = await RawMaterial.find({ supplier: supplier });
+    if (!rawMaterials.length) {
+      return res.status(404).json({ message: 'No raw materials found for this supplier.' });
+    }
+    res.status(200).json(rawMaterials);
+  } catch (error) {
+    console.error('Error fetching raw materials by supplier:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
