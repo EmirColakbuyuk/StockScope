@@ -5,14 +5,15 @@ const moment = require('moment-timezone');
 // Add a new supplier
 exports.addSupplier = async (req, res) => {
   try {
-    const { name, code, address, notes } = req.body;
+    const { name, code, address, notes, phone } = req.body; // Include phone
 
     // Create new supplier
     const newSupplier = new Supplier({
       name,
       code,
       address,
-      notes
+      notes,
+      phone // Add phone
     });
 
     // Save to database
@@ -28,13 +29,13 @@ exports.addSupplier = async (req, res) => {
 exports.updateSupplier = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, code, address, notes } = req.body;
+    const { name, code, address, notes, phone } = req.body; // Include phone
 
     // Find supplier by ID and update
     const updatedSupplier = await Supplier.findByIdAndUpdate(
-      id,
-      { name, code, address, notes },
-      { new: true }
+        id,
+        { name, code, address, notes, phone }, // Include phone
+        { new: true }
     );
 
     if (!updatedSupplier) {
@@ -100,8 +101,6 @@ exports.getAllSuppliersPaginated = async (req, res) => {
     res.status(500).json({ message: 'Error getting suppliers', error: error.message });
   }
 };
-
-
 
 // Get a supplier by ID
 exports.getSupplierById = async (req, res) => {
