@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const supplierController = require('../controllers/supplierController');
 const auth = require('../middleware/auth');
+const rawController = require("../controllers/rawController");
 
 // Supplier routes
 router.post('/addSupplier', auth, supplierController.addSupplier); // Add a new supplier
@@ -11,6 +12,7 @@ router.get('/getAllSuppliers', auth, supplierController.getAllSuppliers); // Get
 router.get('/getAllSuppliersPaginated', auth, supplierController.getAllSuppliersPaginated);
 router.get('/getSupplier/:id', auth, supplierController.getSupplierById); // Get a supplier by
 router.get('/getPurchasesBySupplier', auth, supplierController.getPurchasesBySupplier); // Get purchases by supplier
-
+router.get('/filterSuppliers', auth, supplierController.filterSuppliers);
+router.get('/searchNotesSuppliers', auth, supplierController.searchNotesSuppliers);
 
 module.exports = router;

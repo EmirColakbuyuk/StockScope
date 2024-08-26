@@ -135,3 +135,120 @@ exports.getPurchasesBySupplier = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+// Get filtered and paginated suppliers
+exports.filterSuppliers = async (req, res) => {
+  try {
+    const {
+      name,
+      code,
+      address,
+      phone,
+      startDate, // Belirli bir tarihten sonra eklenenler için
+      endDate,   // Belirli bir tarihten önce eklenenler için
+      sortOrder, // Tarihe göre sıralama (asc, desc)
+      page = 1,
+      limit = 5,
+    } = req.query;
+
+    // MongoDB query object
+    let query = {};
+
+    // Name filter
+    if (name) {
+      query.name = { $regex: name, $options: 'i' }; // Case-insensitive partial match
+    }
+
+    // Code filter
+    if (code) {
+      query.code = { $regex: code, $options: 'i' };
+    }
+
+    // Address filter
+    if (address) {
+      query.address = { $regex: address, $options: 'i' };
+    }
+
+    // Phone filter
+    if (phone) {
+      query.phone = { $regex: phone, $options: 'i' };
+    }
+
+    // Date filter: after startDate, before endDate
+    if (startDate && endDate) {
+      query.createdAt = { $gte: moment(startDate).startOf('day').toDate(), $lte: moment(endDate).endOf('day').toDate() };
+    } else if (startDate) {
+      query.createdAt = { $gte: moment(startDate).startOf('day').toDate() };
+    } else if (endDate) {
+      query.createdAt = { $lte: moment(endDate).endOf('day').toDate() };
+    }
+
+    // Sort order
+    let sort = {};
+
+    if (sortOrder === 'asc') {
+      sort.createdAt = 1; // Oldest to newest
+    } else if (sortOrder === 'desc') {
+      sort.createdAt = -1; // Newest to oldest
+    } else if (!startDate && !endDate) {
+      // If no date filter is applied, default sorting by name alphabetically
+      sort.name = 1; // Alphabetical order by name
+    }
+
+    // Fetch filtered and paginated suppliers
+    const suppliers = await Supplier.find(query)
+        .sort(sort)
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+
+    const count = await Supplier.countDocuments(query);
+
+    res.status(200).json({
+      suppliers,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count,
+    });
+  } catch (error) {
+    console.error('Error getting filtered suppliers:', error);
+    res.status(500).json({ message: 'Error getting filtered suppliers', error: error.message });
+  }
+};
+
+
+// Search suppliers by notes only with pagination
+exports.searchNotesSuppliers = async (req, res) => {
+  try {
+    const { query, page = 1, limit = 5 } = req.query;
+
+    if (!query) {
+      return res.status(400).json({ message: 'Arama sorgusu gereklidir' });
+    }
+
+    // MongoDB query object: Sadece notlar içinde arama yapacak
+    let searchQuery = {
+      notes: { $regex: query, $options: 'i' } // Notlar içinde geçen herhangi bir eşleşme (case-insensitive)
+    };
+
+    // Pagination için toplam sonuç sayısını alıyoruz
+    const totalItems = await Supplier.countDocuments(searchQuery);
+
+    // Sadece belirli sayıda sonuç döndürmek için limit ve skip kullanıyoruz
+    const suppliers = await Supplier.find(searchQuery)
+        .limit(limit * 1) // limit'i integer olarak kullan
+        .skip((page - 1) * limit)
+        .exec();
+
+    res.status(200).json({
+      suppliers,
+      totalPages: Math.ceil(totalItems / limit),
+      currentPage: Number(page),
+      totalItems
+    });
+  } catch (error) {
+    console.error('Error searching suppliers:', error);
+    res.status(500).json({ message: 'Error searching suppliers', error: error.message });
+  }
+};

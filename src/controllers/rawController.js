@@ -413,8 +413,7 @@ exports.getAllTypes = async (req, res) => {
 
 // FILTERS //
 
-
-// Filter raw materials (both active and passive)
+// 1. Tüm durumlar için filtreleme (status fark etmeksizin)
 exports.filterRawMaterials = async (req, res) => {
   try {
     const {
@@ -423,7 +422,7 @@ exports.filterRawMaterials = async (req, res) => {
       name,
       supplier,
       type,
-      status,  // Statü filtresi eklendi
+      status,
       grammageComparison1,
       grammageValue1,
       grammageComparison2,
@@ -452,6 +451,12 @@ exports.filterRawMaterials = async (req, res) => {
       MasuraLengthValue1,
       MasuraLengthComparison2,
       MasuraLengthValue2,
+      dateBefore,
+      dateAfter,
+      dateExact,
+      passiveDateBefore,
+      passiveDateAfter,
+      passiveDateExact
     } = req.query;
 
     let filterCriteria = {};
@@ -459,7 +464,7 @@ exports.filterRawMaterials = async (req, res) => {
     if (name) filterCriteria.name = name;
     if (supplier) filterCriteria.supplier = supplier;
     if (type) filterCriteria.type = type;
-    if (status) filterCriteria.status = status;  // Statü filtresi eklendi
+    if (status) filterCriteria.status = status;
 
     // Comparison criteria
     if (grammageValue1 && grammageComparison1) {
@@ -505,12 +510,38 @@ exports.filterRawMaterials = async (req, res) => {
       filterCriteria.MasuraLength = { ...filterCriteria.MasuraLength, [`$${MasuraLengthComparison2}`]: MasuraLengthValue2 };
     }
 
+    // Date filters for stoğa giriş (createdAt)
+    if (dateBefore) {
+      filterCriteria.createdAt = { ...filterCriteria.createdAt, $lt: new Date(dateBefore) };
+    }
+    if (dateAfter) {
+      filterCriteria.createdAt = { ...filterCriteria.createdAt, $gt: new Date(dateAfter) };
+    }
+    if (dateExact) {
+      const exactDate = new Date(dateExact);
+      filterCriteria.createdAt = { ...filterCriteria.createdAt, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
+    }
+
+    // Date filters for stoktan çıkış (updatedAt)
+    if (passiveDateBefore) {
+      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $lt: new Date(passiveDateBefore) };
+    }
+    if (passiveDateAfter) {
+      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gt: new Date(passiveDateAfter) };
+    }
+    if (passiveDateExact) {
+      const exactDate = new Date(passiveDateExact);
+      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
+    }
+
     const rawMaterials = await RawMaterial.find(filterCriteria)
-        .limit(limit * 1)
+        .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
+        .limit(Number(limit))
         .exec();
 
     const count = await RawMaterial.countDocuments(filterCriteria);
+
 
     res.status(200).json({
       rawMaterials,
@@ -523,7 +554,6 @@ exports.filterRawMaterials = async (req, res) => {
     res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
   }
 };
-
 
 // Filter active raw materials
 exports.filterActiveRawMaterials = async (req, res) => {
@@ -562,9 +592,12 @@ exports.filterActiveRawMaterials = async (req, res) => {
       MasuraLengthValue1,
       MasuraLengthComparison2,
       MasuraLengthValue2,
+      dateBefore,
+      dateAfter,
+      dateExact
     } = req.query;
 
-    let filterCriteria = { status: 'active' }; // Yalnızca 'active' statüsündeki materyalleri filtrele
+    let filterCriteria = { status: 'active' };
 
     if (name) filterCriteria.name = name;
     if (supplier) filterCriteria.supplier = supplier;
@@ -614,9 +647,22 @@ exports.filterActiveRawMaterials = async (req, res) => {
       filterCriteria.MasuraLength = { ...filterCriteria.MasuraLength, [`$${MasuraLengthComparison2}`]: MasuraLengthValue2 };
     }
 
+    // Date filters for stoğa giriş (createdAt)
+    if (dateBefore) {
+      filterCriteria.createdAt = { ...filterCriteria.createdAt, $lt: new Date(dateBefore) };
+    }
+    if (dateAfter) {
+      filterCriteria.createdAt = { ...filterCriteria.createdAt, $gt: new Date(dateAfter) };
+    }
+    if (dateExact) {
+      const exactDate = new Date(dateExact);
+      filterCriteria.createdAt = { ...filterCriteria.createdAt, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
+    }
+
     const rawMaterials = await RawMaterial.find(filterCriteria)
-        .limit(limit * 1)
+        .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
+        .limit(Number(limit))
         .exec();
 
     const count = await RawMaterial.countDocuments(filterCriteria);
@@ -628,12 +674,10 @@ exports.filterActiveRawMaterials = async (req, res) => {
       totalItems: count
     });
   } catch (error) {
-    console.error('Error filtering raw materials:', error);
-    res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
+    console.error('Error filtering active raw materials:', error);
+    res.status(500).json({ message: 'Error filtering active raw materials', error: error.message });
   }
 };
-
-
 
 // Filter passive raw materials
 exports.filterPassiveRawMaterials = async (req, res) => {
@@ -672,9 +716,12 @@ exports.filterPassiveRawMaterials = async (req, res) => {
       MasuraLengthValue1,
       MasuraLengthComparison2,
       MasuraLengthValue2,
+      passiveDateBefore,
+      passiveDateAfter,
+      passiveDateExact
     } = req.query;
 
-    let filterCriteria = { status: 'passive' }; // Yalnızca 'active' statüsündeki materyalleri filtrele
+    let filterCriteria = { status: 'passive' };
 
     if (name) filterCriteria.name = name;
     if (supplier) filterCriteria.supplier = supplier;
@@ -724,9 +771,22 @@ exports.filterPassiveRawMaterials = async (req, res) => {
       filterCriteria.MasuraLength = { ...filterCriteria.MasuraLength, [`$${MasuraLengthComparison2}`]: MasuraLengthValue2 };
     }
 
+    // Date filters for stoktan çıkış (updatedAt)
+    if (passiveDateBefore) {
+      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $lt: new Date(passiveDateBefore) };
+    }
+    if (passiveDateAfter) {
+      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gt: new Date(passiveDateAfter) };
+    }
+    if (passiveDateExact) {
+      const exactDate = new Date(passiveDateExact);
+      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
+    }
+
     const rawMaterials = await RawMaterial.find(filterCriteria)
-        .limit(limit * 1)
+        .sort({ updatedAt: -1 })
         .skip((page - 1) * limit)
+        .limit(Number(limit))
         .exec();
 
     const count = await RawMaterial.countDocuments(filterCriteria);
@@ -738,7 +798,97 @@ exports.filterPassiveRawMaterials = async (req, res) => {
       totalItems: count
     });
   } catch (error) {
-    console.error('Error filtering raw materials:', error);
-    res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
+    console.error('Error filtering passive raw materials:', error);
+    res.status(500).json({ message: 'Error filtering passive raw materials', error: error.message });
+  }
+};
+
+
+// 1. Tüm durumlar için arama (status fark etmeksizin)
+exports.searchNotesAllRawMaterials = async (req, res) => {
+  try {
+    const { searchQuery, page = 1, limit = 5 } = req.query;
+
+    let query = {};
+    if (searchQuery) {
+      query.notes = { $regex: searchQuery, $options: 'i' };
+    }
+
+    const rawMaterials = await RawMaterial.find(query)
+        .skip((page - 1) * limit)
+        .limit(Number(limit))
+        .exec();
+
+    const count = await RawMaterial.countDocuments(query);
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count,
+    });
+  } catch (error) {
+    console.error('Error searching raw materials by notes:', error);
+    res.status(500).json({ message: 'Error searching raw materials by notes', error: error.message });
+  }
+};
+
+
+// 2. Sadece "active" status için arama
+exports.searchNotesActiveRawMaterials = async (req, res) => {
+  try {
+    const { searchQuery, page = 1, limit = 5 } = req.query;
+
+    let query = { status: 'active' };
+    if (searchQuery) {
+      query.notes = { $regex: searchQuery, $options: 'i' };
+    }
+
+    const rawMaterials = await RawMaterial.find(query)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec();
+
+    const count = await RawMaterial.countDocuments(query);
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count,
+    });
+  } catch (error) {
+    console.error('Error searching raw materials by notes (active):', error);
+    res.status(500).json({ message: 'Error searching raw materials by notes (active)', error: error.message });
+  }
+};
+
+
+// 3. Sadece "passive" status için arama
+exports.searchNotesPassiveRawMaterials = async (req, res) => {
+  try {
+    const { query, page = 1, limit = 5 } = req.query;
+
+    let searchQuery = { status: 'passive' };
+    if (query) {
+      searchQuery.notes = { $regex: query, $options: 'i' };
+    }
+
+    const rawMaterials = await RawMaterial.find(searchQuery)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec();
+
+    const count = await RawMaterial.countDocuments(searchQuery);
+
+    res.status(200).json({
+      rawMaterials,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      totalItems: count,
+    });
+  } catch (error) {
+    console.error('Error searching raw materials by notes (passive):', error);
+    res.status(500).json({ message: 'Error searching raw materials by notes (passive)', error: error.message });
   }
 };

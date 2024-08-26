@@ -21,6 +21,10 @@ router.get('/getAllTypes', auth, rawController.getAllTypes);
 router.get('/filterActiveRawMaterials', auth, rawController.filterActiveRawMaterials);
 router.get('/filterPassiveRawMaterials', auth, rawController.filterPassiveRawMaterials);
 router.get('/filterRawMaterials', auth, rawController.filterRawMaterials);
+router.get('/searchNotesAllRawMaterials', auth, rawController.searchNotesAllRawMaterials);
+router.get('/searchNotesActiveRawMaterials', auth, rawController.searchNotesActiveRawMaterials);
+router.get('/searchNotesPassiveRawMaterials', auth, rawController.searchNotesPassiveRawMaterials);
+
 
 
 module.exports = router;

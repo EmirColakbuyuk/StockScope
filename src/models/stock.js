@@ -2,15 +2,28 @@ const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 
 const stockSchema = new mongoose.Schema({
-    uniqueId : {
+    status: {
         type: String,
+        enum: ['active', 'passive'],
         required: true
     },
     size: {
         type: String,
         required: true
     },
-    total : {
+    weight: {
+        type: Number,
+        required: true
+    },
+    boxCount: {
+        type: Number,
+        required: true
+    },
+    itemsPerBox: {
+        type: Number,
+        required: true
+    },
+    itemsPerPackage: {
         type: Number,
         required: true
     },
@@ -21,7 +34,7 @@ const stockSchema = new mongoose.Schema({
     },
     notes: {
         type: String,
-        reqired : false
+        required: false
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
