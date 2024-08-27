@@ -2,34 +2,33 @@ const Stock = require('../models/stock');
 const Customer = require('../models/customer');
 const moment = require('moment-timezone');
 const { filterLogs } = require('../middleware/logger.js');
-const mongoose = require('mongoose');
 
 
 // Add or update stock
 exports.addStock = async (req, res) => {
   try {
-    const { size, weight, boxCount, itemsPerBox, itemsPerPackage, notes } = req.body;
+    const { size, weight, boxCount, packageCount, packageContain, notes } = req.body;
 
     const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
+    const total = boxCount * packageCount * packageContain;
 
-    // Find if the stock already exists with the same properties including weight
-    let stock = await Stock.findOne({ size, weight, itemsPerBox, itemsPerPackage });
+    // Find the existing stock entry by uniqueId and size
+    let stock = await Stock.findOne({ size, weight });
 
     if (stock) {
-      // Eğer aynı stok zaten varsa, mevcut `boxCount` ile gelen `boxCount`'u topla
-      console.log('Existing boxCount:', stock.boxCount); // Mevcut boxCount'u yazdır
-      stock.boxCount = Number(stock.boxCount) + Number(boxCount); // Toplama işlemi
-      console.log('Updated boxCount:', stock.boxCount); // Güncellenmiş boxCount'u yazdır
-      stock.updatedAt = dateInTurkey; // İsteğe bağlı olarak tarihi güncelle
+      // Update existing stock by adding the new quantities and recalculating the total
+      stock.total += total;
+      stock.boxCount += boxCount;
+      stock.notes = notes; // Update notes if needed
+      stock.date = dateInTurkey;
+      
     } else {
-      // Eğer stok yoksa yeni bir stok oluştur
+      // Create a new stock entry if it doesn't exist
       stock = new Stock({
-        status: 'active', // Status otomatik olarak "active" olarak ayarlanır
         size,
-        weight, // Ağırlık bir kez ayarlanır ve sabit kalır
+        weight,
+        total,
         boxCount,
-        itemsPerBox,
-        itemsPerPackage,
         notes,
         date: dateInTurkey,
         createdBy: req.user._id
@@ -45,61 +44,92 @@ exports.addStock = async (req, res) => {
   }
 };
 
+exports.deleteStock = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const stock = await
+    Stock.findByIdAndDelete(id);
+    if (!stock) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
+    res.status(200).json({ message: 'Stock deleted successfully', stock });
+  }
+  catch (error) {
+    console.error('Error deleting stock:', error);
+    res.status(500).json({ message: 'Error deleting stock', error: error.message });
+  }
+};
 
 
+exports.updateStock = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { size, weight, boxCount, total, notes } = req.body;
+
+    const stock = await Stock.findById(id);
+    if (!stock) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
+
+    stock.size = size;
+    stock.weight = weight;
+    stock.total = total;
+    stock.boxCount = boxCount;
+    stock.notes = notes;
+
+    const updatedStock = await stock.save();
+
+    res.status(200).json({ message: 'Stock updated successfully', stock: updatedStock });
+  }
+  catch (error) {
+    console.error('Error updating stock:', error);
+    res.status(500).json({ message: 'Error updating stock', error: error.message });
+  }
+};
 
 // Sell stock
 exports.sellStock = async (req, res) => {
   try {
-    const { size, boxCount, itemsPerBox, itemsPerPackage, customerId } = req.body;
+    const { size, weight, boxCount, packageCount, packageContain, customerId , notes} = req.body;
 
-    // Validate the customerId
-    if (!mongoose.Types.ObjectId.isValid(customerId)) {
-      return res.status(400).json({ message: 'Invalid customer ID' });
-    }
-
-    let stock = await Stock.findOne({ size, itemsPerBox, itemsPerPackage });
+    // Find the existing stock entry by uniqueId and size
+    let stock = await Stock.findOne({ size, weight });
 
     if (!stock) {
       return res.status(404).json({ message: 'Stock not found' });
     }
 
-    if (stock.boxCount < boxCount) {
+    // Calculate the total items requested to be sold
+    const totalBoxRequested = boxCount;
+    const totalPackageRequested = packageCount;
+    const totalContainRequested = packageContain;
+    const totalRequested = totalBoxRequested * totalPackageRequested * totalContainRequested;
+
+    // Check if there is enough stock to sell
+    if (stock.total < totalRequested) {
       return res.status(400).json({ message: 'Not enough stock to sell' });
     }
 
-    stock.boxCount -= boxCount;
-
-    if (stock.boxCount === 0) {
-      stock.status = 'passive';
-    }
+    // Decrease the stock quantities
+    stock.total -= totalRequested;
+    stock.boxCount -= totalBoxRequested;
 
     const updatedStock = await stock.save();
 
-    const passiveStock = new Stock({
-      status: 'passive',
-      size: stock.size,
-      weight: stock.weight,
-      boxCount: boxCount,
-      itemsPerBox: stock.itemsPerBox,
-      itemsPerPackage: stock.itemsPerPackage,
-      notes: `Sold to customer ID: ${customerId}`,
-      date: moment.tz("Europe/Istanbul").toDate(),
-      createdBy: req.user._id
-    });
-
-    await passiveStock.save();
-
+    // Find the customer by their ID
     const customer = await Customer.findById(customerId);
     if (!customer) {
       return res.status(404).json({ message: 'Customer not found' });
     }
 
+    // Add the sold stock details to the customer's purchases
     customer.purchases.push({
       size,
-      boxCount,
-      itemsPerBox,
-      itemsPerPackage,
+      weight,
+      boxCount: totalBoxRequested,
+      packageCount: totalPackageRequested,
+      packageContain: totalContainRequested,
+      notes, 
       date: moment.tz("Europe/Istanbul").toDate()
     });
 
@@ -113,74 +143,8 @@ exports.sellStock = async (req, res) => {
 };
 
 
-
-// delete stock
-exports.deleteStock = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { boxCount } = req.body;
-
-    const stock = await Stock.findById(id);
-    if (!stock) {
-      return res.status(404).json({ message: 'Stock not found' });
-    }
-
-    // Check if there is enough stock to delete
-    if (stock.boxCount < boxCount) {
-      return res.status(400).json({ message: 'Not enough stock to delete' });
-    }
-
-    // Decrease the original stock box count
-    stock.boxCount -= boxCount;
-
-    // If the stock is now empty, delete the stock or mark it as 'passive'
-    if (stock.boxCount === 0) {
-      await stock.deleteOne();
-      return res.status(200).json({ message: 'Stock deleted successfully' });
-    } else {
-      const updatedStock = await stock.save();
-      return res.status(200).json({ message: 'Stock updated successfully', stock: updatedStock });
-    }
-  } catch (error) {
-    console.error('Error deleting stock:', error);
-    res.status(500).json({ message: 'Error deleting stock', error: error.message });
-  }
-};
-
-// Update Stock
-exports.updateStock = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status = 'active', size, weight, boxCount, itemsPerBox, itemsPerPackage, notes } = req.body;
-
-    const stock = await Stock.findById(id);
-    if (!stock) {
-      return res.status(404).json({ message: 'Stock not found' });
-    }
-
-    // Eğer req.body'de status gönderilmediyse, 'active' olarak ayarlanacak
-    stock.status = status;
-    stock.size = size;
-    stock.weight = weight;
-    stock.boxCount = boxCount;
-    stock.itemsPerBox = itemsPerBox;
-    stock.itemsPerPackage = itemsPerPackage;
-    stock.notes = notes;
-
-    const updatedStock = await stock.save();
-
-    res.status(200).json({ message: 'Stock updated successfully', stock: updatedStock });
-  } catch (error) {
-    console.error('Error updating stock:', error);
-    res.status(500).json({ message: 'Error updating stock', error: error.message });
-  }
-};
-
-
-
-
-// Get all stocks
-exports.getAllStock = async (req, res) => {
+// Get all active stocks
+exports.getAllActiveStock = async (req, res) => {
   try {
     const stocks = await Stock.find().sort({ date: -1 }); // Sort by date, newest first
     res.status(200).json(stocks);
@@ -190,30 +154,45 @@ exports.getAllStock = async (req, res) => {
   }
 };
 
-// Get stocks by date
-exports.byDateStock = async (req, res) => {
+// Get all passive stocks
+exports.getAllPassiveStock = async (req, res) => {
   try {
-    const { date } = req.query;
-    if (!date) {
-      return res.status(400).json({ message: 'Date query parameter is required' });
-    }
-
-    const startOfDay = moment.tz(date, "Europe/Istanbul").startOf('day').toDate();
-    const endOfDay = moment.tz(date, "Europe/Istanbul").endOf('day').toDate();
-
-    const stocks = await Stock.find({
-      date: {
-        $gte: startOfDay,
-        $lte: endOfDay
-      }
-    }).sort({ date: -1 }); // Sort by date, newest first
-
-    res.status(200).json(stocks);
+    // Find all customers and return their purchases
+    const customers = await Customer.find({}, 'purchases'); // Fetch only the 'purchases' field for all customers
+    res.status(200).json(customers);
   } catch (error) {
-    console.error('Error getting stocks by date:', error);
-    res.status(500).json({ message: 'Error getting stocks by date', error: error.message });
+    console.error('Error getting stocks:', error);
+    res.status(500).json({ message: 'Error getting stocks', error: error.message });
   }
 };
+
+
+// Get all stocks (active and passive)
+exports.getAllStocks = async (req, res) => {
+  try {
+    // Retrieve all active stocks from the Stock collection
+    const activeStocks = await Stock.find().sort({ date: -1 }); // Sort by date, newest first
+    
+    // Retrieve all passive stocks from the Customer collection
+    const customers = await Customer.find({}, 'purchases'); // Fetch only the 'purchases' field
+    
+    // Extract purchases from all customers
+    const passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+
+    // Combine active and passive stocks
+    const allStocks = {
+      active: activeStocks,
+      passive: passiveStocks
+    };
+
+    res.status(200).json(allStocks);
+  } catch (error) {
+    console.error('Error getting stocks:', error);
+    res.status(500).json({ message: 'Error getting stocks', error: error.message });
+  }
+};
+
+
 
 // Get the number of stocks added within a certain period
 exports.getStocksAddedInPeriod = (req, res) => {
@@ -240,19 +219,7 @@ exports.getStocksAddedInPeriod = (req, res) => {
       return log.method === 'POST' && log.url.includes('/api/addstocks') && logDate >= startJsDate && logDate <= endJsDate;
     });
 
-    // Calculate the total amount of stocks added
-    const totalAmount = filteredLogs.reduce((sum, log) => {
-      if (log.requestBody && log.requestBody.boxCount && log.requestBody.itemsPerBox && log.requestBody.itemsPerPackage) {
-        const boxCount = log.requestBody.boxCount;
-        const itemsPerBox = log.requestBody.itemsPerBox;
-        const itemsPerPackage = log.requestBody.itemsPerPackage;
-        return sum + (boxCount * itemsPerBox * itemsPerPackage);
-      }
-      return sum;
-    }, 0);
-
-    // Return filtered logs and total amount
-    res.status(200).json({ logs: filteredLogs, totalAmount });
+    res.status(200).json(filteredLogs);
   } catch (error) {
     console.error('Error getting stocks added in period:', error);
     res.status(500).json({ message: 'Error getting stocks added in period', error: error.message });
@@ -260,129 +227,192 @@ exports.getStocksAddedInPeriod = (req, res) => {
 };
 
 
-// Functions
 
-// Get all stocks with pagination, regardless of status
-exports.getAllStocksPaginated = async (req, res) => {
+// Get paginated and filtered active stocks
+exports.getPaginatedActiveStock = async (req, res) => {
   try {
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 10, size, weight } = req.query;
+    
+    const filter = {};
+    if (size) filter.size = size;
+    if (weight) filter.weight = weight;
+    
+    const stocks = await Stock.find(filter)
+      .sort({ date: -1 }) // Sort by date, newest first
+      .skip((page - 1) * limit) // Calculate how many documents to skip
+      .limit(parseInt(limit));  // Limit the number of documents
 
-    const stocks = await Stock.find()
-        .sort({ date: -1 })  // Tarihe göre en son eklenenden ilk eklenene doğru sıralama
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
-
-    const totalItems = await Stock.countDocuments();
-    const totalPages = Math.ceil(totalItems / limit);
+    const totalCount = await Stock.countDocuments(filter);
 
     res.status(200).json({
-      stocks,
-      currentPage: Number(page),
-      totalPages,
-      totalItems,
+      totalPages: Math.ceil(totalCount / limit),
+      currentPage: page,
+      stocks
     });
   } catch (error) {
-    console.error('Error getting all stocks:', error);
-    res.status(500).json({ message: 'Error getting all stocks', error: error.message });
+    console.error('Error getting paginated active stocks:', error);
+    res.status(500).json({ message: 'Error getting paginated active stocks', error: error.message });
   }
 };
 
-// Get active stocks with pagination
-exports.getActiveStocksPaginated = async (req, res) => {
+
+
+
+// Get paginated and filtered passive stocks
+exports.getPaginatedPassiveStock = async (req, res) => {
   try {
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 10, size, weight } = req.query;
 
-    const stocks = await Stock.find({ status: 'active' })
-        .sort({ date: -1 })
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
+    // Find all customers and retrieve their purchases
+    const customers = await Customer.find()
+      .select('purchases')
+      .lean(); // Fetch only the 'purchases' field
 
-    const totalItems = await Stock.countDocuments({ status: 'active' });
-    const totalPages = Math.ceil(totalItems / limit);
+    // Flatten purchases and filter them based on query parameters
+    let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+    
+    if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
+    if (weight) passiveStocks = passiveStocks.filter(purchase => purchase.weight === weight);
+
+    // Pagination
+    const totalCount = passiveStocks.length;
+    const paginatedStocks = passiveStocks.slice((page - 1) * limit, page * limit);
 
     res.status(200).json({
-      stocks,
-      currentPage: Number(page),
-      totalPages,
-      totalItems,
+      totalPages: Math.ceil(totalCount / limit),
+      currentPage: page,
+      passiveStocks: paginatedStocks
     });
   } catch (error) {
-    console.error('Error getting active stocks:', error);
-    res.status(500).json({ message: 'Error getting active stocks', error: error.message });
+    console.error('Error getting paginated passive stocks:', error);
+    res.status(500).json({ message: 'Error getting paginated passive stocks', error: error.message });
   }
 };
 
-// Get passive stocks with pagination
-exports.getPassiveStocksPaginated = async (req, res) => {
+
+
+// Get paginated and filtered all stocks (active and passive)
+exports.getPaginatedAllStocks = async (req, res) => {
   try {
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 10, size, weight } = req.query;
 
-    const stocks = await Stock.find({ status: 'passive' })
-        .sort({ date: -1 })
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
+    // Fetch active stocks from the Stock collection
+    const filter = {};
+    if (size) filter.size = size;
+    if (weight) filter.weight = weight;
 
-    const totalItems = await Stock.countDocuments({ status: 'passive' });
-    const totalPages = Math.ceil(totalItems / limit);
+    const activeStocksQuery = Stock.find(filter)
+      .sort({ date: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    const totalActiveCountQuery = Stock.countDocuments(filter);
+
+    // Fetch passive stocks from the Customer collection
+    const customers = await Customer.find()
+      .select('purchases')
+      .lean();
+
+    let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+
+    if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
+    if (weight) passiveStocks = passiveStocks.filter(purchase => purchase.weight === weight);
+
+    // Calculate pagination for passive stocks
+    const totalPassiveCount = passiveStocks.length;
+    const paginatedPassiveStocks = passiveStocks.slice((page - 1) * limit, page * limit);
+
+    // Combine active and passive stocks
+    const [activeStocks, totalActiveCount] = await Promise.all([activeStocksQuery, totalActiveCountQuery]);
+
+    // Combine active and passive stocks and paginate
+    const allStocks = [...activeStocks, ...paginatedPassiveStocks];
+    const totalCount = totalActiveCount + totalPassiveCount;
 
     res.status(200).json({
-      stocks,
-      currentPage: Number(page),
-      totalPages,
-      totalItems,
+      totalPages: Math.ceil(totalCount / limit),
+      currentPage: page,
+      allStocks
     });
   } catch (error) {
-    console.error('Error getting passive stocks:', error);
-    res.status(500).json({ message: 'Error getting passive stocks', error: error.message });
+    console.error('Error getting paginated all stocks:', error);
+    res.status(500).json({ message: 'Error getting paginated all stocks', error: error.message });
   }
 };
 
-// 1. Tüm durumlar için arama (status fark etmeksizin)
+
+
 exports.searchNotesAllStocks = async (req, res) => {
   try {
     const { searchQuery, page = 1, limit = 5 } = req.query;
+    
+    const paginationOptions = {
+      skip: (page - 1) * limit,
+      limit: parseInt(limit)
+    };
 
-    let query = {};
+    // Prepare search query for notes
+    const searchRegExp = searchQuery ? new RegExp(searchQuery, 'i') : null;
+
+    // Fetch and paginate active stocks
+    const activeStocksQuery = Stock.find(searchQuery ? { notes: searchRegExp } : {})
+      .sort({ date: -1 })
+      .skip(paginationOptions.skip)
+      .limit(paginationOptions.limit);
+    
+    const totalActiveCountQuery = Stock.countDocuments(searchQuery ? { notes: searchRegExp } : {});
+
+    // Fetch all customers and filter their purchases
+    const customers = await Customer.find().select('purchases').lean();
+    let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+    
     if (searchQuery) {
-      query.notes = { $regex: searchQuery, $options: 'i' };
+      passiveStocks = passiveStocks.filter(purchase => 
+        purchase.notes && searchRegExp.test(purchase.notes)
+      );
     }
 
-    const stocks = await Stock.find(query)
-        .sort({ date: -1 })  // Tarihe göre en son eklenenden ilk eklenene doğru sıralama
-        .skip((page - 1) * limit)
-        .limit(Number(limit))
-        .exec();
+    // Calculate pagination for passive stocks
+    const totalPassiveCount = passiveStocks.length;
+    const paginatedPassiveStocks = passiveStocks.slice(paginationOptions.skip, paginationOptions.skip + paginationOptions.limit);
 
-    const count = await Stock.countDocuments(query);
+    // Fetch active stocks and total active count
+    const [activeStocks, totalActiveCount] = await Promise.all([activeStocksQuery, totalActiveCountQuery]);
+
+    // Combine active and paginated passive stocks
+    const allStocks = [...activeStocks, ...paginatedPassiveStocks];
+    const totalCount = totalActiveCount + totalPassiveCount;
 
     res.status(200).json({
-      stocks,
-      totalPages: Math.ceil(count / limit),
+      stocks: allStocks,
+      totalPages: Math.ceil(totalCount / limit),
       currentPage: Number(page),
-      totalItems: count,
+      totalItems: totalCount,
     });
   } catch (error) {
     console.error('Error searching stocks by notes:', error);
     res.status(500).json({ message: 'Error searching stocks by notes', error: error.message });
   }
 };
-
-// 2. Sadece "active" status için arama
+// 2. Search for active stocks by notes
 exports.searchNotesActiveStocks = async (req, res) => {
   try {
     const { searchQuery, page = 1, limit = 5 } = req.query;
 
-    let query = { status: 'active' };
+    // Create a query for active stocks (those present in the Stock collection)
+    const query = {};
     if (searchQuery) {
       query.notes = { $regex: searchQuery, $options: 'i' };
     }
 
+    // Fetch and paginate active stocks
     const stocks = await Stock.find(query)
-        .sort({ date: -1 })
-        .skip((page - 1) * limit)
-        .limit(Number(limit))
-        .exec();
+      .sort({ date: -1 }) // Sort by date, newest first
+      .skip((page - 1) * limit) // Calculate how many documents to skip
+      .limit(parseInt(limit))  // Limit the number of documents
+      .exec();
 
+    // Get the total count of active stocks matching the query
     const count = await Stock.countDocuments(query);
 
     res.status(200).json({
@@ -392,40 +422,50 @@ exports.searchNotesActiveStocks = async (req, res) => {
       totalItems: count,
     });
   } catch (error) {
-    console.error('Error searching stocks by notes (active):', error);
-    res.status(500).json({ message: 'Error searching stocks by notes (active)', error: error.message });
+    console.error('Error searching active stocks by notes:', error);
+    res.status(500).json({ message: 'Error searching active stocks by notes', error: error.message });
   }
 };
 
-// 3. Sadece "passive" status için arama
+// 3. Search for customer purchases by notes
 exports.searchNotesPassiveStocks = async (req, res) => {
   try {
     const { searchQuery, page = 1, limit = 5 } = req.query;
 
-    let query = { status: 'passive' };
-    if (searchQuery) {
-      query.notes = { $regex: searchQuery, $options: 'i' };
-    }
+    // Create a query to search for notes in customer purchases
+    const query = { "purchases.notes": { $regex: searchQuery, $options: 'i' } };
 
-    const stocks = await Stock.find(query)
-        .sort({ date: -1 })
-        .skip((page - 1) * limit)
-        .limit(Number(limit))
-        .exec();
+    // Fetch and paginate customers with matching purchases
+    const customers = await Customer.find(query)
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .select('purchases')  // Only select the 'purchases' field
+      .lean(); // Use lean() to get plain JavaScript objects
 
-    const count = await Stock.countDocuments(query);
+    // Extract and filter purchases from all customers
+    const allPurchases = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+    const filteredPurchases = allPurchases.filter(purchase =>
+      purchase.notes && new RegExp(searchQuery, 'i').test(purchase.notes)
+    );
+
+    // Get the total count of filtered purchases
+    const totalCount = filteredPurchases.length;
+
+    // Paginate the filtered purchases
+    const paginatedPurchases = filteredPurchases.slice((page - 1) * limit, page * limit);
 
     res.status(200).json({
-      stocks,
-      totalPages: Math.ceil(count / limit),
+      purchases: paginatedPurchases,
+      totalPages: Math.ceil(totalCount / limit),
       currentPage: Number(page),
-      totalItems: count,
+      totalItems: totalCount,
     });
   } catch (error) {
-    console.error('Error searching stocks by notes (passive):', error);
-    res.status(500).json({ message: 'Error searching stocks by notes (passive)', error: error.message });
+    console.error('Error searching customer purchases by notes:', error);
+    res.status(500).json({ message: 'Error searching customer purchases by notes', error: error.message });
   }
 };
+
 
 // 1. Tüm durumlar için filtreleme (status fark etmeksizin)
 exports.filterStocks = async (req, res) => {

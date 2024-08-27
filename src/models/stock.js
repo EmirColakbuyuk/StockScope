@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 
 const stockSchema = new mongoose.Schema({
-    status: {
-        type: String,
-        enum: ['active', 'passive'],
-        required: true
-    },
     size: {
         type: String,
         required: true
@@ -19,11 +14,7 @@ const stockSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    itemsPerBox: {
-        type: Number,
-        required: true
-    },
-    itemsPerPackage: {
+    total: {
         type: Number,
         required: true
     },

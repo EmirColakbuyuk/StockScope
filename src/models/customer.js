@@ -23,15 +23,15 @@ const customerSchema = new mongoose.Schema({
         required: false
     },
     purchases: [{
-        uniqueId: {
-            type: String,
-            required: true
-        },
         size: {
             type: String,
             required: true
         },
-        koliCount: {
+        weight: {
+            type: Number,
+            required: true
+        },
+        boxCount: {
             type: Number,
             required: true
         },
@@ -47,6 +47,10 @@ const customerSchema = new mongoose.Schema({
             type: Date,
             required: true,
             default: () => moment().tz("Europe/Istanbul").toDate()
+        },
+        notes : {
+            type: String,
+            required: false
         }
     }],
 
