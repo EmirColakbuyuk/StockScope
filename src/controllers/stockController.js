@@ -4,38 +4,50 @@ const moment = require('moment-timezone');
 const { filterLogs } = require('../middleware/logger.js');
 
 
-// Add or update stock
 exports.addStock = async (req, res) => {
   try {
     const { size, weight, boxCount, packageCount, packageContain, notes } = req.body;
 
-    const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
-    const total = boxCount * packageCount * packageContain;
+    // Gelen verileri sayısal değerlere dönüştürün
+    const numericWeight = parseFloat(weight);
+    const numericBoxCount = parseInt(boxCount, 10);
+    const numericPackageCount = parseInt(packageCount, 10);
+    const numericPackageContain = parseInt(packageContain, 10);
 
-    // Find the existing stock entry by uniqueId and size
-    let stock = await Stock.findOne({ size, weight });
+    const dateInTurkey = moment.tz("Europe/Istanbul").toDate();
+    const total = numericBoxCount * numericPackageCount * numericPackageContain;
+
+    console.log('Calculated Total:', total);
+
+    let stock = await Stock.findOne({ size, weight: numericWeight });
 
     if (stock) {
-      // Update existing stock by adding the new quantities and recalculating the total
+      console.log('Existing Stock Found:', stock);
+
       stock.total += total;
-      stock.boxCount += boxCount;
-      stock.notes = notes; // Update notes if needed
+      stock.boxCount += numericBoxCount;
+      stock.notes = notes;
       stock.date = dateInTurkey;
-      
+
+      console.log('Updated Stock:', stock);
     } else {
-      // Create a new stock entry if it doesn't exist
+      console.log('No existing stock found. Creating new stock.');
+
       stock = new Stock({
         size,
-        weight,
+        weight: numericWeight,
         total,
-        boxCount,
+        boxCount: numericBoxCount,
         notes,
         date: dateInTurkey,
         createdBy: req.user._id
       });
+
+      console.log('New Stock Created:', stock);
     }
 
     const savedStock = await stock.save();
+    console.log('Stock Saved:', savedStock);
 
     res.status(201).json({ message: 'Stock added or updated successfully', stock: savedStock });
   } catch (error) {
@@ -47,18 +59,47 @@ exports.addStock = async (req, res) => {
 exports.deleteStock = async (req, res) => {
   try {
     const { id } = req.params;
-    const stock = await
-    Stock.findByIdAndDelete(id);
+    const { boxCount, totalCount } = req.body; // totalCount burada tanımlanmalı
+
+    // Log ekleyerek backend'e gelen verileri görün
+    console.log("Deleting stock with ID:", id);
+    console.log("Box Count Received:", boxCount);
+    console.log("Total Count Received:", totalCount); // totalCount burada loglanmalı
+
+    const stock = await Stock.findById(id); // İlgili stok kaydını buluyoruz
+
     if (!stock) {
       return res.status(404).json({ message: 'Stock not found' });
     }
-    res.status(200).json({ message: 'Stock deleted successfully', stock });
+
+    // Eğer stokta mevcut koli sayısı, silinmek istenen koli sayısından küçükse hata dönüyoruz
+    if (stock.boxCount < boxCount) {
+      return res.status(400).json({ message: 'Not enough stock to delete' });
+    }
+
+    // Stok miktarını ve toplam adet sayısını güncelliyoruz
+    stock.boxCount -= boxCount;
+    stock.total -= totalCount;  // totalCount'ı total alanı üzerinden eksiltiyoruz
+
+    // Eğer tüm koli ve toplam sayı sıfıra düştüyse kaydı tamamen siliyoruz
+    if (stock.boxCount === 0 && stock.total === 0) {
+      await Stock.findByIdAndDelete(id);
+      return res.status(200).json({ message: 'Stock fully deleted', stock });
+    }
+
+    // Eğer tamamen silinmediyse sadece güncellenmiş haliyle kaydediyoruz
+    await stock.save();
+
+    res.status(200).json({ message: 'Stock updated successfully', stock });
   }
   catch (error) {
     console.error('Error deleting stock:', error);
     res.status(500).json({ message: 'Error deleting stock', error: error.message });
   }
 };
+
+
+
 
 
 exports.updateStock = async (req, res) => {
@@ -228,26 +269,59 @@ exports.getStocksAddedInPeriod = (req, res) => {
 
 
 
+// // Get paginated and filtered active stocks
+// exports.getPaginatedActiveStock = async (req, res) => {
+//   try {
+//     const { page = 1, limit = 10, size, weight } = req.query;
+//
+//     const filter = {};
+//     if (size) filter.size = size;
+//     if (weight) filter.weight = weight;
+//
+//     const stocks = await Stock.find(filter)
+//       .sort({ date: -1 }) // Sort by date, newest first
+//       .skip((page - 1) * limit) // Calculate how many documents to skip
+//       .limit(parseInt(limit));  // Limit the number of documents
+//
+//     const totalCount = await Stock.countDocuments(filter);
+//
+//     res.status(200).json({
+//       totalPages: Math.ceil(totalCount / limit),
+//       currentPage: page,
+//       stocks
+//     });
+//   } catch (error) {
+//     console.error('Error getting paginated active stocks:', error);
+//     res.status(500).json({ message: 'Error getting paginated active stocks', error: error.message });
+//   }
+// };
+
+
 // Get paginated and filtered active stocks
 exports.getPaginatedActiveStock = async (req, res) => {
   try {
-    const { page = 1, limit = 10, size, weight } = req.query;
-    
-    const filter = {};
-    if (size) filter.size = size;
-    if (weight) filter.weight = weight;
-    
-    const stocks = await Stock.find(filter)
-      .sort({ date: -1 }) // Sort by date, newest first
-      .skip((page - 1) * limit) // Calculate how many documents to skip
-      .limit(parseInt(limit));  // Limit the number of documents
+    const page = parseInt(req.query.page) || 1;  // Sayıya çevir
+    const limit = parseInt(req.query.limit) || 10;  // Sayıya çevir
+    const { size, weight } = req.query;  // Filtreler
 
+    const filter = {};  // Boş bir filtre nesnesi oluştur
+    if (size) filter.size = size;  // Eğer size varsa filtreye ekle
+    if (weight) filter.weight = weight;  // Eğer weight varsa filtreye ekle
+
+    // Stokları filtreleyip, sıralayıp, sayfalama işlemi yapıyoruz
+    const stocks = await Stock.find(filter)
+        .sort({ date: -1 })  // Tarihe göre ters sırala (en yeni ilk sırada)
+        .skip((page - 1) * limit)  // Sayfaya göre kaç tane belge atlanacak
+        .limit(limit);  // Kaç tane belge alınacak
+
+    // Toplam stok sayısını buluyoruz (filtreli)
     const totalCount = await Stock.countDocuments(filter);
 
     res.status(200).json({
-      totalPages: Math.ceil(totalCount / limit),
-      currentPage: page,
-      stocks
+      totalPages: Math.ceil(totalCount / limit),  // Toplam sayfa sayısı
+      currentPage: page,  // Şu anki sayfa
+      totalItems: totalCount,  // Toplam stok sayısı (totalItems ekliyoruz)
+      stocks  // Filtrelenmiş stokları döndürüyoruz
     });
   } catch (error) {
     console.error('Error getting paginated active stocks:', error);
@@ -290,7 +364,6 @@ exports.getPaginatedPassiveStock = async (req, res) => {
 };
 
 
-
 // Get paginated and filtered all stocks (active and passive)
 exports.getPaginatedAllStocks = async (req, res) => {
   try {
@@ -302,16 +375,16 @@ exports.getPaginatedAllStocks = async (req, res) => {
     if (weight) filter.weight = weight;
 
     const activeStocksQuery = Stock.find(filter)
-      .sort({ date: -1 })
-      .skip((page - 1) * limit)
-      .limit(parseInt(limit));
+        .sort({ date: -1 })
+        .skip((page - 1) * limit)
+        .limit(parseInt(limit));
 
     const totalActiveCountQuery = Stock.countDocuments(filter);
 
     // Fetch passive stocks from the Customer collection
     const customers = await Customer.find()
-      .select('purchases')
-      .lean();
+        .select('purchases')
+        .lean();
 
     let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
 
@@ -332,14 +405,14 @@ exports.getPaginatedAllStocks = async (req, res) => {
     res.status(200).json({
       totalPages: Math.ceil(totalCount / limit),
       currentPage: page,
-      allStocks
+      allStocks,
+      totalItems: totalCount  // totalItems backend response'a eklendi
     });
   } catch (error) {
     console.error('Error getting paginated all stocks:', error);
     res.status(500).json({ message: 'Error getting paginated all stocks', error: error.message });
   }
 };
-
 
 
 exports.searchNotesAllStocks = async (req, res) => {
