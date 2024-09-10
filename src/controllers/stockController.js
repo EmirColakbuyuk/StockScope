@@ -317,6 +317,60 @@ exports.getStocksAddedInPeriod = (req, res) => {
 };
 
 
+// Get distinct values by field
+exports.getDistinctValuesByField = async (req, res) => {
+  try {
+    const { field } = req.params;
+
+    // List of fields to check if field is valid
+    const validFields = ['size', 'weight'];
+
+    // Check if the provided field is valid
+    if (!validFields.includes(field)) {
+      return res.status(400).json({ message: 'Invalid field name' });
+    }
+
+    // Get distinct values for the specified field
+    const distinctValues = await Stock.distinct(field);
+
+    res.status(200).json({ [field]: distinctValues });
+  } catch (error) {
+    console.error('Error getting distinct values by field:', error);
+    res.status(500).json({ message: 'Error getting distinct values by field', error: error.message });
+  }
+};
+
+
+// Get all distinct sizes
+exports.getAllSizes = async (req, res) => {
+  try {
+    const sizes = await Stock.distinct('size');
+    res.status(200).json(sizes);
+  } catch (error) {
+    console.error('Error getting sizes:', error);
+    res.status(500).json({ message: 'Error getting sizes', error: error.message });
+  }
+};
+
+
+// Get distinct weights by size
+exports.getDistinctWeightsBySize = async (req, res) => {
+  try {
+    const { size } = req.params;
+
+    // Fetch distinct weights for the given size
+    const distinctWeights = await Stock.distinct('weight', { size });
+
+    res.status(200).json({ size, weights: distinctWeights });
+  } catch (error) {
+    console.error('Error getting distinct weights by size:', error);
+    res.status(500).json({ message: 'Error getting distinct weights by size', error: error.message });
+  }
+};
+
+
+
+
 // Get paginated and filtered active stocks
 exports.getPaginatedActiveStock = async (req, res) => {
   try {
@@ -505,6 +559,8 @@ exports.searchNotesAllStocks = async (req, res) => {
     res.status(500).json({ message: 'Error searching stocks by notes', error: error.message });
   }
 };
+
+
 // 2. Search for active stocks by notes
 exports.searchNotesActiveStocks = async (req, res) => {
   try {

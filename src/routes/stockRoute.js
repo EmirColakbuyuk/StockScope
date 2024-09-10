@@ -13,6 +13,9 @@ router.get('/getAllPassiveStocks',auth , stockController.getAllPassiveStock); //
 router.get('/getAllStocks',auth , stockController.getAllStocks); 
 router.post('/sellStock', auth, stockController.sellStock); // Sell stock
 router.get('/stocks-added-in-period', auth,  stockController.getStocksAddedInPeriod);
+router.get('/stocks/distinct/:field', auth, stockController.getDistinctValuesByField); // Get distinct values by name  
+router.get('/stock/getAllSizes', auth, stockController.getAllSizes); // Get all sizes
+router.get('/stock/getWeightBySize/:size', auth, stockController.getDistinctWeightsBySize); // Get distinct values by field
 
 router.get('/allStockPaginated', auth, stockController.getPaginatedAllStocks); // Get all stocks with pagination
 router.get('/allStockActivePaginated', auth, stockController.getPaginatedActiveStock); // Get only active stocks with pagination
