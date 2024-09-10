@@ -19,7 +19,7 @@ router.get('/allStockPassivePaginated', auth, stockController.getPaginatedPassiv
 router.get('/searchNotesAllStocks', auth, stockController.searchNotesAllStocks); // Search all stocks by notes
 router.get('/searchNotesActiveStocks', auth, stockController.searchNotesActiveStocks); // Search active stocks by notes
 router.get('/searchNotesPassiveStocks', auth, stockController.searchNotesPassiveStocks); // Search passive stocks by notes
-router.get('/filterStocks', auth, stockController.filterStocks); // Filter all stocks
+router.get('/filterStocks', auth, stockController.filterAllStocks); // Filter all stocks
 router.get('/filterActiveStocks', auth, stockController.filterActiveStocks); // Filter active stocks
 router.get('/filterPassiveStocks', auth, stockController.filterPassiveStocks); // Filter passive stocks
 
