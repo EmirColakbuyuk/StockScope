@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 // Stock routes
 router.post('/addstocks',auth , stockController.addStock); // Add a new stock
 router.delete('/deleteStock/:id',auth , stockController.deleteStock); // Delete a stock by ID
+router.delete('/deleteStockFromCustomers', auth, stockController.deleteStockFromCustomer); // Delete all stocks from a customer
 router.put('/updateStock/:id',auth , stockController.updateStock); // Update a stock by ID
 router.get('/getallActiveStocks',auth , stockController.getAllActiveStock); // Get all active stocks
 router.get('/getAllPassiveStocks',auth , stockController.getAllPassiveStock); // Get all passive stocks

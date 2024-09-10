@@ -3,6 +3,8 @@ const Customer = require('../models/customer');
 const moment = require('moment-timezone');
 const { filterLogs } = require('../middleware/logger.js');
 
+const mongoose = require('mongoose');
+
 
 exports.addStock = async (req, res) => {
   try {
@@ -97,6 +99,53 @@ exports.deleteStock = async (req, res) => {
     res.status(500).json({ message: 'Error deleting stock', error: error.message });
   }
 };
+
+
+exports.deleteStockFromCustomer = async (req, res) => {
+  try {
+    const { customerId, purchaseId } = req.body;
+
+    // Find the customer by their ID
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    // Find the purchase details
+    const purchase = customer.purchases.id(purchaseId);
+    if (!purchase) {
+      return res.status(404).json({ message: 'Purchase not found' });
+    }
+
+    // Find the stock entry by size and weight
+    const stock = await Stock.findOne({ size: purchase.size, weight: purchase.weight });
+    if (!stock) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
+
+    // Calculate the total items in the purchase
+    const totalItems = purchase.boxCount * purchase.packageCount * purchase.packageContain;
+
+    // Increase the stock quantities
+    stock.total += totalItems;
+    stock.boxCount += purchase.boxCount;
+
+    // Remove the purchase from the customer's purchases
+    customer.purchases.pull(purchaseId);
+
+    // Save changes
+    await customer.save();
+    await stock.save();
+
+    res.status(200).json({ message: 'Stock restored successfully', stock, customer });
+  } catch (error) {
+    console.error('Error deleting stock from customer:', error);
+    res.status(500).json({ message: 'Error deleting stock from customer', error: error.message });
+  }
+};
+
+
+
 
 
 
@@ -268,35 +317,6 @@ exports.getStocksAddedInPeriod = (req, res) => {
 };
 
 
-
-// // Get paginated and filtered active stocks
-// exports.getPaginatedActiveStock = async (req, res) => {
-//   try {
-//     const { page = 1, limit = 10, size, weight } = req.query;
-//
-//     const filter = {};
-//     if (size) filter.size = size;
-//     if (weight) filter.weight = weight;
-//
-//     const stocks = await Stock.find(filter)
-//       .sort({ date: -1 }) // Sort by date, newest first
-//       .skip((page - 1) * limit) // Calculate how many documents to skip
-//       .limit(parseInt(limit));  // Limit the number of documents
-//
-//     const totalCount = await Stock.countDocuments(filter);
-//
-//     res.status(200).json({
-//       totalPages: Math.ceil(totalCount / limit),
-//       currentPage: page,
-//       stocks
-//     });
-//   } catch (error) {
-//     console.error('Error getting paginated active stocks:', error);
-//     res.status(500).json({ message: 'Error getting paginated active stocks', error: error.message });
-//   }
-// };
-
-
 // Get paginated and filtered active stocks
 exports.getPaginatedActiveStock = async (req, res) => {
   try {
@@ -330,23 +350,32 @@ exports.getPaginatedActiveStock = async (req, res) => {
 };
 
 
-
-
 // Get paginated and filtered passive stocks
 exports.getPaginatedPassiveStock = async (req, res) => {
   try {
-    const { page = 1, limit = 10, size, weight } = req.query;
+    const { page = 1, limit = 10, size, weight, boxCount, packageCount, packageContain, date } = req.query;
 
     // Find all customers and retrieve their purchases
     const customers = await Customer.find()
       .select('purchases')
       .lean(); // Fetch only the 'purchases' field
 
-    // Flatten purchases and filter them based on query parameters
+    // Flatten purchases
     let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
     
+    // Apply filters
     if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
     if (weight) passiveStocks = passiveStocks.filter(purchase => purchase.weight === weight);
+    if (boxCount) passiveStocks = passiveStocks.filter(purchase => purchase.boxCount === boxCount);
+    if (packageCount) passiveStocks = passiveStocks.filter(purchase => purchase.packageCount === packageCount);
+    if (packageContain) passiveStocks = passiveStocks.filter(purchase => purchase.packageContain === packageContain);
+    if (date) passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date).toISOString().split('T')[0] === new Date(date).toISOString().split('T')[0]);
+
+    // Calculate total for each purchase
+    passiveStocks = passiveStocks.map(purchase => ({
+      ...purchase,
+      total: purchase.boxCount * purchase.packageCount * purchase.packageContain
+    }));
 
     // Pagination
     const totalCount = passiveStocks.length;
@@ -354,7 +383,8 @@ exports.getPaginatedPassiveStock = async (req, res) => {
 
     res.status(200).json({
       totalPages: Math.ceil(totalCount / limit),
-      currentPage: page,
+      currentPage: Number(page),
+      totalItems: totalCount,
       passiveStocks: paginatedStocks
     });
   } catch (error) {
@@ -375,21 +405,28 @@ exports.getPaginatedAllStocks = async (req, res) => {
     if (weight) filter.weight = weight;
 
     const activeStocksQuery = Stock.find(filter)
-        .sort({ date: -1 })
-        .skip((page - 1) * limit)
-        .limit(parseInt(limit));
+      .sort({ date: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
 
     const totalActiveCountQuery = Stock.countDocuments(filter);
 
     // Fetch passive stocks from the Customer collection
     const customers = await Customer.find()
-        .select('purchases')
-        .lean();
+      .select('purchases')
+      .lean();
 
     let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
-
+    
+    // Apply filters to passive stocks
     if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
     if (weight) passiveStocks = passiveStocks.filter(purchase => purchase.weight === weight);
+
+    // Calculate total for each passive stock
+    passiveStocks = passiveStocks.map(purchase => ({
+      ...purchase,
+      total: purchase.boxCount * purchase.packageCount * purchase.packageContain
+    }));
 
     // Calculate pagination for passive stocks
     const totalPassiveCount = passiveStocks.length;
@@ -404,7 +441,7 @@ exports.getPaginatedAllStocks = async (req, res) => {
 
     res.status(200).json({
       totalPages: Math.ceil(totalCount / limit),
-      currentPage: page,
+      currentPage: Number(page),
       allStocks,
       totalItems: totalCount  // totalItems backend response'a eklendi
     });
@@ -413,6 +450,7 @@ exports.getPaginatedAllStocks = async (req, res) => {
     res.status(500).json({ message: 'Error getting paginated all stocks', error: error.message });
   }
 };
+
 
 
 exports.searchNotesAllStocks = async (req, res) => {
