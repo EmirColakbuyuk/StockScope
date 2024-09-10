@@ -578,8 +578,11 @@ exports.searchNotesPassiveStocks = async (req, res) => {
 };
 
 
-// 1. Tüm durumlar için filtreleme (status fark etmeksizin)
-exports.filterStocks = async (req, res) => {
+
+// FILTER
+
+// 3. Tüm stoklar için filtreleme (aktif ve pasif stoklar)
+exports.filterAllStocks = async (req, res) => {
   try {
     const {
       page = 1,
@@ -593,24 +596,23 @@ exports.filterStocks = async (req, res) => {
       boxCountValue1,
       boxCountComparison2,
       boxCountValue2,
-      itemsPerBoxComparison1,
-      itemsPerBoxValue1,
-      itemsPerBoxComparison2,
-      itemsPerBoxValue2,
-      itemsPerPackageComparison1,
-      itemsPerPackageValue1,
-      itemsPerPackageComparison2,
-      itemsPerPackageValue2,
+      totalComparison1,
+      totalValue1,
+      totalComparison2,
+      totalValue2,
       dateBefore,
       dateAfter,
       dateExact,
       passiveDateBefore,
       passiveDateAfter,
-      passiveDateExact
+      passiveDateExact,
+      customerId, // Müşteri ID'sine göre filtreleme
+      customerName, // Müşteri ismine göre filtreleme
+      status // 'active', 'passive', veya 'all' olabilir
     } = req.query;
 
+    // Aktif stoklar için filtreleme
     let filterCriteria = {};
-
     if (size) filterCriteria.size = size;
 
     if (weightValue1 && weightComparison1) {
@@ -625,68 +627,104 @@ exports.filterStocks = async (req, res) => {
     if (boxCountValue2 && boxCountComparison2) {
       filterCriteria.boxCount = { ...filterCriteria.boxCount, [`$${boxCountComparison2}`]: boxCountValue2 };
     }
-    if (itemsPerBoxValue1 && itemsPerBoxComparison1) {
-      filterCriteria.itemsPerBox = { ...filterCriteria.itemsPerBox, [`$${itemsPerBoxComparison1}`]: itemsPerBoxValue1 };
+
+    // Total için filtreleme
+    if (totalValue1 && totalComparison1) {
+      filterCriteria.total = { ...filterCriteria.total, [`$${totalComparison1}`]: totalValue1 };
     }
-    if (itemsPerBoxValue2 && itemsPerBoxComparison2) {
-      filterCriteria.itemsPerBox = { ...filterCriteria.itemsPerBox, [`$${itemsPerBoxComparison2}`]: itemsPerBoxValue2 };
-    }
-    if (itemsPerPackageValue1 && itemsPerPackageComparison1) {
-      filterCriteria.itemsPerPackage = { ...filterCriteria.itemsPerPackage, [`$${itemsPerPackageComparison1}`]: itemsPerPackageValue1 };
-    }
-    if (itemsPerPackageValue2 && itemsPerPackageComparison2) {
-      filterCriteria.itemsPerPackage = { ...filterCriteria.itemsPerPackage, [`$${itemsPerPackageComparison2}`]: itemsPerPackageValue2 };
+    if (totalValue2 && totalComparison2) {
+      filterCriteria.total = { ...filterCriteria.total, [`$${totalComparison2}`]: totalValue2 };
     }
 
-    if (dateBefore) {
-      filterCriteria.date = { ...filterCriteria.date, $lt: new Date(dateBefore) };
-    }
-    if (dateAfter) {
-      filterCriteria.date = { ...filterCriteria.date, $gt: new Date(dateAfter) };
-    }
+    // Stoğa giriş tarihi filtreleri
+    if (dateBefore) filterCriteria.date = { ...filterCriteria.date, $lt: new Date(dateBefore) };
+    if (dateAfter) filterCriteria.date = { ...filterCriteria.date, $gt: new Date(dateAfter) };
     if (dateExact) {
       const exactDate = new Date(dateExact);
       filterCriteria.date = { ...filterCriteria.date, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
     }
 
+    // Duruma göre aktif stokları getirme
+    let activeStocks = [];
+    let totalActiveCount = 0;
+    if (status === 'active' || status === 'all') {
+      activeStocks = await Stock.find(filterCriteria)
+          .sort({ date: -1 })
+          .skip((page - 1) * limit)
+          .limit(Number(limit));
+      totalActiveCount = await Stock.countDocuments(filterCriteria);
+    }
+
+    // Pasif stoklar için müşteri verilerinden purchases çekilecek
+    let customerFilter = {}; // Müşteri filtrelemesi
+    if (customerId) customerFilter._id = customerId;
+    if (customerName) customerFilter.name = { $regex: customerName, $options: 'i' }; // Case insensitive arama
+
+    const customers = await Customer.find(customerFilter)
+        .select('purchases')
+        .lean();
+
+    let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+
+    // Pasif stoklar için filtreler
+    if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
+    if (weightValue1 && weightComparison1) {
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.weight} ${weightComparison1} ${weightValue1}`));
+    }
+    if (weightValue2 && weightComparison2) {
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.weight} ${weightComparison2} ${weightValue2}`));
+    }
+    if (boxCountValue1 && boxCountComparison1) {
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.boxCount} ${boxCountComparison1} ${boxCountValue1}`));
+    }
+    if (boxCountValue2 && boxCountComparison2) {
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.boxCount} ${boxCountComparison2} ${boxCountValue2}`));
+    }
+
+    // Pasif stoklar için stoktan çıkış tarihi filtreleri
     if (passiveDateBefore) {
-      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $lt: new Date(passiveDateBefore) };
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) < new Date(passiveDateBefore));
     }
     if (passiveDateAfter) {
-      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gt: new Date(passiveDateAfter) };
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) > new Date(passiveDateAfter));
     }
     if (passiveDateExact) {
-      const exactDate = new Date(passiveDateExact);
-      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
+      const exactPassiveDate = new Date(passiveDateExact);
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) >= exactPassiveDate && new Date(purchase.date) < new Date(exactPassiveDate.getTime() + 24 * 60 * 60 * 1000));
     }
 
-    // Filtrelenmiş sonuçları getir
-    const stocks = await Stock.find(filterCriteria)
-        .sort({ date: -1 })
-        .skip((page - 1) * limit)
-        .limit(Number(limit))
-        .exec();
+    const totalPassiveCount = passiveStocks.length;
+    const paginatedPassiveStocks = passiveStocks.slice((page - 1) * limit, page * limit);
 
-    // Toplam filtrelenmiş sonuçları say
-    // const count = await Stock.countDocuments(filterCriteria);
-    const count = stocks.length;
+    // Eğer 'passive' seçilmişse sadece pasif stokları döndür, 'all' ise her ikisini de
+    let allStocks = [];
+    if (status === 'passive') {
+      allStocks = paginatedPassiveStocks;
+    } else if (status === 'all') {
+      allStocks = [...activeStocks, ...paginatedPassiveStocks];
+    } else {
+      allStocks = activeStocks; // Default olarak aktif stokları göster
+    }
+
+    const totalCount = status === 'all' ? totalActiveCount + totalPassiveCount : (status === 'passive' ? totalPassiveCount : totalActiveCount);
 
     res.status(200).json({
-      stocks,
-      totalPages: Math.ceil(count / limit),
-      currentPage: Number(page),
-      totalItems: count,
+      allStocks,
+      totalPages: Math.ceil(totalCount / limit),
+      currentPage: page,
+      totalItems: totalCount
     });
   } catch (error) {
-    console.error('Error filtering stocks:', error);
-    res.status(500).json({ message: 'Error filtering stocks', error: error.message });
+    console.error('Error filtering all stocks:', error);
+    res.status(500).json({ message: 'Error filtering all stocks', error: error.message });
   }
 };
 
 
 
 
-// 2. Sadece "active" status için filtreleme (stoğa giriş tarihi baz alınacak)
+
+// 1. Sadece aktif stoklar için filtreleme
 exports.filterActiveStocks = async (req, res) => {
   try {
     const {
@@ -701,24 +739,19 @@ exports.filterActiveStocks = async (req, res) => {
       boxCountValue1,
       boxCountComparison2,
       boxCountValue2,
-      itemsPerBoxComparison1,
-      itemsPerBoxValue1,
-      itemsPerBoxComparison2,
-      itemsPerBoxValue2,
-      itemsPerPackageComparison1,
-      itemsPerPackageValue1,
-      itemsPerPackageComparison2,
-      itemsPerPackageValue2,
-      dateBefore,        // Stoğa giriş tarihi için
-      dateAfter,         // Stoğa giriş tarihi için
-      dateExact          // Stoğa giriş tarihi için
+      totalComparison1,
+      totalValue1,
+      totalComparison2,
+      totalValue2,
+      dateBefore,
+      dateAfter,
+      dateExact
     } = req.query;
 
-    let filterCriteria = { status: 'active' };
+    let filterCriteria = {};  // Artık status yok
 
     if (size) filterCriteria.size = size;
 
-    // Comparison criteria for weight, boxCount, itemsPerBox, itemsPerPackage
     if (weightValue1 && weightComparison1) {
       filterCriteria.weight = { ...filterCriteria.weight, [`$${weightComparison1}`]: weightValue1 };
     }
@@ -731,20 +764,16 @@ exports.filterActiveStocks = async (req, res) => {
     if (boxCountValue2 && boxCountComparison2) {
       filterCriteria.boxCount = { ...filterCriteria.boxCount, [`$${boxCountComparison2}`]: boxCountValue2 };
     }
-    if (itemsPerBoxValue1 && itemsPerBoxComparison1) {
-      filterCriteria.itemsPerBox = { ...filterCriteria.itemsPerBox, [`$${itemsPerBoxComparison1}`]: itemsPerBoxValue1 };
+
+    // Total için filtreleme
+    if (totalValue1 && totalComparison1) {
+      filterCriteria.total = { ...filterCriteria.total, [`$${totalComparison1}`]: totalValue1 };
     }
-    if (itemsPerBoxValue2 && itemsPerBoxComparison2) {
-      filterCriteria.itemsPerBox = { ...filterCriteria.itemsPerBox, [`$${itemsPerBoxComparison2}`]: itemsPerBoxValue2 };
-    }
-    if (itemsPerPackageValue1 && itemsPerPackageComparison1) {
-      filterCriteria.itemsPerPackage = { ...filterCriteria.itemsPerPackage, [`$${itemsPerPackageComparison1}`]: itemsPerPackageValue1 };
-    }
-    if (itemsPerPackageValue2 && itemsPerPackageComparison2) {
-      filterCriteria.itemsPerPackage = { ...filterCriteria.itemsPerPackage, [`$${itemsPerPackageComparison2}`]: itemsPerPackageValue2 };
+    if (totalValue2 && totalComparison2) {
+      filterCriteria.total = { ...filterCriteria.total, [`$${totalComparison2}`]: totalValue2 };
     }
 
-    // Date filters for stoğa giriş (date)
+    // Stoğa giriş tarihi için filtreler
     if (dateBefore) {
       filterCriteria.date = { ...filterCriteria.date, $lt: new Date(dateBefore) };
     }
@@ -757,13 +786,11 @@ exports.filterActiveStocks = async (req, res) => {
     }
 
     const stocks = await Stock.find(filterCriteria)
-        .sort({ date: -1 })  // Tarihe göre sıralama
-        .limit(Number(limit))
+        .sort({ date: -1 })
         .skip((page - 1) * limit)
-        .exec();
+        .limit(Number(limit));
 
-    // const count = await Stock.countDocuments(filterCriteria);
-    const count = stocks.length;
+    const count = await Stock.countDocuments(filterCriteria);
 
     res.status(200).json({
       stocks,
@@ -777,7 +804,8 @@ exports.filterActiveStocks = async (req, res) => {
   }
 };
 
-// 3. Sadece "passive" status için filtreleme (stoktan çıkış tarihi baz alınacak)
+
+// 2. Sadece pasif stoklar için filtreleme
 exports.filterPassiveStocks = async (req, res) => {
   try {
     const {
@@ -792,75 +820,87 @@ exports.filterPassiveStocks = async (req, res) => {
       boxCountValue1,
       boxCountComparison2,
       boxCountValue2,
-      itemsPerBoxComparison1,
-      itemsPerBoxValue1,
-      itemsPerBoxComparison2,
-      itemsPerBoxValue2,
-      itemsPerPackageComparison1,
-      itemsPerPackageValue1,
-      itemsPerPackageComparison2,
-      itemsPerPackageValue2,
-      passiveDateBefore, // Stoktan çıkış tarihi için
-      passiveDateAfter,  // Stoktan çıkış tarihi için
-      passiveDateExact   // Stoktan çıkış tarihi için
+      totalComparison1,
+      totalValue1,
+      totalComparison2,
+      totalValue2,
+      dateBefore,
+      dateAfter,
+      dateExact,
+      passiveDateBefore,
+      passiveDateAfter,
+      passiveDateExact,
+      customerId, // Customer'a göre filtreleme için ekleme
+      customerName // Customer ismine göre filtreleme
     } = req.query;
 
-    let filterCriteria = { status: 'passive' };
+    // Pasif stokların alınması için müşterilerin purchases'larına bakacağız
+    let customerFilter = {};  // Müşteriye göre filtreleme
+    if (customerId) {
+      customerFilter._id = customerId;
+    }
+    if (customerName) {
+      customerFilter.name = { $regex: customerName, $options: 'i' };  // Case insensitive isim araması
+    }
 
-    if (size) filterCriteria.size = size;
+    const customers = await Customer.find(customerFilter)
+        .select('purchases')
+        .lean();
 
-    // Comparison criteria for weight, boxCount, itemsPerBox, itemsPerPackage
+    let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+
+    if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
     if (weightValue1 && weightComparison1) {
-      filterCriteria.weight = { ...filterCriteria.weight, [`$${weightComparison1}`]: weightValue1 };
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.weight} ${weightComparison1} ${weightValue1}`));
     }
     if (weightValue2 && weightComparison2) {
-      filterCriteria.weight = { ...filterCriteria.weight, [`$${weightComparison2}`]: weightValue2 };
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.weight} ${weightComparison2} ${weightValue2}`));
     }
     if (boxCountValue1 && boxCountComparison1) {
-      filterCriteria.boxCount = { ...filterCriteria.boxCount, [`$${boxCountComparison1}`]: boxCountValue1 };
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.boxCount} ${boxCountComparison1} ${boxCountValue1}`));
     }
     if (boxCountValue2 && boxCountComparison2) {
-      filterCriteria.boxCount = { ...filterCriteria.boxCount, [`$${boxCountComparison2}`]: boxCountValue2 };
-    }
-    if (itemsPerBoxValue1 && itemsPerBoxComparison1) {
-      filterCriteria.itemsPerBox = { ...filterCriteria.itemsPerBox, [`$${itemsPerBoxComparison1}`]: itemsPerBoxValue1 };
-    }
-    if (itemsPerBoxValue2 && itemsPerBoxComparison2) {
-      filterCriteria.itemsPerBox = { ...filterCriteria.itemsPerBox, [`$${itemsPerBoxComparison2}`]: itemsPerBoxValue2 };
-    }
-    if (itemsPerPackageValue1 && itemsPerPackageComparison1) {
-      filterCriteria.itemsPerPackage = { ...filterCriteria.itemsPerPackage, [`$${itemsPerPackageComparison1}`]: itemsPerPackageValue1 };
-    }
-    if (itemsPerPackageValue2 && itemsPerPackageComparison2) {
-      filterCriteria.itemsPerPackage = { ...filterCriteria.itemsPerPackage, [`$${itemsPerPackageComparison2}`]: itemsPerPackageValue2 };
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.boxCount} ${boxCountComparison2} ${boxCountValue2}`));
     }
 
-    // Date filters for stoktan çıkış (updatedAt)
+    // Total için filtreleme
+    if (totalValue1 && totalComparison1) {
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.total} ${totalComparison1} ${totalValue1}`));
+    }
+    if (totalValue2 && totalComparison2) {
+      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.total} ${totalComparison2} ${totalValue2}`));
+    }
+
+    // Stoğa giriş ve stoktan çıkış tarihleri için filtreleme
+    if (dateBefore) {
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) < new Date(dateBefore));
+    }
+    if (dateAfter) {
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) > new Date(dateAfter));
+    }
+    if (dateExact) {
+      const exactDate = new Date(dateExact);
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) >= exactDate && new Date(purchase.date) < new Date(exactDate.getTime() + 24 * 60 * 60 * 1000));
+    }
     if (passiveDateBefore) {
-      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $lt: new Date(passiveDateBefore) };
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) < new Date(passiveDateBefore));
     }
     if (passiveDateAfter) {
-      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gt: new Date(passiveDateAfter) };
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) > new Date(passiveDateAfter));
     }
     if (passiveDateExact) {
-      const exactDate = new Date(passiveDateExact);
-      filterCriteria.updatedAt = { ...filterCriteria.updatedAt, $gte: exactDate, $lt: new Date(exactDate.getTime() + 24 * 60 * 60 * 1000) };
+      const exactPassiveDate = new Date(passiveDateExact);
+      passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date) >= exactPassiveDate && new Date(purchase.date) < new Date(exactPassiveDate.getTime() + 24 * 60 * 60 * 1000));
     }
 
-    const stocks = await Stock.find(filterCriteria)
-        .sort({ updatedAt: -1 })  // Stoktan çıkış tarihine göre sıralama
-        .limit(Number(limit))
-        .skip((page - 1) * limit)
-        .exec();
-
-    // const count = await Stock.countDocuments(filterCriteria);
-    const count = stocks.length;
+    const totalCount = passiveStocks.length;
+    const paginatedPassiveStocks = passiveStocks.slice((page - 1) * limit, page * limit);
 
     res.status(200).json({
-      stocks,
-      totalPages: Math.ceil(count / limit),
-      currentPage: Number(page),
-      totalItems: count,
+      passiveStocks: paginatedPassiveStocks,
+      totalPages: Math.ceil(totalCount / limit),
+      currentPage: page,
+      totalItems: totalCount
     });
   } catch (error) {
     console.error('Error filtering passive stocks:', error);
