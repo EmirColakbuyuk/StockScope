@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
     };
     console.log('Payload:', payload);
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1000000000000000h' });
     console.log('Generated Token:', token);
 
     res.json({
