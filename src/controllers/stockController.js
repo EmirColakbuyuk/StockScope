@@ -100,40 +100,94 @@ exports.deleteStock = async (req, res) => {
   }
 };
 
+//
+// exports.deleteStockFromCustomer = async (req, res) => {
+//   try {
+//     console.log("Gelen veri:", req.body);
+//     const { customerId, purchaseId } = req.body;
+//
+//     // Find the customer by their ID
+//     const customer = await Customer.findById(customerId);
+//     if (!customer) {
+//       return res.status(404).json({ message: 'Customer not found' });
+//     }
+//
+//     // Find the purchase details
+//     const purchase = customer.purchases.id(purchaseId);
+//     if (!purchase) {
+//       return res.status(404).json({ message: 'Purchase not found' });
+//     }
+//
+//     // Find the stock entry by size and weight
+//     const stock = await Stock.findOne({ size: purchase.size, weight: purchase.weight });
+//     if (!stock) {
+//       return res.status(404).json({ message: 'Stock not found' });
+//     }
+//
+//     // Calculate the total items in the purchase
+//     const totalItems = purchase.boxCount * purchase.packageCount * purchase.packageContain;
+//
+//     // Increase the stock quantities
+//     stock.total += totalItems;
+//     stock.boxCount += purchase.boxCount;
+//
+//     // Remove the purchase from the customer's purchases
+//     customer.purchases.pull(purchaseId);
+//
+//     // Save changes
+//     await customer.save();
+//     await stock.save();
+//
+//     res.status(200).json({ message: 'Stock restored successfully', stock, customer });
+//   } catch (error) {
+//     console.error('Error deleting stock from customer:', error);
+//     res.status(500).json({ message: 'Error deleting stock from customer', error: error.message });
+//   }
+// };
 
 exports.deleteStockFromCustomer = async (req, res) => {
   try {
+    console.log("Gelen veri:", req.body);
     const { customerId, purchaseId } = req.body;
 
-    // Find the customer by their ID
+    // Müşteriyi ID'ye göre bul
     const customer = await Customer.findById(customerId);
     if (!customer) {
       return res.status(404).json({ message: 'Customer not found' });
     }
 
-    // Find the purchase details
+    // İlgili satın alma işlemini bul
     const purchase = customer.purchases.id(purchaseId);
     if (!purchase) {
       return res.status(404).json({ message: 'Purchase not found' });
     }
 
-    // Find the stock entry by size and weight
-    const stock = await Stock.findOne({ size: purchase.size, weight: purchase.weight });
-    if (!stock) {
-      return res.status(404).json({ message: 'Stock not found' });
+    // Toplam miktarı hesapla: paket sayısı * paket içeriği
+    const totalItems = purchase.packageCount * purchase.packageContain;
+
+    // Stoğu boyut ve ağırlığa göre kontrol et
+    let stock = await Stock.findOne({ size: purchase.size, weight: purchase.weight });
+
+    if (stock) {
+      // Stok mevcutsa, ilgili miktarları ekle
+      stock.total += totalItems;
+      stock.boxCount += purchase.boxCount;
+    } else {
+      // Stok yoksa yeni bir stok oluştur
+      stock = new Stock({
+        size: purchase.size,
+        weight: purchase.weight,
+        boxCount: purchase.boxCount,
+        total: totalItems,
+        createdBy: customer.createdBy, // Stoğu kimin oluşturduğu bilgisi
+        notes: purchase.notes || '', // Satın alma notları (varsa)
+      });
     }
 
-    // Calculate the total items in the purchase
-    const totalItems = purchase.boxCount * purchase.packageCount * purchase.packageContain;
-
-    // Increase the stock quantities
-    stock.total += totalItems;
-    stock.boxCount += purchase.boxCount;
-
-    // Remove the purchase from the customer's purchases
+    // İlgili satın alma kaydını müşterinin purchases'ından sil
     customer.purchases.pull(purchaseId);
 
-    // Save changes
+    // Değişiklikleri kaydet
     await customer.save();
     await stock.save();
 
@@ -143,6 +197,7 @@ exports.deleteStockFromCustomer = async (req, res) => {
     res.status(500).json({ message: 'Error deleting stock from customer', error: error.message });
   }
 };
+
 
 
 
@@ -405,18 +460,63 @@ exports.getPaginatedActiveStock = async (req, res) => {
 
 
 // Get paginated and filtered passive stocks
+// exports.getPaginatedPassiveStock = async (req, res) => {
+//   try {
+//     const { page = 1, limit = 10, size, weight, boxCount, packageCount, packageContain, date } = req.query;
+//
+//     // Find all customers and retrieve their purchases
+//     const customers = await Customer.find()
+//       .select('purchases')
+//       .lean(); // Fetch only the 'purchases' field
+//
+//     // Flatten purchases
+//     let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
+//
+//     // Apply filters
+//     if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
+//     if (weight) passiveStocks = passiveStocks.filter(purchase => purchase.weight === weight);
+//     if (boxCount) passiveStocks = passiveStocks.filter(purchase => purchase.boxCount === boxCount);
+//     if (packageCount) passiveStocks = passiveStocks.filter(purchase => purchase.packageCount === packageCount);
+//     if (packageContain) passiveStocks = passiveStocks.filter(purchase => purchase.packageContain === packageContain);
+//     if (date) passiveStocks = passiveStocks.filter(purchase => new Date(purchase.date).toISOString().split('T')[0] === new Date(date).toISOString().split('T')[0]);
+//
+//     // Calculate total for each purchase
+//     passiveStocks = passiveStocks.map(purchase => ({
+//       ...purchase,
+//       total: purchase.boxCount * purchase.packageCount * purchase.packageContain
+//     }));
+//
+//     // Pagination
+//     const totalCount = passiveStocks.length;
+//     const paginatedStocks = passiveStocks.slice((page - 1) * limit, page * limit);
+//
+//     res.status(200).json({
+//       totalPages: Math.ceil(totalCount / limit),
+//       currentPage: Number(page),
+//       totalItems: totalCount,
+//       passiveStocks: paginatedStocks
+//     });
+//   } catch (error) {
+//     console.error('Error getting paginated passive stocks:', error);
+//     res.status(500).json({ message: 'Error getting paginated passive stocks', error: error.message });
+//   }
+// };
 exports.getPaginatedPassiveStock = async (req, res) => {
   try {
     const { page = 1, limit = 10, size, weight, boxCount, packageCount, packageContain, date } = req.query;
 
     // Find all customers and retrieve their purchases
-    const customers = await Customer.find()
-      .select('purchases')
-      .lean(); // Fetch only the 'purchases' field
+    const customers = await Customer.find().lean(); // Fetch entire customers including purchases
 
-    // Flatten purchases
-    let passiveStocks = customers.reduce((acc, customer) => acc.concat(customer.purchases), []);
-    
+    // Flatten purchases and include customerId with each purchase
+    let passiveStocks = customers.reduce((acc, customer) => {
+      const purchasesWithCustomerId = customer.purchases.map(purchase => ({
+        ...purchase,
+        customerId: customer._id  // Add customerId to each purchase
+      }));
+      return acc.concat(purchasesWithCustomerId);
+    }, []);
+
     // Apply filters
     if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
     if (weight) passiveStocks = passiveStocks.filter(purchase => purchase.weight === weight);
@@ -446,6 +546,7 @@ exports.getPaginatedPassiveStock = async (req, res) => {
     res.status(500).json({ message: 'Error getting paginated passive stocks', error: error.message });
   }
 };
+
 
 
 // Get paginated and filtered all stocks (active and passive)
@@ -637,9 +738,13 @@ exports.searchNotesPassiveStocks = async (req, res) => {
 
 // FILTER
 
+
+
+
 // 3. Tüm stoklar için filtreleme (aktif ve pasif stoklar)
 exports.filterAllStocks = async (req, res) => {
   try {
+    console.log('Incoming request query:', req.query);
     const {
       page = 1,
       limit = 5,
@@ -664,32 +769,43 @@ exports.filterAllStocks = async (req, res) => {
       passiveDateExact,
       customerId, // Müşteri ID'sine göre filtreleme
       customerName, // Müşteri ismine göre filtreleme
-      status // 'active', 'passive', veya 'all' olabilir
+      status = 'active' // Varsayılan olarak 'active' olabilir
     } = req.query;
+
+    console.log('Status received:', status);
+
+    // Karşılaştırma operatörlerini eşle
+    const comparisonOperators = {
+      'gt': (a, b) => a > b,
+      'lt': (a, b) => a < b,
+      'eq': (a, b) => a === b,
+      'gte': (a, b) => a >= b,
+      'lte': (a, b) => a <= b
+    };
 
     // Aktif stoklar için filtreleme
     let filterCriteria = {};
     if (size) filterCriteria.size = size;
 
-    if (weightValue1 && weightComparison1) {
-      filterCriteria.weight = { ...filterCriteria.weight, [`$${weightComparison1}`]: weightValue1 };
+    if (weightValue1 && weightComparison1 && comparisonOperators[weightComparison1]) {
+      filterCriteria.weight = { ...filterCriteria.weight, [comparisonOperators[weightComparison1]]: parseFloat(weightValue1) };
     }
-    if (weightValue2 && weightComparison2) {
-      filterCriteria.weight = { ...filterCriteria.weight, [`$${weightComparison2}`]: weightValue2 };
+    if (weightValue2 && weightComparison2 && comparisonOperators[weightComparison2]) {
+      filterCriteria.weight = { ...filterCriteria.weight, [comparisonOperators[weightComparison2]]: parseFloat(weightValue2) };
     }
-    if (boxCountValue1 && boxCountComparison1) {
-      filterCriteria.boxCount = { ...filterCriteria.boxCount, [`$${boxCountComparison1}`]: boxCountValue1 };
+    if (boxCountValue1 && boxCountComparison1 && comparisonOperators[boxCountComparison1]) {
+      filterCriteria.boxCount = { ...filterCriteria.boxCount, [comparisonOperators[boxCountComparison1]]: parseInt(boxCountValue1) };
     }
-    if (boxCountValue2 && boxCountComparison2) {
-      filterCriteria.boxCount = { ...filterCriteria.boxCount, [`$${boxCountComparison2}`]: boxCountValue2 };
+    if (boxCountValue2 && boxCountComparison2 && comparisonOperators[boxCountComparison2]) {
+      filterCriteria.boxCount = { ...filterCriteria.boxCount, [comparisonOperators[boxCountComparison2]]: parseInt(boxCountValue2) };
     }
 
     // Total için filtreleme
-    if (totalValue1 && totalComparison1) {
-      filterCriteria.total = { ...filterCriteria.total, [`$${totalComparison1}`]: totalValue1 };
+    if (totalValue1 && totalComparison1 && comparisonOperators[totalComparison1]) {
+      filterCriteria.total = { ...filterCriteria.total, [comparisonOperators[totalComparison1]]: parseFloat(totalValue1) };
     }
-    if (totalValue2 && totalComparison2) {
-      filterCriteria.total = { ...filterCriteria.total, [`$${totalComparison2}`]: totalValue2 };
+    if (totalValue2 && totalComparison2 && comparisonOperators[totalComparison2]) {
+      filterCriteria.total = { ...filterCriteria.total, [comparisonOperators[totalComparison2]]: parseFloat(totalValue2) };
     }
 
     // Stoğa giriş tarihi filtreleri
@@ -724,17 +840,17 @@ exports.filterAllStocks = async (req, res) => {
 
     // Pasif stoklar için filtreler
     if (size) passiveStocks = passiveStocks.filter(purchase => purchase.size === size);
-    if (weightValue1 && weightComparison1) {
-      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.weight} ${weightComparison1} ${weightValue1}`));
+    if (weightValue1 && weightComparison1 && comparisonOperators[weightComparison1]) {
+      passiveStocks = passiveStocks.filter(purchase => comparisonOperators[weightComparison1](purchase.weight, parseFloat(weightValue1)));
     }
-    if (weightValue2 && weightComparison2) {
-      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.weight} ${weightComparison2} ${weightValue2}`));
+    if (weightValue2 && weightComparison2 && comparisonOperators[weightComparison2]) {
+      passiveStocks = passiveStocks.filter(purchase => comparisonOperators[weightComparison2](purchase.weight, parseFloat(weightValue2)));
     }
-    if (boxCountValue1 && boxCountComparison1) {
-      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.boxCount} ${boxCountComparison1} ${boxCountValue1}`));
+    if (boxCountValue1 && boxCountComparison1 && comparisonOperators[boxCountComparison1]) {
+      passiveStocks = passiveStocks.filter(purchase => comparisonOperators[boxCountComparison1](purchase.boxCount, parseInt(boxCountValue1)));
     }
-    if (boxCountValue2 && boxCountComparison2) {
-      passiveStocks = passiveStocks.filter(purchase => eval(`${purchase.boxCount} ${boxCountComparison2} ${boxCountValue2}`));
+    if (boxCountValue2 && boxCountComparison2 && comparisonOperators[boxCountComparison2]) {
+      passiveStocks = passiveStocks.filter(purchase => comparisonOperators[boxCountComparison2](purchase.boxCount, parseInt(boxCountValue2)));
     }
 
     // Pasif stoklar için stoktan çıkış tarihi filtreleri
@@ -775,7 +891,6 @@ exports.filterAllStocks = async (req, res) => {
     res.status(500).json({ message: 'Error filtering all stocks', error: error.message });
   }
 };
-
 
 
 
