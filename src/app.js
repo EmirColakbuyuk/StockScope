@@ -23,6 +23,7 @@ app.use(cors({
   origin: 'http://localhost:3001'
 }));
 
+
 // Logger middleware
 app.use(logger);
 

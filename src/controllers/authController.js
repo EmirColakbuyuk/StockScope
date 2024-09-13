@@ -45,4 +45,42 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.refresh = async (req, res) => {
+  const authHeader = req.header('Authorization');
 
+  if (!authHeader) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+
+  const token = authHeader.replace('Bearer ', '');
+
+  try {
+    // Decode the expired token without verifying its signature
+    const decoded = jwt.decode(token);
+    if (!decoded) {
+      console.log('Invalid token');
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+
+    // Find the user by the ID in the decoded token
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      console.log('User not found for token:', decoded.id);
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    // Generate a new token with a new expiration
+    const newToken = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+    console.log('New token generated:', newToken);
+
+    // Return the new token
+    res.json({ token: newToken });
+  } catch (error) {
+    console.error('Token refresh error:', error);
+    res.status(500).json({ message: 'Could not refresh token' });
+  }
+};

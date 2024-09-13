@@ -20,17 +20,17 @@ const auth = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid token, authorization denied' });
     }
-    req.user = user; 
+    req.user = user;
     next();
   } catch (error) {
-    console.error('JWT Verification Error:', error);
-    if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(401).json({ message: 'Token is invalid' });
-    } else if (error instanceof jwt.TokenExpiredError) {
+    if (error instanceof jwt.TokenExpiredError) {
+      // If token has expired, allow the user to hit the refresh token route
       return res.status(401).json({ message: 'Token has expired', error: 'token_expired' });
-    } else {
-      return res.status(401).json({ message: 'Token is not valid' });
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: 'Token is invalid' });
     }
+    console.error('JWT Verification Error:', error);
+    return res.status(401).json({ message: 'Token is not valid' });
   }
 };
 
