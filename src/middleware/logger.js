@@ -11,6 +11,12 @@ if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
 const logger = (req, res, next) => {
   const username = req.user ? req.user.username : 'Anonymous';
 
+  // Clone request body and remove password if present
+  const sanitizedRequestBody = { ...req.body };
+  if (sanitizedRequestBody.password) {
+    delete sanitizedRequestBody.password;
+  }
+
   // Capture the original send function
   const originalSend = res.send;
 
@@ -35,7 +41,7 @@ const logger = (req, res, next) => {
       user: username,
       objectId: objectId || null,
       objectType: objectType || null,
-      requestBody: req.body,
+      requestBody: sanitizedRequestBody, // Use sanitized body here
       responseBody: body
     };
 
