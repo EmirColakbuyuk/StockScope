@@ -1,3 +1,5 @@
+// app.js or server.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const auth = require('./middleware/auth'); // Import the auth middleware
@@ -15,6 +17,8 @@ const port = 3000;
 // Load environment variables from .env file
 require('dotenv').config();
 
+require('./middleware/cron');
+
 // Middleware to parse JSON
 app.use(express.json());
 
@@ -23,23 +27,30 @@ app.use(cors({
   origin: 'http://localhost:3001'
 }));
 
-
-// Logger middleware
-app.use(logger);
-
-app.get('/api/filter-logs', auth, (req, res) => {
-  const { objectId, username } = req.query;
-  const filteredLogs = filterLogs(objectId, username);
-  res.send(filteredLogs);
-});
-
-app.use('/api', stockRoutes);
+// Authentication routes (login/register) - NO auth middleware applied here
 app.use('/api/auth', authRoutes);
+
+// Apply auth middleware globally for all protected routes
+app.use('/api', auth);
+
+// Apply logger middleware globally for all routes after auth is checked
+app.use('/api', logger);
+
+
+
+// API routes
+app.use('/api', stockRoutes);
 app.use('/api', rawRoutes);
 app.use('/api', customerRoutes);
 app.use('/api', supplierRoutes);
 app.use('/api', userRoutes);
 
+// Filter logs route (protected by auth, logger after auth)
+app.get('/api/filter-logs', auth, (req, res) => {
+  const { objectId, username } = req.query;
+  const filteredLogs = filterLogs(objectId, username);
+  res.send(filteredLogs);
+});
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {

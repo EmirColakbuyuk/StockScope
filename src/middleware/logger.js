@@ -9,8 +9,16 @@ if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
 }
 
 const logger = (req, res, next) => {
-  const username = req.user ? req.user.username : 'Anonymous';
+  
+  let username = 'Anonymous';
 
+  if (req.user) {
+    username = req.user.username; // When user is authenticated
+  } else if (req.body.email) {
+    username = req.body.email; // Use email when logging in
+  }
+
+  
   // Clone request body and remove password if present
   const sanitizedRequestBody = { ...req.body };
   if (sanitizedRequestBody.password) {
