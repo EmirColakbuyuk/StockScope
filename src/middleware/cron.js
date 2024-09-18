@@ -6,7 +6,7 @@ const LastLog = require('../models/lastLog'); // Correct path to the LastLog mod
 const logFilePath = path.join(__dirname, '..', 'logs', 'access.log');
 
 // Schedule the cron job
-cron.schedule('0 0 * * *', async () => {
+cron.schedule('49 21 * * *', async () => {
   console.log('Running task at midnight: Saving new logs from access.log to the database');
 
   fs.readFile(logFilePath, 'utf8', async (err, data) => {
