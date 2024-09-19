@@ -5,12 +5,13 @@ const roleAccess = (requiredRole) => {
       return res.status(403).json({ message: 'Access denied, no role found' });
     }
 
+    console.log(req.user.role);
     // Check if the user's role meets the required role
-    if (req.user.role < requiredRole) {
+    if (req.user.role > requiredRole) {
       return res.status(403).json({ message: 'Access denied, insufficient permissions' });
     }
 
-    next(); // User has sufficient role, allow access
+    next();
   };
 };
 

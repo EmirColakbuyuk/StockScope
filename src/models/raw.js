@@ -61,7 +61,13 @@ const rawSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: false
-    }
+    },
+
+    soldAt: {
+        type: Date, // Change the type to String to store formatted date
+        required: false
+    },
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('RawMaterial', rawSchema);

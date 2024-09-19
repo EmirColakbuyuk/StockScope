@@ -134,7 +134,10 @@ exports.softDeleteRawMaterial = async (req, res) => {
     const { id } = req.params;
     const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
       id,
-      { status: 'passive' },
+      { status: 'passive',
+        soldAt: new Date()
+      },
+      
       { new: true }
     );
 
