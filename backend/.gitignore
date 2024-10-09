@@ -1,0 +1,10 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore access.log file in the logs folder
+src/logs/access.log
+src/logs
+
+
+# Ignore environment variable file
+.env
