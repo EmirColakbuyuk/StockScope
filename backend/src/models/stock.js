@@ -27,6 +27,10 @@ const stockSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    soldNote: {
+        type: String,
+        required: false
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

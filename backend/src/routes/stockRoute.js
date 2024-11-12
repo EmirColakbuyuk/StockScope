@@ -31,6 +31,7 @@ router.get('/stockAnalysis', auth, stockController.getActiveStockDistribution); 
 router.get('/stockAnalysisPassive', auth, stockController.getPassiveStockDistribution); // Stock analysis passive
 router.get('/stockComparison', auth, stockController.getStockDistributionWithSalesRatio); // Stock comparison
 router.get('/stockInOutAnalysis', auth, stockController.getStockInOutAnalysis);
+router.get('/stockAnalysisWithWeightDetails', stockController.getActiveStockDistributionWithWeightDetails);
 
 
 

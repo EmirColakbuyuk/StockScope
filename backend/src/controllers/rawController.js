@@ -1,74 +1,77 @@
 const RawMaterial = require('../models/raw');
 const Supplier = require('../models/supplier');
+const Customer = require('../models/customer');
 const moment = require('moment-timezone');
 const { logger } = require('../middleware/logger');
 const Log = require('../models/log'); // Log modelini içeri aktarın
+const raw = require('../models/raw');
 
-// Basic raw functions
+
+
 exports.addRawMaterial = async (req, res) => {
     try {
         const {
             name,
-            supplier: supplierCode, // Supplier code
+            supplier: supplierCode, 
             type,
             grammage,
-            totalBobinweight,
             meter,
+            bobinWeight,
             bobinNumber,
             bobinHeight,
             bobinDiameter,
             notes
         } = req.body;
 
-        // Check if supplier exists
-        const supplierDoc = await Supplier.findOne({code: supplierCode});
+        
+        const supplierDoc = await Supplier.findOne({ code: supplierCode });
         if (!supplierDoc) {
-            return res.status(404).json({message: 'Supplier not found'});
+            return res.status(404).json({ message: 'Supplier not found' });
         }
 
-        // Calculate SquareMeter as bobinHeight * meter
+        
         const SquareMeter = bobinHeight * meter;
+        const totalBobinweight = bobinWeight * bobinNumber;
 
-        // Create new raw material
+        
         const newRawMaterial = new RawMaterial({
             name,
-            supplier: supplierCode, // Save supplier code
+            supplier: supplierCode, 
             type,
             grammage,
-            totalBobinweight,
             meter,
+            bobinWeight,
             bobinNumber,
             bobinHeight,
             bobinDiameter,
-            SquareMeter,  // Set SquareMeter based on calculation
+            SquareMeter, 
+            totalBobinweight, 
             notes,
             createdBy: req.user ? req.user._id : null
         });
 
-        // Save to database
+        
         const savedRawMaterial = await newRawMaterial.save();
 
-        //
-
-        res.status(201).json({rawMaterial: savedRawMaterial});
+        res.status(201).json({ rawMaterial: savedRawMaterial });
     } catch (error) {
         console.error('Error adding raw material:', error);
-        res.status(500).json({message: 'Error adding raw material', error: error.message});
+        res.status(500).json({ message: 'Error adding raw material', error: error.message });
     }
 };
 
 
 exports.updateRawMaterial = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const {
             name,
             status,
-            supplier: supplierCode, // Supplier code
+            supplier: supplierCode, 
             type,
             grammage,
-            totalBobinweight,
             meter,
+            bobinWeight,
             bobinNumber,
             bobinHeight,
             bobinDiameter,
@@ -77,47 +80,46 @@ exports.updateRawMaterial = async (req, res) => {
         } = req.body;
 
         // Find supplier by code
-        const supplierDoc = await Supplier.findOne({code: supplierCode});
+        const supplierDoc = await Supplier.findOne({ code: supplierCode });
         if (!supplierDoc) {
-            return res.status(404).json({message: 'Supplier not found'});
+            return res.status(404).json({ message: 'Supplier not found' });
         }
 
-        // Calculate SquareMeter as bobinHeight * meter
         const SquareMeter = bobinHeight * meter;
+        const totalBobinweight = bobinWeight * bobinNumber;
 
-        // Parse date or use the current date in Europe/Istanbul timezone
         const dateInTurkey = date ? moment.tz(date, "Europe/Istanbul").toDate() : moment.tz("Europe/Istanbul").toDate();
 
-        // Update raw material document
         const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
             id,
             {
                 name,
                 status,
-                supplier: supplierCode, // Update supplier code
+                supplier: supplierCode, 
                 type,
                 grammage,
-                totalBobinweight,
                 meter,
+                bobinWeight,
                 bobinNumber,
                 bobinHeight,
                 bobinDiameter,
-                SquareMeter,  // Calculate and update SquareMeter
+                SquareMeter, 
+                totalBobinweight, 
                 notes,
-                updatedAt: dateInTurkey, // Use parsed or current date for updatedAt
-                updatedBy: req.user._id  // Record the user who updated the material
+                updatedAt: dateInTurkey, 
+                updatedBy: req.user._id 
             },
-            {new: true} // Return the updated document
+            { new: true } 
         );
 
         if (!updatedRawMaterial) {
-            return res.status(404).json({message: 'Raw material not found'});
+            return res.status(404).json({ message: 'Raw material not found' });
         }
 
-        res.status(200).json({message: 'Raw material updated successfully', rawMaterial: updatedRawMaterial});
+        res.status(200).json({ message: 'Raw material updated successfully', rawMaterial: updatedRawMaterial });
     } catch (error) {
         console.error('Error updating raw material:', error);
-        res.status(500).json({message: 'Error updating raw material', error: error.message});
+        res.status(500).json({ message: 'Error updating raw material', error: error.message });
     }
 };
 
@@ -138,55 +140,178 @@ exports.deleteRawMaterial = async (req, res) => {
     }
 };
 
-// Soft delete a raw material by ID (change status to 'passive')
+
+// Soft delete a raw material by ID (change status to 'passive' and add soldNote)
 exports.softDeleteRawMaterial = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
+        const { soldNote } = req.body; 
+
         const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
             id,
             {
                 status: 'passive',
-                soldAt: new Date()
+                soldAt: new Date(),
+                soldNote 
             },
-
-            {new: true}
+            { new: true }
         );
 
         if (!updatedRawMaterial) {
-            return res.status(404).json({message: 'Raw material not found'});
+            return res.status(404).json({ message: 'Raw material not found' });
         }
 
-        res.status(200).json({message: 'Raw material status updated to passive', rawMaterial: updatedRawMaterial});
+        res.status(200).json({ message: 'Raw material status updated to passive', rawMaterial: updatedRawMaterial });
     } catch (error) {
         console.error('Error updating raw material status:', error);
-        res.status(500).json({message: 'Error updating raw material status', error: error.message});
+        res.status(500).json({ message: 'Error updating raw material status', error: error.message });
     }
 };
 
-
-// Soft active a raw material by ID (change status to 'passive')
+// Soft activate a raw material by ID (change status to 'active' and remove 'soldAt' and 'soldNote')
 exports.softActiveRawMaterial = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const updatedRawMaterial = await RawMaterial.findByIdAndUpdate(
             id,
-            {status: 'active'},
-            {new: true}
+            {
+                status: 'active',
+                $unset: { soldAt: "", soldNote: "" } 
+            },
+            { new: true }
         );
 
         if (!updatedRawMaterial) {
-            return res.status(404).json({message: 'Raw material not found'});
+            return res.status(404).json({ message: 'Raw material not found' });
         }
 
-        res.status(200).json({message: 'Raw material status updated to active', rawMaterial: updatedRawMaterial});
+        res.status(200).json({ message: 'Raw material status updated to active', rawMaterial: updatedRawMaterial });
     } catch (error) {
         console.error('Error updating raw material status:', error);
-        res.status(500).json({message: 'Error updating raw material status', error: error.message});
+        res.status(500).json({ message: 'Error updating raw material status', error: error.message });
     }
 };
 
 
-// GET ALL //
+// Sell raw material to customer
+exports.TransferRawMaterial = async (req, res) => {
+    try {
+        console.log("Request Parameters:", req.params);
+        console.log("Request Body:", req.body);
+        const { id } = req.params;
+        const { customerId, soldNote } = req.body;  
+
+        const rawMaterial = await RawMaterial.findById(id);
+        if (!rawMaterial) {
+            return res.status(404).json({ message: 'Raw material not found' });
+        }
+
+        const saleDate = new Date();
+
+        if (customerId) {
+            const customer = await Customer.findById(customerId);
+            if (!customer) {
+                return res.status(404).json({ message: 'Customer not found' });
+            }
+
+            customer.purchasesRaw.push({
+                name: rawMaterial.name,
+                supplier: rawMaterial.supplier,
+                type: rawMaterial.type,
+                grammage: rawMaterial.grammage,
+                meter: rawMaterial.meter,
+                bobinWeight: rawMaterial.bobinWeight,
+                bobinNumber: rawMaterial.bobinNumber,
+                bobinHeight: rawMaterial.bobinHeight,
+                bobinDiameter: rawMaterial.bobinDiameter,
+                SquareMeter: rawMaterial.SquareMeter,
+                totalBobinweight: rawMaterial.totalBobinweight,
+                notes: rawMaterial.notes,
+                soldNote, 
+                date: saleDate 
+            });
+
+            
+            await customer.save();
+        }
+
+        
+        rawMaterial.status = 'passive';
+        rawMaterial.soldAt = saleDate;
+        rawMaterial.soldNote = soldNote; 
+        rawMaterial.customer = customerId;
+
+
+        const updatedRawMaterial = await rawMaterial.save();
+
+        res.status(200).json({
+            message: `Raw material ${customerId ? 'transferred to customer and marked' : 'marked'} as passive`,
+            rawMaterial: updatedRawMaterial
+        });
+    } catch (error) {
+        console.error('Error  transferring raw material:', error);
+        res.status(500).json({ message: 'Error  transferring raw material', error: error.message });
+    }
+};
+
+
+// Revert transfer of raw material from customer
+exports.revertTransferRawMaterial = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { customerId } = req.body;
+
+        const rawMaterial = await RawMaterial.findById(id);
+        if (!rawMaterial) {
+            return res.status(404).json({ message: 'Raw material not found' });
+        }
+
+        if (rawMaterial.status !== 'passive') {
+            return res.status(400).json({ message: 'Raw material is not in passive state' });
+        }
+
+        if (customerId) {
+            const customer = await Customer.findById(customerId);
+            if (!customer) {
+                return res.status(404).json({ message: 'Customer not found' });
+            }
+
+            const purchaseIndex = customer.purchasesRaw.findIndex(purchase => 
+                purchase.name === rawMaterial.name &&
+                purchase.supplier === rawMaterial.supplier &&
+                purchase.type === rawMaterial.type &&
+                purchase.date.getTime() === rawMaterial.soldAt.getTime() 
+            );
+
+            if (purchaseIndex === -1) {
+                return res.status(404).json({ message: 'Purchase record not found in customer data' });
+            }
+
+            customer.purchasesRaw.splice(purchaseIndex, 1);
+            await customer.save();
+        }
+
+        // Revert raw material status to active and remove `soldAt`, `soldNote`, and `customer`
+        await RawMaterial.findByIdAndUpdate(
+            id,
+            {
+                status: 'active',
+                $unset: { soldAt: "", soldNote: ""},
+                customer: null
+            },
+            { new: true }
+        );
+
+        res.status(200).json({
+            message: `Raw material ${customerId ? 'removed from customer and ' : ''}reverted to active status`,
+            rawMaterial
+        });
+    } catch (error) {
+        console.error('Error reverting transfer of raw material:', error);
+        res.status(500).json({ message: 'Error reverting transfer of raw material', error: error.message });
+    }
+};
+
 
 
 // Get all raw materials
@@ -312,6 +437,7 @@ exports.getAllActiveRawMaterialPagination = async (req, res) => {
     }
 };
 
+// hem çıkışı yapılmışları hem satılmışları getiricek
 
 // Get all passive raw materials with pagination
 exports.getAllPassiveRawMaterialPagination = async (req, res) => {
@@ -423,6 +549,184 @@ exports.getAllTypes = async (req, res) => {
 // FILTERS //
 //
 
+// statü kısmına satılmış eklenicek
+// exports.filterRawMaterials = async (req, res) => {
+//     try {
+//         const {
+//             page = 1,
+//             limit = 5,
+//             name,
+//             supplier,
+//             type,
+//             status,
+//             soldToCustomer,
+//             grammageComparison1,
+//             grammageValue1,
+//             grammageComparison2,
+//             grammageValue2,
+//             totalBobinweightComparison1,
+//             totalBobinweightValue1,
+//             totalBobinweightComparison2,
+//             totalBobinweightValue2,
+//             meterComparison1,
+//             meterValue1,
+//             meterComparison2,
+//             meterValue2,
+//             bobinNumberComparison1,
+//             bobinNumberValue1,
+//             bobinNumberComparison2,
+//             bobinNumberValue2,
+//             bobinHeightComparison1,
+//             bobinHeightValue1,
+//             bobinHeightComparison2,
+//             bobinHeightValue2,
+//             bobinDiameterComparison1,
+//             bobinDiameterValue1,
+//             bobinDiameterComparison2,
+//             bobinDiameterValue2,
+//             SquareMeterComparison1,
+//             SquareMeterValue1,
+//             SquareMeterComparison2,
+//             SquareMeterValue2,
+//             dateBefore,
+//             dateAfter,
+//             dateExact,
+//             passiveDateBefore,
+//             passiveDateAfter,
+//             passiveDateExact
+//         } = req.query;
+//
+//         let filterCriteria = {};
+//
+//         // Helper function to convert values to numbers
+//         const parseNumber = (value) => {
+//             const num = parseFloat(value);
+//             return isNaN(num) ? null : num;
+//         };
+//
+//         // Apply name, supplier, and type filters
+//         if (name) filterCriteria.name = name;
+//         if (supplier) filterCriteria.supplier = supplier;
+//         if (type) filterCriteria.type = type;
+//
+//         // Status filter
+//         if (status) {
+//             filterCriteria.status = status;
+//         }
+//
+//         // Apply the soldToCustomer filter to exclude null values when required
+//         if (soldToCustomer === 'true') {
+//             filterCriteria.customer = { $ne: null }; // Ensures customer exists and is not null
+//         } else if (soldToCustomer === 'false') {
+//             filterCriteria.$or = [{ customer: { $exists: false } }, { customer: null }]; // Exclude items with non-null customers
+//         }
+//
+//         // Comparison criteria
+//         const addComparisonFilter = (field, comparison1, value1, comparison2, value2) => {
+//             const filter = {};
+//
+//             if (comparison1 === 'between' && value1 && value2) {
+//                 filter.$gte = parseNumber(value1);
+//                 filter.$lte = parseNumber(value2);
+//             } else {
+//                 if (value1 && comparison1) {
+//                     filter[`$${comparison1}`] = parseNumber(value1);
+//                 }
+//                 if (value2 && comparison2) {
+//                     filter[`$${comparison2}`] = parseNumber(value2);
+//                 }
+//             }
+//
+//             if (Object.keys(filter).length > 0) {
+//                 filterCriteria[field] = filter;
+//             }
+//         };
+//
+//         // Apply filters
+//         addComparisonFilter('grammage', grammageComparison1, grammageValue1, grammageComparison2, grammageValue2);
+//         addComparisonFilter('totalBobinweight', totalBobinweightComparison1, totalBobinweightValue1, totalBobinweightComparison2, totalBobinweightValue2);
+//         addComparisonFilter('meter', meterComparison1, meterValue1, meterComparison2, meterValue2);
+//         addComparisonFilter('bobinNumber', bobinNumberComparison1, bobinNumberValue1, bobinNumberComparison2, bobinNumberValue2);
+//         addComparisonFilter('bobinHeight', bobinHeightComparison1, bobinHeightValue1, bobinHeightComparison2, bobinHeightValue2);
+//         addComparisonFilter('bobinDiameter', bobinDiameterComparison1, bobinDiameterValue1, bobinDiameterComparison2, bobinDiameterValue2);
+//         addComparisonFilter('SquareMeter', SquareMeterComparison1, SquareMeterValue1, SquareMeterComparison2, SquareMeterValue2);
+//
+//         // Passive date filter to include only passive records
+//         if (passiveDateExact || (passiveDateBefore && passiveDateAfter)) {
+//             filterCriteria.status = 'passive';
+//         }
+//
+//         // Entry date filters
+//         if (dateExact) {
+//             const exactDate = new Date(dateExact);
+//             filterCriteria.createdAt = {
+//                 $gte: new Date(exactDate.setHours(0, 0, 0, 0)),
+//                 $lt: new Date(exactDate.setHours(23, 59, 59, 999))
+//             };
+//         } else {
+//             if (dateBefore && dateAfter) {
+//                 const afterDate = new Date(dateAfter);
+//                 const beforeDate = new Date(dateBefore);
+//                 afterDate.setHours(0, 0, 0, 0);
+//                 beforeDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.createdAt = { $gte: afterDate, $lte: beforeDate };
+//             } else if (dateBefore) {
+//                 const beforeDate = new Date(dateBefore);
+//                 beforeDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.createdAt = { $lte: beforeDate };
+//             } else if (dateAfter) {
+//                 const afterDate = new Date(dateAfter);
+//                 afterDate.setHours(0, 0, 0, 0);
+//                 filterCriteria.createdAt = { $gte: afterDate };
+//             }
+//         }
+//
+//         // Passive date filters
+//         if (passiveDateExact) {
+//             const exactPassiveDate = new Date(passiveDateExact);
+//             filterCriteria.updatedAt = {
+//                 $gte: new Date(exactPassiveDate.setHours(0, 0, 0, 0)),
+//                 $lt: new Date(exactPassiveDate.setHours(23, 59, 59, 999))
+//             };
+//         } else {
+//             if (passiveDateBefore && passiveDateAfter) {
+//                 const afterPassiveDate = new Date(passiveDateAfter);
+//                 const beforePassiveDate = new Date(passiveDateBefore);
+//                 afterPassiveDate.setHours(0, 0, 0, 0);
+//                 beforePassiveDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.soldAt = { $gte: afterPassiveDate, $lte: beforePassiveDate };
+//             } else if (passiveDateBefore) {
+//                 const beforePassiveDate = new Date(passiveDateBefore);
+//                 beforePassiveDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.soldAt = { $lte: beforePassiveDate };
+//             } else if (passiveDateAfter) {
+//                 const afterPassiveDate = new Date(passiveDateAfter);
+//                 afterPassiveDate.setHours(0, 0, 0, 0);
+//                 filterCriteria.soldAt = { $gte: afterPassiveDate };
+//             }
+//         }
+//
+//         // Database query
+//         const rawMaterials = await RawMaterial.find(filterCriteria)
+//             .sort({ createdAt: -1 })
+//             .skip((page - 1) * limit)
+//             .limit(Number(limit))
+//             .exec();
+//
+//         const count = await RawMaterial.countDocuments(filterCriteria);
+//
+//         res.status(200).json({
+//             rawMaterials,
+//             totalPages: Math.ceil(count / limit),
+//             currentPage: Number(page),
+//             totalItems: count
+//         });
+//     } catch (error) {
+//         console.error('Error filtering raw materials:', error);
+//         res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
+//     }
+// };
+
 exports.filterRawMaterials = async (req, res) => {
     try {
         const {
@@ -431,7 +735,8 @@ exports.filterRawMaterials = async (req, res) => {
             name,
             supplier,
             type,
-            status,
+            statusType,
+            customerId,
             grammageComparison1,
             grammageValue1,
             grammageComparison2,
@@ -465,32 +770,51 @@ exports.filterRawMaterials = async (req, res) => {
             dateExact,
             passiveDateBefore,
             passiveDateAfter,
-            passiveDateExact
+            passiveDateExact,
+            bobinweightComparison1, 
+            bobinweightValue1, 
+            bobinweightComparison2,
+            bobinweightValue2
         } = req.query;
 
         let filterCriteria = {};
 
-        // Yardımcı fonksiyon: sayısal değerleri açıkça 'number' tipine çevir
+        // Helper function to convert values to numbers
         const parseNumber = (value) => {
             const num = parseFloat(value);
             return isNaN(num) ? null : num;
         };
 
-        // Ad, tedarikçi ve tip gibi filtreler
+        // Apply name, supplier, and type filters
         if (name) filterCriteria.name = name;
         if (supplier) filterCriteria.supplier = supplier;
         if (type) filterCriteria.type = type;
 
-        // Durum (status) kontrolü: sadece 'passive' olanlar getirilecekse bu kısım ayarlanır
-        if (status) {
-            filterCriteria.status = status;
+        // Status filter based on `statusType`
+        if (statusType === 'active') {
+            // Eğer `statusType` "active" ise, sadece aktif olanları filtrele
+            filterCriteria.status = 'active';
+        } else if (statusType === 'sold') {
+            // Eğer `statusType` "sold" ise, pasif olup müşterisi olanları filtrele (yani satılmış olanlar)
+            filterCriteria.status = 'passive';
+            filterCriteria.customer = { $ne: null };  // Müşteri alanı null olmayanlar satılmış demektir
+        } else if (statusType === 'removed') {
+            // Eğer `statusType` "removed" ise, pasif olup müşteri bilgisi olmayanları filtrele (stoktan çıkmış olanlar)
+            filterCriteria.status = 'passive';
+            filterCriteria.$or = [{ customer: { $exists: false } }, { customer: null }]; // Müşteri bilgisi olmayanlar
         }
 
-        // Comparison kriterleri ekleme
+// Eğer customerId verildiyse, müşteri alanı verilen ID ile eşleşen, pasif durumdaki kayıtları filtrele
+        if (customerId) {
+            // Bu durumda sadece `status` pasif olanlara ve `customer` alanı belirtilen müşteri ID'sine eşit olanlara bakılacak
+            filterCriteria.status = 'passive'; // Sadece pasif durumdaki veriler
+            filterCriteria.customer = customerId; // Müşteri alanı verilen ID ile eşleşenler
+        }
+
+        // Comparison criteria
         const addComparisonFilter = (field, comparison1, value1, comparison2, value2) => {
             const filter = {};
 
-            // Between işlemi kontrolü
             if (comparison1 === 'between' && value1 && value2) {
                 filter.$gte = parseNumber(value1);
                 filter.$lte = parseNumber(value2);
@@ -508,7 +832,7 @@ exports.filterRawMaterials = async (req, res) => {
             }
         };
 
-        // Filtreler ekleniyor
+        // Apply filters
         addComparisonFilter('grammage', grammageComparison1, grammageValue1, grammageComparison2, grammageValue2);
         addComparisonFilter('totalBobinweight', totalBobinweightComparison1, totalBobinweightValue1, totalBobinweightComparison2, totalBobinweightValue2);
         addComparisonFilter('meter', meterComparison1, meterValue1, meterComparison2, meterValue2);
@@ -516,83 +840,61 @@ exports.filterRawMaterials = async (req, res) => {
         addComparisonFilter('bobinHeight', bobinHeightComparison1, bobinHeightValue1, bobinHeightComparison2, bobinHeightValue2);
         addComparisonFilter('bobinDiameter', bobinDiameterComparison1, bobinDiameterValue1, bobinDiameterComparison2, bobinDiameterValue2);
         addComparisonFilter('SquareMeter', SquareMeterComparison1, SquareMeterValue1, SquareMeterComparison2, SquareMeterValue2);
+        addComparisonFilter('bobinWeight', bobinweightComparison1, bobinweightValue1, bobinweightComparison2, bobinweightValue2);
 
-        // Eğer passiveDate (stoktan çıkış tarihi) filtreleniyorsa sadece pasif kayıtları getir
-        if (passiveDateExact || (passiveDateBefore && passiveDateAfter)) {
-            filterCriteria.status = 'passive';  // Sadece pasif olanlar filtrelenecek
-        }
-
-        // Tarih filtreleri (stoğa giriş)
+        // Entry date filters
         if (dateExact) {
             const exactDate = new Date(dateExact);
             filterCriteria.createdAt = {
-                $gte: new Date(exactDate.setHours(0, 0, 0, 0)),  // Günü başlat
-                $lt: new Date(exactDate.setHours(23, 59, 59, 999))  // Günü bitir
+                $gte: new Date(exactDate.setHours(0, 0, 0, 0)),
+                $lt: new Date(exactDate.setHours(23, 59, 59, 999))
             };
-        }
-        else {
+        } else {
             if (dateBefore && dateAfter) {
-                const afterDate = new Date(dateAfter);   // Başlangıç tarihi
-                const beforeDate = new Date(dateBefore); // Bitiş tarihi
-
-                // Başlangıç gününü 00:00:00 olarak ayarla
+                const afterDate = new Date(dateAfter);
+                const beforeDate = new Date(dateBefore);
                 afterDate.setHours(0, 0, 0, 0);
-                // Bitiş gününü 23:59:59 olarak ayarla
                 beforeDate.setHours(23, 59, 59, 999);
-
-                // Başlangıç ve bitiş tarihleri arasındaki verileri getir
-                filterCriteria.createdAt = {
-                    $gte: afterDate,
-                    $lte: beforeDate  // 17'si dahil olacak şekilde
-                };
+                filterCriteria.createdAt = { $gte: afterDate, $lte: beforeDate };
             } else if (dateBefore) {
                 const beforeDate = new Date(dateBefore);
-                beforeDate.setHours(23, 59, 59, 999);  // Bitiş tarihini 23:59:59 olarak ayarla
-                filterCriteria.createdAt = {$lte: beforeDate};
+                beforeDate.setHours(23, 59, 59, 999);
+                filterCriteria.createdAt = { $lte: beforeDate };
             } else if (dateAfter) {
                 const afterDate = new Date(dateAfter);
-                afterDate.setHours(0, 0, 0, 0);  // Başlangıç tarihini 00:00:00 olarak ayarla
-                filterCriteria.createdAt = {$gte: afterDate};
+                afterDate.setHours(0, 0, 0, 0);
+                filterCriteria.createdAt = { $gte: afterDate };
             }
         }
 
-        // Stoktan çıkış tarihleri (updatedAt, passiveDate)
+        // Passive date filters
         if (passiveDateExact) {
             const exactPassiveDate = new Date(passiveDateExact);
             filterCriteria.updatedAt = {
-                $gte: new Date(exactPassiveDate.setHours(0, 0, 0, 0)),  // Günü başlat
-                $lt: new Date(exactPassiveDate.setHours(23, 59, 59, 999))  // Günü bitir
+                $gte: new Date(exactPassiveDate.setHours(0, 0, 0, 0)),
+                $lt: new Date(exactPassiveDate.setHours(23, 59, 59, 999))
             };
-        }
-        else {
+        } else {
             if (passiveDateBefore && passiveDateAfter) {
-                const afterPassiveDate = new Date(passiveDateAfter);   // Başlangıç tarihi
-                const beforePassiveDate = new Date(passiveDateBefore); // Bitiş tarihi
-
-                // Başlangıç gününü 00:00:00 olarak ayarla
+                const afterPassiveDate = new Date(passiveDateAfter);
+                const beforePassiveDate = new Date(passiveDateBefore);
                 afterPassiveDate.setHours(0, 0, 0, 0);
-                // Bitiş gününü 23:59:59 olarak ayarla
                 beforePassiveDate.setHours(23, 59, 59, 999);
-
-                // Başlangıç ve bitiş tarihleri arasındaki verileri getir
-                filterCriteria.soldAt = {
-                    $gte: afterPassiveDate,
-                    $lte: beforePassiveDate  // 17'si dahil olacak şekilde
-                };
+                filterCriteria.soldAt = { $gte: afterPassiveDate, $lte: beforePassiveDate };
             } else if (passiveDateBefore) {
                 const beforePassiveDate = new Date(passiveDateBefore);
-                beforePassiveDate.setHours(23, 59, 59, 999);  // Bitiş tarihini 23:59:59 olarak ayarla
-                filterCriteria.soldAt = {$lte: beforePassiveDate};
+                beforePassiveDate.setHours(23, 59, 59, 999);
+                filterCriteria.soldAt = { $lte: beforePassiveDate };
             } else if (passiveDateAfter) {
                 const afterPassiveDate = new Date(passiveDateAfter);
-                afterPassiveDate.setHours(0, 0, 0, 0);  // Başlangıç tarihini 00:00:00 olarak ayarla
-                filterCriteria.soldAt = {$gte: afterPassiveDate};
+                afterPassiveDate.setHours(0, 0, 0, 0);
+                filterCriteria.soldAt = { $gte: afterPassiveDate };
             }
         }
 
-        // Veritabanı sorgusu
+        // Database query
         const rawMaterials = await RawMaterial.find(filterCriteria)
-            .sort({createdAt: -1})
+            .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(Number(limit))
             .exec();
@@ -607,7 +909,7 @@ exports.filterRawMaterials = async (req, res) => {
         });
     } catch (error) {
         console.error('Error filtering raw materials:', error);
-        res.status(500).json({message: 'Error filtering raw materials', error: error.message});
+        res.status(500).json({ message: 'Error filtering raw materials', error: error.message });
     }
 };
 
@@ -622,54 +924,55 @@ exports.filterActiveRawMaterials = async (req, res) => {
             type,
             grammageComparison1,
             grammageValue1,
-            grammageValue2,   // between işlemi için 2. değer
+            grammageValue2,
             totalBobinweightComparison1,
             totalBobinweightValue1,
-            totalBobinweightValue2,  // between işlemi için 2. değer
+            totalBobinweightValue2,
             meterComparison1,
             meterValue1,
-            meterValue2,  // between işlemi için 2. değer
+            meterValue2,
             bobinNumberComparison1,
             bobinNumberValue1,
-            bobinNumberValue2,  // between işlemi için 2. değer
+            bobinNumberValue2,
             bobinHeightComparison1,
             bobinHeightValue1,
-            bobinHeightValue2,  // between işlemi için 2. değer
+            bobinHeightValue2,
             bobinDiameterComparison1,
             bobinDiameterValue1,
-            bobinDiameterValue2,  // between işlemi için 2. değer
+            bobinDiameterValue2,
             SquareMeterComparison1,
             SquareMeterValue1,
-            SquareMeterValue2,  // between işlemi için 2. değer
+            SquareMeterValue2,
+            bobinweightComparison1,
+            bobinweightValue1,
+            bobinweightValue2,
             dateBefore,
             dateAfter,
             dateExact
         } = req.query;
 
-        let filterCriteria = {status: 'active'};
+        let filterCriteria = { status: 'active' };
 
         if (name) filterCriteria.name = name;
         if (supplier) filterCriteria.supplier = supplier;
         if (type) filterCriteria.type = type;
 
-        // Range (between) veya tekli karşılaştırma işlemleri için kullanabileceğimiz fonksiyon
         const applyRangeFilter = (filterName, comparison, value1, value2) => {
             if (comparison === 'between' && value1 && value2) {
-                // "Arasında" seçeneği için hem büyük eşit hem küçük eşit koşulu uygulanır
                 filterCriteria[filterName] = {
-                    $gte: value1,
-                    $lte: value2
+                    $gte: parseNumber(value1),
+                    $lte: parseNumber(value2)
                 };
             } else if (comparison === 'lt' && value1) {
-                filterCriteria[filterName] = {$lt: value1};
+                filterCriteria[filterName] = { $lt: parseNumber(value1) };
             } else if (comparison === 'gt' && value1) {
-                filterCriteria[filterName] = {$gt: value1};
+                filterCriteria[filterName] = { $gt: parseNumber(value1) };
             } else if (comparison === 'eq' && value1) {
-                filterCriteria[filterName] = {$eq: value1};
+                filterCriteria[filterName] = { $eq: parseNumber(value1) };
             }
         };
 
-        // Filtreleri uygula
+        // Apply filters
         applyRangeFilter('grammage', grammageComparison1, grammageValue1, grammageValue2);
         applyRangeFilter('totalBobinweight', totalBobinweightComparison1, totalBobinweightValue1, totalBobinweightValue2);
         applyRangeFilter('meter', meterComparison1, meterValue1, meterValue2);
@@ -677,43 +980,37 @@ exports.filterActiveRawMaterials = async (req, res) => {
         applyRangeFilter('bobinHeight', bobinHeightComparison1, bobinHeightValue1, bobinHeightValue2);
         applyRangeFilter('bobinDiameter', bobinDiameterComparison1, bobinDiameterValue1, bobinDiameterValue2);
         applyRangeFilter('SquareMeter', SquareMeterComparison1, SquareMeterValue1, SquareMeterValue2);
+        applyRangeFilter('bobinWeight', bobinweightComparison1, bobinweightValue1, bobinweightValue2);
 
-        // Tarih işlemleri: tam tarih (dateExact) varsa sadece o tarih, yoksa iki tarih aralığına bak
         if (dateExact) {
             const exactDate = new Date(dateExact);
             filterCriteria.createdAt = {
-                $gte: new Date(exactDate.setHours(0, 0, 0, 0)),  // Günü başlat
-                $lt: new Date(exactDate.setHours(23, 59, 59, 999))  // Günü bitir
+                $gte: new Date(exactDate.setHours(0, 0, 0, 0)),
+                $lt: new Date(exactDate.setHours(23, 59, 59, 999))
             };
         } else {
             if (dateBefore && dateAfter) {
-                const afterDate = new Date(dateAfter);   // Başlangıç tarihi
-                const beforeDate = new Date(dateBefore); // Bitiş tarihi
-
-                // Başlangıç gününü 00:00:00 olarak ayarla
+                const afterDate = new Date(dateAfter);
+                const beforeDate = new Date(dateBefore);
                 afterDate.setHours(0, 0, 0, 0);
-                // Bitiş gününü 23:59:59 olarak ayarla
                 beforeDate.setHours(23, 59, 59, 999);
-
-                // Başlangıç ve bitiş tarihleri arasındaki verileri getir
-                filterCriteria.createdAt = {
-                    $gte: afterDate,
-                    $lte: beforeDate  // 17'si dahil olacak şekilde
-                };
+                filterCriteria.createdAt = { $gte: afterDate, $lte: beforeDate };
             } else if (dateBefore) {
                 const beforeDate = new Date(dateBefore);
-                beforeDate.setHours(23, 59, 59, 999);  // Bitiş tarihini 23:59:59 olarak ayarla
-                filterCriteria.createdAt = {$lte: beforeDate};
+                beforeDate.setHours(23, 59, 59, 999);
+                filterCriteria.createdAt = { $lte: beforeDate };
             } else if (dateAfter) {
                 const afterDate = new Date(dateAfter);
-                afterDate.setHours(0, 0, 0, 0);  // Başlangıç tarihini 00:00:00 olarak ayarla
-                filterCriteria.createdAt = {$gte: afterDate};
+                afterDate.setHours(0, 0, 0, 0);
+                filterCriteria.createdAt = { $gte: afterDate };
             }
         }
 
-        // Veritabanı sorgusu ve sonuçlar
+        // Debugging the constructed filter criteria
+        console.log("Filter Criteria:", filterCriteria);
+
         const rawMaterials = await RawMaterial.find(filterCriteria)
-            .sort({createdAt: -1}) // Son eklenen en başa
+            .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(Number(limit))
             .exec();
@@ -728,12 +1025,13 @@ exports.filterActiveRawMaterials = async (req, res) => {
         });
     } catch (error) {
         console.error('Error filtering active raw materials:', error);
-        res.status(500).json({message: 'Error filtering active raw materials', error: error.message});
+        res.status(500).json({ message: 'Error filtering active raw materials', error: error.message });
     }
 };
 
 
-// Filter passive raw materials
+
+
 // Helper function to apply comparison operators based on input values
 const applyComparisonFilter = (filterName, comparison, value1, value2) => {
     const parsedValue1 = parseNumber(value1);
@@ -766,6 +1064,141 @@ const parseNumber = (value) => {
 };
 
 // Filter passive raw materials
+// exports.filterPassiveRawMaterials = async (req, res) => {
+//     try {
+//         const {
+//             page = 1,
+//             limit = 5,
+//             name,
+//             supplier,
+//             type,
+//             soldToCustomer,
+//             grammageComparison1,
+//             grammageValue1,
+//             grammageValue2,
+//             totalBobinweightComparison1,
+//             totalBobinweightValue1,
+//             totalBobinweightValue2,
+//             meterComparison1,
+//             meterValue1,
+//             meterValue2,
+//             bobinNumberComparison1,
+//             bobinNumberValue1,
+//             bobinNumberValue2,
+//             bobinHeightComparison1,
+//             bobinHeightValue1,
+//             bobinHeightValue2,
+//             bobinDiameterComparison1,
+//             bobinDiameterValue1,
+//             bobinDiameterValue2,
+//             SquareMeterComparison1,
+//             SquareMeterValue1,
+//             SquareMeterValue2,
+//             dateBefore,
+//             dateAfter,
+//             dateExact,
+//             passiveDateBefore,
+//             passiveDateAfter,
+//             passiveDateExact
+//         } = req.query;
+//
+//         let filterCriteria = { status: 'passive' };
+//
+//         if (name) filterCriteria.name = name;
+//         if (supplier) filterCriteria.supplier = supplier;
+//         if (type) filterCriteria.type = type;
+//
+//         // Add soldToCustomer filter to differentiate passive status
+//         if (soldToCustomer === 'true') {
+//             filterCriteria.customer = { $ne: null }; // Ensures customer exists and is not null
+//         } else if (soldToCustomer === 'false') {
+//             filterCriteria.$or = [{ customer: { $exists: false } }, { customer: null }]; // Exclude items with non-null customers
+//         }
+//
+//
+//         // Apply range and comparison filters
+//         Object.assign(
+//             filterCriteria,
+//             applyComparisonFilter('grammage', grammageComparison1, grammageValue1, grammageValue2),
+//             applyComparisonFilter('totalBobinweight', totalBobinweightComparison1, totalBobinweightValue1, totalBobinweightValue2),
+//             applyComparisonFilter('meter', meterComparison1, meterValue1, meterValue2),
+//             applyComparisonFilter('bobinNumber', bobinNumberComparison1, bobinNumberValue1, bobinNumberValue2),
+//             applyComparisonFilter('bobinHeight', bobinHeightComparison1, bobinHeightValue1, bobinHeightValue2),
+//             applyComparisonFilter('bobinDiameter', bobinDiameterComparison1, bobinDiameterValue1, bobinDiameterValue2),
+//             applyComparisonFilter('SquareMeter', SquareMeterComparison1, SquareMeterValue1, SquareMeterValue2)
+//         );
+//
+//         // Date filters
+//         if (dateExact) {
+//             const exactDate = new Date(dateExact);
+//             filterCriteria.createdAt = {
+//                 $gte: new Date(exactDate.setHours(0, 0, 0, 0)),
+//                 $lt: new Date(exactDate.setHours(23, 59, 59, 999))
+//             };
+//         } else {
+//             if (dateBefore && dateAfter) {
+//                 const afterDate = new Date(dateAfter);
+//                 const beforeDate = new Date(dateBefore);
+//                 afterDate.setHours(0, 0, 0, 0);
+//                 beforeDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.createdAt = { $gte: afterDate, $lte: beforeDate };
+//             } else if (dateBefore) {
+//                 const beforeDate = new Date(dateBefore);
+//                 beforeDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.createdAt = { $lte: beforeDate };
+//             } else if (dateAfter) {
+//                 const afterDate = new Date(dateAfter);
+//                 afterDate.setHours(0, 0, 0, 0);
+//                 filterCriteria.createdAt = { $gte: afterDate };
+//             }
+//         }
+//
+//         // Passive date filters
+//         if (passiveDateExact) {
+//             const exactPassiveDate = new Date(passiveDateExact);
+//             filterCriteria.soldAt = {
+//                 $gte: new Date(exactPassiveDate.setHours(0, 0, 0, 0)),
+//                 $lt: new Date(exactPassiveDate.setHours(23, 59, 59, 999))
+//             };
+//         } else {
+//             if (passiveDateBefore && passiveDateAfter) {
+//                 const afterPassiveDate = new Date(passiveDateAfter);
+//                 const beforePassiveDate = new Date(passiveDateBefore);
+//                 afterPassiveDate.setHours(0, 0, 0, 0);
+//                 beforePassiveDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.soldAt = { $gte: afterPassiveDate, $lte: beforePassiveDate };
+//             } else if (passiveDateBefore) {
+//                 const beforePassiveDate = new Date(passiveDateBefore);
+//                 beforePassiveDate.setHours(23, 59, 59, 999);
+//                 filterCriteria.soldAt = { $lte: beforePassiveDate };
+//             } else if (passiveDateAfter) {
+//                 const afterPassiveDate = new Date(passiveDateAfter);
+//                 afterPassiveDate.setHours(0, 0, 0, 0);
+//                 filterCriteria.soldAt = { $gte: afterPassiveDate };
+//             }
+//         }
+//
+//         // Query and results
+//         const rawMaterials = await RawMaterial.find(filterCriteria)
+//             .sort({ createdAt: -1 })
+//             .skip((page - 1) * limit)
+//             .limit(Number(limit))
+//             .exec();
+//
+//         const count = await RawMaterial.countDocuments(filterCriteria);
+//
+//         res.status(200).json({
+//             rawMaterials,
+//             totalPages: Math.ceil(count / limit),
+//             currentPage: Number(page),
+//             totalItems: count
+//         });
+//     } catch (error) {
+//         console.error('Error filtering passive raw materials:', error);
+//         res.status(500).json({ message: 'Error filtering passive raw materials', error: error.message });
+//     }
+// };
+
 exports.filterPassiveRawMaterials = async (req, res) => {
     try {
         const {
@@ -774,6 +1207,8 @@ exports.filterPassiveRawMaterials = async (req, res) => {
             name,
             supplier,
             type,
+            customerId,
+            soldToCustomer,
             grammageComparison1,
             grammageValue1,
             grammageValue2,
@@ -795,6 +1230,9 @@ exports.filterPassiveRawMaterials = async (req, res) => {
             SquareMeterComparison1,
             SquareMeterValue1,
             SquareMeterValue2,
+            bobinweightComparison1,  
+            bobinweightValue1,       
+            bobinweightValue2,       
             dateBefore,
             dateAfter,
             dateExact,
@@ -803,11 +1241,22 @@ exports.filterPassiveRawMaterials = async (req, res) => {
             passiveDateExact
         } = req.query;
 
+        // Default criteria to filter passive raw materials
         let filterCriteria = { status: 'passive' };
 
+        // Name, supplier, and type filters
         if (name) filterCriteria.name = name;
         if (supplier) filterCriteria.supplier = supplier;
         if (type) filterCriteria.type = type;
+
+        // Customer-based filtering
+        if (customerId) {
+            filterCriteria.customer = customerId;
+        } else if (soldToCustomer === 'true') {
+            filterCriteria.customer = { $ne: null };
+        } else if (soldToCustomer === 'false') {
+            filterCriteria.customer = { $eq: null };
+        }
 
         // Apply range and comparison filters
         Object.assign(
@@ -818,7 +1267,8 @@ exports.filterPassiveRawMaterials = async (req, res) => {
             applyComparisonFilter('bobinNumber', bobinNumberComparison1, bobinNumberValue1, bobinNumberValue2),
             applyComparisonFilter('bobinHeight', bobinHeightComparison1, bobinHeightValue1, bobinHeightValue2),
             applyComparisonFilter('bobinDiameter', bobinDiameterComparison1, bobinDiameterValue1, bobinDiameterValue2),
-            applyComparisonFilter('SquareMeter', SquareMeterComparison1, SquareMeterValue1, SquareMeterValue2)
+            applyComparisonFilter('SquareMeter', SquareMeterComparison1, SquareMeterValue1, SquareMeterValue2),
+            applyComparisonFilter('bobinWeight', bobinweightComparison1, bobinweightValue1, bobinweightValue2) // New bobinweight filter
         );
 
         // Date filters
@@ -891,6 +1341,7 @@ exports.filterPassiveRawMaterials = async (req, res) => {
         res.status(500).json({ message: 'Error filtering passive raw materials', error: error.message });
     }
 };
+
 
 
 

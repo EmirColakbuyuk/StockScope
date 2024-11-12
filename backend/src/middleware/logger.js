@@ -109,22 +109,17 @@ const extractObjectId = (req, body) => {
   return { objectId, objectType };
 };
 
-// Function to filter logs based on objectId, username, objectType, supplierId, or customerId
 const filterLogs = (objectId, username, objectType, page = 1, pageSize = 5, supplierId = null, customerId = null) => {
   // Read logs from file
   const logs = fs.readFileSync(logFilePath, 'utf-8').split('\n').filter(Boolean);
-  
 
   // Parse and filter logs based on parameters
   const filteredLogs = logs
     .map(log => {
       try {
-        const parsedLog = JSON.parse(log);
-        
-        return parsedLog;
+        return JSON.parse(log);
       } catch (e) {
-        
-        return null;
+        return null; // Return null if the log cannot be parsed
       }
     })
     .filter(log => {
@@ -138,12 +133,13 @@ const filterLogs = (objectId, username, objectType, page = 1, pageSize = 5, supp
       // Check if log is a supplier action or related rawMaterial entry for a specific supplierId
       const matchSupplierLogs = supplierId ? checkSupplierLogs(log, supplierId) : true;
 
+      // Check if log is related to customer actions such as add, delete, or update
+      const matchCustomerLogs = customerId ? checkCustomerLogs(log, customerId) : true;
+
       // Include the log only if it matches all the criteria
-      return log && matchObjectId && matchUsername && matchObjectType && matchSupplierLogs;
-    });
-
-  
-
+      return log && matchObjectId && matchUsername && matchObjectType && matchSupplierLogs && matchCustomerLogs;
+    })
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   // Pagination logic
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -160,9 +156,10 @@ const filterLogs = (objectId, username, objectType, page = 1, pageSize = 5, supp
   };
 };
 
-// Helper function to check if a log is related to a supplier or rawMaterial associated with a supplier
+/**
+ * Helper function to check if a log is related to a supplier or rawMaterial associated with a supplier.
+ */
 const checkSupplierLogs = (log, supplierId) => {
-  
   if (!log || !log.requestBody) {
     return false;
   }
@@ -173,6 +170,23 @@ const checkSupplierLogs = (log, supplierId) => {
   const isRawMaterialFromSupplier = log.objectType === 'rawMaterial' && requestBody.supplier === supplierId;
 
   return isRawMaterialFromSupplier;
+};
+
+/**
+ * Helper function to check if a log is related to a customer operation (e.g., stock add, delete, update).
+ * Allows filtering only by customerId.
+ */
+const checkCustomerLogs = (log, customerId) => {
+  if (!log || !log.requestBody) {
+    return false;
+  }
+
+  const { requestBody } = log;
+
+  // Check if the log's objectType is 'stock' and the requestBody contains a matching customerId
+  const isStockOperationFromCustomerId = log.objectType === 'stock' && requestBody.customerId === customerId;
+
+  return isStockOperationFromCustomerId;
 };
 
 module.exports = { logger, filterLogs };

@@ -5,15 +5,18 @@ const moment = require('moment-timezone');
 // Add a new supplier
 exports.addSupplier = async (req, res) => {
   try {
-    const { name, code, address, notes, phone } = req.body; // Include phone
+    console.log('Gelen veriler:', req.body);
+    const { name, code, contactPerson, address, notes, phone } = req.body;
+
 
     // Create new supplier
     const newSupplier = new Supplier({
       name,
       code,
+      contactPerson,
       address,
       notes,
-      phone // Add phone
+      phone,
     });
 
     // Save to database
@@ -29,17 +32,16 @@ exports.addSupplier = async (req, res) => {
 exports.updateSupplier = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, code, address, notes, phone } = req.body; // Include phone
+    const { name, code, address, notes, phone, contactPerson } = req.body; 
 
-    console.log("Request received to update supplier"); // Bu adımda bir log ekleyin
-    console.log(`Supplier ID: ${id}`);  // Burada ID'nin alındığını doğrulayın
-
+    console.log("Request received to update supplier");
+    console.log(`Supplier ID: ${id}`);
 
     // Find supplier by ID and update
     const updatedSupplier = await Supplier.findByIdAndUpdate(
-        id,
-        { name, code, address, notes, phone }, // Include phone
-        { new: true }
+      id,
+      { name, code, address, notes, phone, contactPerson }, 
+      { new: true }
     );
 
     if (!updatedSupplier) {
@@ -87,10 +89,10 @@ exports.getAllSuppliersPaginated = async (req, res) => {
   try {
     const { page = 1, limit = 5 } = req.query;
     const suppliers = await Supplier.find()
-        .sort({ name: 1 }) // Alphabetical sorting by name
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .exec();
+      .sort({ name: 1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
 
     const count = await Supplier.countDocuments();
 
@@ -124,12 +126,11 @@ exports.getSupplierById = async (req, res) => {
   }
 };
 
-
-
+// Get purchases by supplier
 exports.getPurchasesBySupplier = async (req, res) => {
   try {
     const { supplier } = req.body;
-    const rawMaterials = await RawMaterial.find({ supplier: supplier });
+    const rawMaterials = await RawMaterial.find({ supplier });
     if (!rawMaterials.length) {
       return res.status(404).json({ message: 'No raw materials found for this supplier.' });
     }
@@ -140,7 +141,6 @@ exports.getPurchasesBySupplier = async (req, res) => {
   }
 };
 
-
 // Get filtered and paginated suppliers
 exports.filterSuppliers = async (req, res) => {
   try {
@@ -149,63 +149,47 @@ exports.filterSuppliers = async (req, res) => {
       code,
       address,
       phone,
-      startDate, // Belirli bir tarihten sonra eklenenler için
-      endDate,   // Belirli bir tarihten önce eklenenler için
-      sortOrder, // Tarihe göre sıralama (asc, desc)
+      contactPerson, 
+      startDate,
+      endDate,
+      sortOrder,
       page = 1,
       limit = 5,
     } = req.query;
 
-    // MongoDB query object
     let query = {};
 
-    // Name filter
-    if (name) {
-      query.name = { $regex: name, $options: 'i' }; // Case-insensitive partial match
-    }
+    if (name) query.name = { $regex: name, $options: 'i' };
+    if (code) query.code = { $regex: code, $options: 'i' };
+    if (address) query.address = { $regex: address, $options: 'i' };
+    if (phone) query.phone = { $regex: phone, $options: 'i' };
+    if (contactPerson) query.contactPerson = { $regex: contactPerson, $options: 'i' }; 
 
-    // Code filter
-    if (code) {
-      query.code = { $regex: code, $options: 'i' };
-    }
-
-    // Address filter
-    if (address) {
-      query.address = { $regex: address, $options: 'i' };
-    }
-
-    // Phone filter
-    if (phone) {
-      query.phone = { $regex: phone, $options: 'i' };
-    }
-
-    // Date filter: after startDate, before endDate
     if (startDate && endDate) {
-      query.createdAt = { $gte: moment(startDate).startOf('day').toDate(), $lte: moment(endDate).endOf('day').toDate() };
+      query.createdAt = {
+        $gte: moment(startDate).startOf('day').toDate(),
+        $lte: moment(endDate).endOf('day').toDate()
+      };
     } else if (startDate) {
       query.createdAt = { $gte: moment(startDate).startOf('day').toDate() };
     } else if (endDate) {
       query.createdAt = { $lte: moment(endDate).endOf('day').toDate() };
     }
 
-    // Sort order
     let sort = {};
-
     if (sortOrder === 'asc') {
-      sort.createdAt = 1; // Oldest to newest
+      sort.createdAt = 1;
     } else if (sortOrder === 'desc') {
-      sort.createdAt = -1; // Newest to oldest
+      sort.createdAt = -1;
     } else if (!startDate && !endDate) {
-      // If no date filter is applied, default sorting by name alphabetically
-      sort.name = 1; // Alphabetical order by name
+      sort.name = 1;
     }
 
-    // Fetch filtered and paginated suppliers
     const suppliers = await Supplier.find(query)
-        .sort(sort)
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .exec();
+      .sort(sort)
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
 
     const count = await Supplier.countDocuments(query);
 
@@ -221,30 +205,25 @@ exports.filterSuppliers = async (req, res) => {
   }
 };
 
-
-
+// Search suppliers by notes
 exports.searchNotesSuppliers = async (req, res) => {
   try {
-    const { searchQuery, page = 1, limit = 5 } = req.query; // 'query' yerine 'searchQuery' kullanıyoruz
+    const { searchQuery, page = 1, limit = 5 } = req.query;
 
-    // Eğer searchQuery boş ise hata mesajı döndür
     if (!searchQuery) {
-      return res.status(400).json({ message: 'Arama sorgusu gereklidir' });
+      return res.status(400).json({ message: 'Search query is required' });
     }
 
-    // MongoDB query object: Sadece notlar içinde arama yapacak
     let searchCriteria = {
-      notes: { $regex: searchQuery, $options: 'i' } // Notlar içinde geçen herhangi bir eşleşme (case-insensitive)
+      notes: { $regex: searchQuery, $options: 'i' }
     };
 
-    // Pagination için toplam sonuç sayısını alıyoruz
     const totalItems = await Supplier.countDocuments(searchCriteria);
 
-    // Sadece belirli sayıda sonuç döndürmek için limit ve skip kullanıyoruz
     const suppliers = await Supplier.find(searchCriteria)
-        .limit(limit * 1) // limit'i integer olarak kullan
-        .skip((page - 1) * limit)
-        .exec();
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
 
     res.status(200).json({
       suppliers,
@@ -258,19 +237,17 @@ exports.searchNotesSuppliers = async (req, res) => {
   }
 };
 
+// Analyze supplier
 exports.analyzeSupplier = async (req, res) => {
   try {
     const { supplier, filterPeriod, startDate, endDate } = req.query;
 
-    // Ensure supplier is provided
     if (!supplier) {
       return res.status(400).json({ message: 'Supplier is required' });
     }
 
-    // Build initial match criteria with supplier
-    let matchCriteria = { supplier: supplier };
+    let matchCriteria = { supplier };
 
-    // Handle filter period options
     if (filterPeriod) {
       const now = new Date();
       let startDateFilter;
@@ -302,18 +279,12 @@ exports.analyzeSupplier = async (req, res) => {
       matchCriteria.createdAt = { $gte: startDateFilter };
     }
 
-    // Handle custom date range
     if (startDate || endDate) {
       matchCriteria.createdAt = matchCriteria.createdAt || {};
-      if (startDate) {
-        matchCriteria.createdAt.$gte = new Date(startDate);
-      }
-      if (endDate) {
-        matchCriteria.createdAt.$lte = new Date(endDate);
-      }
+      if (startDate) matchCriteria.createdAt.$gte = new Date(startDate);
+      if (endDate) matchCriteria.createdAt.$lte = new Date(endDate);
     }
 
-    // Aggregate query to get distinct names, types, and their total bobin weight
     const results = await RawMaterial.aggregate([
       { $match: matchCriteria },
       {
@@ -348,14 +319,13 @@ exports.analyzeSupplier = async (req, res) => {
   }
 };
 
-
+// Analyze all suppliers distribution
 exports.analyzeSuppliersDistribution = async (req, res) => {
   try {
     const { filterPeriod, startDate, endDate } = req.query;
 
     let matchCriteria = {};
 
-    // Handle filter period options (e.g., daily, weekly, monthly)
     if (filterPeriod) {
       const now = new Date();
       let startDateFilter;
@@ -387,24 +357,18 @@ exports.analyzeSuppliersDistribution = async (req, res) => {
       matchCriteria.createdAt = { $gte: startDateFilter };
     }
 
-    // Handle custom date range
     if (startDate || endDate) {
       matchCriteria.createdAt = matchCriteria.createdAt || {};
-      if (startDate) {
-        matchCriteria.createdAt.$gte = new Date(startDate);
-      }
-      if (endDate) {
-        matchCriteria.createdAt.$lte = new Date(endDate);
-      }
+      if (startDate) matchCriteria.createdAt.$gte = new Date(startDate);
+      if (endDate) matchCriteria.createdAt.$lte = new Date(endDate);
     }
 
-    // Aggregate query to get distribution for all suppliers
     const results = await RawMaterial.aggregate([
       { $match: matchCriteria },
       {
         $group: {
           _id: {
-            supplier: "$supplier", // Group by supplier
+            supplier: "$supplier",
             name: "$name",
             type: "$type"
           },
@@ -414,7 +378,7 @@ exports.analyzeSuppliersDistribution = async (req, res) => {
       },
       {
         $group: {
-          _id: "$_id.supplier", // Group by supplier to get total data for each supplier
+          _id: "$_id.supplier",
           materials: {
             $push: {
               name: "$_id.name",
@@ -430,7 +394,7 @@ exports.analyzeSuppliersDistribution = async (req, res) => {
       {
         $project: {
           _id: 0,
-          supplier: "$_id", // Rename _id to supplier
+          supplier: "$_id",
           materials: 1,
           totalGrammage: 1,
           totalBobinweight: 1
@@ -441,6 +405,6 @@ exports.analyzeSuppliersDistribution = async (req, res) => {
     res.status(200).json(results.length > 0 ? results : []);
   } catch (error) {
     console.error('Error analyzing all suppliers:', error);
-    res.status(500).json({ message: 'Error analyzing all suppliers', error: error.message});
- }
+    res.status(500).json({ message: 'Error analyzing all suppliers', error: error.message });
+  }
 };

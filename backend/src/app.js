@@ -29,7 +29,9 @@ const corsOptions = {
   origin: (origin, callback) => {
     // CORS domainlerini dinamik olarak belirle
     // 'https://stock-scope-stage.herokuapp.com', 'https://stock-scope-stage-b7dd8b41e7a4.herokuapp.com',
-    const allowedOrigins = ['http://localhost:3001', 'https://stock-scope-stage-b7dd8b41e7a4.herokuapp.com'];
+
+    const allowedOrigins = ['http://localhost:3001', 'https://seyka-stok-8e628511fe7d.herokuapp.com', 'http://192.168.1.9:3001']; //sonunda / olmıcak
+
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {

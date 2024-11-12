@@ -9,6 +9,8 @@ router.post('/addRaw', auth, loggerModule.logger, rawController.addRawMaterial);
 router.delete('/deleteRaw/:id', auth, loggerModule.logger, rawController.deleteRawMaterial);
 router.patch('/softDeleteRaw/:id', auth,loggerModule.logger, rawController.softDeleteRawMaterial);
 router.patch('/softActiveRaw/:id', auth, loggerModule.logger, rawController.softActiveRawMaterial);
+router.patch('/transferRaw/:id', auth, loggerModule.logger, rawController.TransferRawMaterial);
+router.patch('/revertTransferRaw/:id', auth, loggerModule.logger, rawController.revertTransferRawMaterial);
 router.put('/update/:id', auth, loggerModule.logger, rawController.updateRawMaterial);
 router.get('/allRaw', auth, rawController.getAllRawMaterials);
 router.get('/allRawActive', auth, rawController.getAllActiveRawMaterials);

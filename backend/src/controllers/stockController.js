@@ -26,7 +26,6 @@ exports.addStock = async (req, res) => {
       stock.total += total;
       stock.boxCount += numericBoxCount;
       stock.notes = notes;
-      stock.date = dateInTurkey;
     } else {
       
 
@@ -50,38 +49,38 @@ exports.addStock = async (req, res) => {
   }
 };
 
+// Delete Stock
 exports.deleteStock = async (req, res) => {
   try {
     const { id } = req.params;
-    const { boxCount, totalCount } = req.body; // totalCount burada tanımlanmalı
+    const { boxCount, totalCount } = req.body; // totalCount here represents the amount to delete
 
-    const stock = await Stock.findById(id); // İlgili stok kaydını buluyoruz
+    const stock = await Stock.findById(id);
 
     if (!stock) {
       return res.status(404).json({ message: 'Stock not found' });
     }
 
-    // Eğer stokta mevcut koli sayısı, silinmek istenen koli sayısından küçükse hata dönüyoruz
+    // Check if there’s enough stock to delete
     if (stock.boxCount < boxCount) {
       return res.status(400).json({ message: 'Not enough stock to delete' });
     }
 
-    // Stok miktarını ve toplam adet sayısını güncelliyoruz
+    // Update the stock quantities
     stock.boxCount -= boxCount;
-    stock.total -= totalCount;  // totalCount'ı total alanı üzerinden eksiltiyoruz
+    stock.total -= totalCount;
 
-    // Eğer tüm koli ve toplam sayı sıfıra düştüyse kaydı tamamen siliyoruz
+    // If all stock is deleted, remove the stock entry completely
     if (stock.boxCount === 0 && stock.total === 0) {
       await Stock.findByIdAndDelete(id);
-      return res.status(200).json({ message: 'Stock fully deleted', stock });
+      return res.status(200).json({ message: 'Stock fully deleted', totalDeleted: totalCount });
     }
 
-    // Eğer tamamen silinmediyse sadece güncellenmiş haliyle kaydediyoruz
+    // Save the updated stock entry
     await stock.save();
 
-    res.status(200).json({ message: 'Stock updated successfully', stock });
-  }
-  catch (error) {
+    res.status(200).json({ message: 'Stock updated successfully', totalDeleted: totalCount, stock });
+  } catch (error) {
     console.error('Error deleting stock:', error);
     res.status(500).json({ message: 'Error deleting stock', error: error.message });
   }
@@ -177,9 +176,12 @@ exports.updateStock = async (req, res) => {
 };
 
 
+// Sell Stock
 exports.sellStock = async (req, res) => {
   try {
-    const { size, weight, boxCount, packageCount, packageContain, customerId, notes } = req.body;
+    console.log('Gelen veriler (req.body):', req.body);
+
+    const { size, weight, boxCount, packageCount, packageContain, customerId, notes, soldNote } = req.body; 
 
     // Find the existing stock entry by size and weight
     let stock = await Stock.findOne({ size, weight });
@@ -209,7 +211,7 @@ exports.sellStock = async (req, res) => {
       return res.status(404).json({ message: 'Customer not found' });
     }
 
-    // Add the sold stock details to the customer's purchases
+    // Add the sold stock details to the customer's purchases with soldNote
     customer.purchases.push({
       size,
       weight,
@@ -217,6 +219,7 @@ exports.sellStock = async (req, res) => {
       packageCount: totalPackageRequested,
       packageContain: totalContainRequested,
       notes,
+      soldNote, 
       date: moment.tz("Europe/Istanbul").toDate()
     });
 
@@ -225,18 +228,17 @@ exports.sellStock = async (req, res) => {
     // Check if stock needs to be deleted
     if (stock.total <= 0 || stock.boxCount <= 0) {
       await Stock.findByIdAndDelete(stock._id);
-      return res.status(200).json({ message: 'Stock sold successfully and stock deleted due to zero quantity', customer });
+      return res.status(200).json({ message: 'Stock sold successfully and stock deleted due to zero quantity', amountSold: totalRequested, soldNote, customer });
     }
 
     const updatedStock = await stock.save();
 
-    res.status(200).json({ message: 'Stock sold successfully', stock: updatedStock, customer });
+    res.status(200).json({ message: 'Stock sold successfully', amountSold: totalRequested, soldNote, stock: updatedStock, customer });
   } catch (error) {
     console.error('Error selling stock:', error);
     res.status(500).json({ message: 'Error selling stock', error: error.message });
   }
 };
-
 
 
 // Get all active stocks
@@ -668,7 +670,6 @@ exports.searchNotesPassiveStocks = async (req, res) => {
 
 
 
-
 exports.filterAllStocks = async (req, res) => {
   try {
     const {
@@ -980,10 +981,6 @@ exports.filterActiveStocks = async (req, res) => {
 };
 
 
-
-
-
-
 exports.filterPassiveStocks = async (req, res) => {
   try {
     const {
@@ -1159,32 +1156,121 @@ exports.filterPassiveStocks = async (req, res) => {
   }
 };
 
+// ANALYZES
 
 // Helper function to handle date filtering based on filterPeriod or custom date range
+// const getDateFilter = (filterPeriod, startDate, endDate) => {
+//   const now = new Date();
+//   let startDateFilter;
+//
+//   switch (filterPeriod) {
+//     case 'daily':
+//       startDateFilter = new Date(now.setHours(0, 0, 0, 0));
+//       break;
+//     case 'weekly':
+//       startDateFilter = new Date(now.setDate(now.getDate() - 7));
+//       startDateFilter.setHours(0, 0, 0, 0);
+//       break;
+//     case 'monthly':
+//       startDateFilter = new Date(now.setMonth(now.getMonth() - 1));
+//       startDateFilter.setHours(0, 0, 0, 0);
+//       break;
+//     case '6months':
+//       startDateFilter = new Date(now.setMonth(now.getMonth() - 6));
+//       startDateFilter.setHours(0, 0, 0, 0);
+//       break;
+//     case 'yearly':
+//       startDateFilter = new Date(now.setFullYear(now.getFullYear() - 1));
+//       startDateFilter.setHours(0, 0, 0, 0);
+//       break;
+//     default:
+//       startDateFilter = startDate ? new Date(startDate) : null;
+//   }
+//
+//   const dateFilter = {};
+//   if (startDateFilter) dateFilter.$gte = startDateFilter;
+//   if (endDate) dateFilter.$lte = new Date(endDate);
+//
+//   return dateFilter;
+// };
+
+// calısan 2
+// const getDateFilter = (filterPeriod, startDate, endDate) => {
+//   const now = new Date();
+//   let startDateFilter;
+//
+//   switch (filterPeriod) {
+//     case 'daily':
+//       // Bir önceki günün 00:00'ı
+//       startDateFilter = new Date(now);
+//       startDateFilter.setDate(now.getDate() - 1);
+//       startDateFilter.setHours(0, 0, 0, 0);
+//       break;
+//     case 'weekly':
+//       // Bu haftanın pazartesi günü 00:00'ı
+//       const dayOfWeek = now.getDay(); // 0 (Pazar) ile 6 (Cumartesi) arasında
+//       const daysSinceMonday = (dayOfWeek + 6) % 7; // Pazartesi için gereken fark
+//       startDateFilter = new Date(now);
+//       startDateFilter.setDate(now.getDate() - daysSinceMonday);
+//       startDateFilter.setHours(0, 0, 0, 0);
+//       break;
+//     case 'monthly':
+//       // Bu ayın başı (ayın 1'i, saat 00:00)
+//       startDateFilter = new Date(now.getFullYear(), now.getMonth(), 1);
+//       break;
+//     case 'yearly':
+//       // Bu yılın başı (1 Ocak, saat 00:00)
+//       startDateFilter = new Date(now.getFullYear(), 0, 1);
+//       break;
+//     case 'allTime':
+//       // İlk baştan beri için herhangi bir tarih filtresi yok
+//       startDateFilter = null;
+//       break;
+//     case 'dateRange':
+//       // Belirli bir tarih aralığı varsa, başlangıç ve bitiş tarihlerini ayarlayın
+//       return { $gte: new Date(startDate), $lte: new Date(endDate) };
+//     default:
+//       startDateFilter = startDate ? new Date(startDate) : null;
+//   }
+//
+//   const dateFilter = {};
+//   if (startDateFilter) dateFilter.$gte = startDateFilter;
+//   if (endDate) dateFilter.$lte = new Date(endDate);
+//
+//   return dateFilter;
+// };
+
+// getDateFilter fonksiyonu
 const getDateFilter = (filterPeriod, startDate, endDate) => {
   const now = new Date();
   let startDateFilter;
 
   switch (filterPeriod) {
     case 'daily':
-      startDateFilter = new Date(now.setHours(0, 0, 0, 0));
+      startDateFilter = new Date(now);
+      startDateFilter.setHours(0, 0, 0, 1); // Gecenin başlangıcı
       break;
     case 'weekly':
-      startDateFilter = new Date(now.setDate(now.getDate() - 7));
-      startDateFilter.setHours(0, 0, 0, 0);
+      const dayOfWeek = now.getDay();
+      const daysSinceMonday = (dayOfWeek + 6) % 7;
+      startDateFilter = new Date(now);
+      startDateFilter.setDate(now.getDate() - daysSinceMonday);
+      startDateFilter.setHours(0, 0, 0, 1); // Haftanın başı
       break;
     case 'monthly':
-      startDateFilter = new Date(now.setMonth(now.getMonth() - 1));
-      startDateFilter.setHours(0, 0, 0, 0);
-      break;
-    case '6months':
-      startDateFilter = new Date(now.setMonth(now.getMonth() - 6));
-      startDateFilter.setHours(0, 0, 0, 0);
+      startDateFilter = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 1); // Ayın başı
       break;
     case 'yearly':
-      startDateFilter = new Date(now.setFullYear(now.getFullYear() - 1));
-      startDateFilter.setHours(0, 0, 0, 0);
+      startDateFilter = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 1); // Yılın başı
       break;
+    case 'allTime':
+      startDateFilter = null; // Herhangi bir başlangıç yok
+      break;
+    case 'dateRange':
+      return {
+        $gte: new Date(startDate), // String olarak gelen tarih, Date nesnesine çevriliyor
+        $lte: new Date(endDate)    // String olarak gelen tarih, Date nesnesine çevriliyor
+      };
     default:
       startDateFilter = startDate ? new Date(startDate) : null;
   }
@@ -1359,65 +1445,268 @@ exports.getStockDistributionWithSalesRatio = async (req, res) => {
 
 
 // Get Stock In and Out Analysis (Daily, Weekly, Monthly, Yearly)
+// exports.getStockInOutAnalysis = async (req, res) => {
+//   try {
+//     const { filterPeriod, startDate, endDate } = req.query;
+//     const dateFilter = getDateFilter(filterPeriod, startDate, endDate);
+//
+//     // Build match criteria for stock in and stock out using the createdAt and date fields
+//     const stockInCriteria = {};
+//     const stockOutCriteria = {};
+//
+//     if (Object.keys(dateFilter).length > 0) {
+//       stockInCriteria.createdAt = dateFilter; // Filter for stock added to inventory (createdAt)
+//       stockOutCriteria.date = dateFilter;     // Filter for stock removed from inventory (date)
+//     }
+//
+//     // Aggregate stock data to calculate stock in based on createdAt
+//     const stockIn = await Stock.aggregate([
+//       { $match: { ...stockInCriteria } }, // Match criteria for stock added to inventory
+//       {
+//         $group: {
+//           _id: null, // No grouping by any specific field, we want total sum
+//           totalInAmount: { $sum: '$total' }, // Sum of total stock amount added
+//           totalInBoxCount: { $sum: '$boxCount' }, // Sum of box count (boxCount instead of koliCount)
+//         },
+//       },
+//       {
+//         $project: {
+//           _id: 0,
+//           totalInAmount: 1,
+//           totalInBoxCount: 1,
+//         },
+//       },
+//     ]);
+//
+//     // Aggregate stock data to calculate stock out based on date
+//     const stockOut = await Stock.aggregate([
+//       { $match: { ...stockOutCriteria, date: { $ne: null } } }, // Match criteria for stock removed from inventory
+//       {
+//         $group: {
+//           _id: null,
+//           totalOutAmount: { $sum: '$total' }, // Sum of total stock amount removed
+//           totalOutBoxCount: { $sum: '$boxCount' }, // Sum of box count (boxCount instead of koliCount)
+//         },
+//       },
+//       {
+//         $project: {
+//           _id: 0,
+//           totalOutAmount: 1,
+//           totalOutBoxCount: 1,
+//         },
+//       },
+//     ]);
+//
+//     // Return the result with total stock in and out amounts
+//     res.status(200).json({
+//       totalIn: stockIn.length > 0 ? stockIn[0] : { totalInAmount: 0, totalInBoxCount: 0 },
+//       totalOut: stockOut.length > 0 ? stockOut[0] : { totalOutAmount: 0, totalOutBoxCount: 0 },
+//     });
+//   } catch (error) {
+//     console.error('Error fetching stock in and out analysis:', error);
+//     res.status(500).json({ error: 'An error occurred while fetching stock in and out analysis.' });
+//   }
+// };
+// Get Stock In and Out Analysis with Remaining Calculation (Daily, Weekly, Monthly, Yearly, Custom Date Range)
+
+
+
+
+
 exports.getStockInOutAnalysis = async (req, res) => {
   try {
     const { filterPeriod, startDate, endDate } = req.query;
     const dateFilter = getDateFilter(filterPeriod, startDate, endDate);
 
-    // Build match criteria for stock in and stock out using the createdAt and date fields
-    const stockInCriteria = {};
-    const stockOutCriteria = {};
+    console.log("Date Filter:", dateFilter);
 
+    console.log("Date Filter:", dateFilter);
+
+    // Stock giriş (Stock modelindeki `createdAt` tarihine göre)
+    const stockInCriteria = {};
     if (Object.keys(dateFilter).length > 0) {
-      stockInCriteria.createdAt = dateFilter; // Filter for stock added to inventory (createdAt)
-      stockOutCriteria.date = dateFilter;     // Filter for stock removed from inventory (date)
+      stockInCriteria.createdAt = dateFilter;
     }
 
-    // Aggregate stock data to calculate stock in based on createdAt
     const stockIn = await Stock.aggregate([
-      { $match: { ...stockInCriteria } }, // Match criteria for stock added to inventory
+      { $match: stockInCriteria },
       {
         $group: {
-          _id: null, // No grouping by any specific field, we want total sum
-          totalInAmount: { $sum: '$total' }, // Sum of total stock amount added
-          totalInBoxCount: { $sum: '$boxCount' }, // Sum of box count (boxCount instead of koliCount)
+          _id: null,
+          totalInAmount: { $sum: '$total' },
+          totalInBoxCount: { $sum: '$boxCount' }
         },
       },
       {
         $project: {
           _id: 0,
           totalInAmount: 1,
-          totalInBoxCount: 1,
+          totalInBoxCount: 1
         },
-      },
+      }
     ]);
 
-    // Aggregate stock data to calculate stock out based on date
-    const stockOut = await Stock.aggregate([
-      { $match: { ...stockOutCriteria, date: { $ne: null } } }, // Match criteria for stock removed from inventory
+    console.log("Stock In Result:", stockIn);
+
+    // Stock çıkışı (Customer modelindeki purchases alanına göre)
+    const purchasesCriteria = {};
+    if (Object.keys(dateFilter).length > 0) {
+      purchasesCriteria['purchases.date'] = dateFilter;
+    }
+
+    const stockOut = await Customer.aggregate([
+      { $unwind: '$purchases' }, // purchases alanını açmak için
+      { $match: purchasesCriteria },
       {
         $group: {
           _id: null,
-          totalOutAmount: { $sum: '$total' }, // Sum of total stock amount removed
-          totalOutBoxCount: { $sum: '$boxCount' }, // Sum of box count (boxCount instead of koliCount)
+          totalOutAmount: {
+            $sum: {
+              $multiply: [
+                '$purchases.packageCount',
+                '$purchases.boxCount',
+                '$purchases.packageContain'
+              ]
+            }
+          },
+          totalOutBoxCount: { $sum: '$purchases.boxCount' }
         },
       },
       {
         $project: {
           _id: 0,
           totalOutAmount: 1,
-          totalOutBoxCount: 1,
+          totalOutBoxCount: 1
         },
-      },
+      }
     ]);
 
-    // Return the result with total stock in and out amounts
-    res.status(200).json({
+    console.log("Stock Out Result:", stockOut);
+
+
+    // totalInAmount değerine totalOutAmount'u ekle
+    const totalIn = stockIn.length > 0 ? stockIn[0].totalInAmount : 0;
+    const totalOut = stockOut.length > 0 ? stockOut[0].totalOutAmount : 0;
+    const adjustedTotalIn = totalIn + totalOut; // stockIn miktarını güncelle
+
+    // Geriye kalan stok miktarını hesapla
+    const remainingAmount = adjustedTotalIn - totalOut;
+
+    console.log("Final Result:", {
+      adjustedTotalIn: adjustedTotalIn, // Güncellenmiş toplam giriş miktarı
       totalIn: stockIn.length > 0 ? stockIn[0] : { totalInAmount: 0, totalInBoxCount: 0 },
       totalOut: stockOut.length > 0 ? stockOut[0] : { totalOutAmount: 0, totalOutBoxCount: 0 },
+      remainingAmount: remainingAmount, // Kalan miktar
+    });
+
+
+    res.status(200).json({
+      totalIn: stockIn.length > 0 ? { totalInAmount: adjustedTotalIn, totalInBoxCount: stockIn[0].totalInBoxCount } : { totalInAmount: 0, totalInBoxCount: 0 },
+      totalOut: stockOut.length > 0 ? stockOut[0] : { totalOutAmount: 0, totalOutBoxCount: 0 },
+      remainingAmount,
     });
   } catch (error) {
     console.error('Error fetching stock in and out analysis:', error);
     res.status(500).json({ error: 'An error occurred while fetching stock in and out analysis.' });
+  }
+};
+
+
+
+// Get Active Stock Distribution with Weight Details
+// exports.getActiveStockDistributionWithWeightDetails = async (req, res) => {
+//   try {
+//     const { filterPeriod, startDate, endDate } = req.query;
+//     const dateFilter = getDateFilter(filterPeriod, startDate, endDate);
+//
+//     const matchCriteria = { date: null };
+//     if (Object.keys(dateFilter).length > 0) {
+//       matchCriteria.createdAt = dateFilter;
+//     }
+//
+//     const activeStocks = await Stock.aggregate([
+//       { $match: matchCriteria },
+//       {
+//         $group: {
+//           _id: { size: '$size', weight: '$weight' }, // Boyut ve gramajlarına göre gruplama
+//           totalAmount: { $sum: '$total' }, // Her boyut ve gramajın toplamı
+//         },
+//       },
+//       {
+//         $group: {
+//           _id: '$_id.size', // Boyutlara göre ana gruplama
+//           weights: {
+//             $push: {
+//               weight: '$_id.weight', // Gramajı sakla
+//               amount: '$totalAmount', // Adetleri sakla
+//             },
+//           },
+//           totalSizeAmount: { $sum: '$totalAmount' }, // Boyutun toplam adedi
+//         },
+//       },
+//       {
+//         $project: {
+//           _id: 0,
+//           size: '$_id', // Boyut
+//           weights: 1, // Gramaj ve adet bilgisi
+//           totalSizeAmount: 1, // Toplam boyut adedi
+//         },
+//       },
+//     ]);
+//
+//     res.status(200).json(activeStocks);
+//   } catch (error) {
+//     console.error('Error fetching active stock distribution with weight details:', error);
+//     res.status(500).json({ error: 'An error occurred while fetching active stock distribution with weight details.' });
+//   }
+// };
+
+// Get Active Stock Distribution with Weight and Box Count Details
+exports.getActiveStockDistributionWithWeightDetails = async (req, res) => {
+  try {
+    const { filterPeriod, startDate, endDate } = req.query;
+    const dateFilter = getDateFilter(filterPeriod, startDate, endDate);
+
+    const matchCriteria = { date: null };
+    if (Object.keys(dateFilter).length > 0) {
+      matchCriteria.createdAt = dateFilter;
+    }
+
+    const activeStocks = await Stock.aggregate([
+      { $match: matchCriteria },
+      {
+        $group: {
+          _id: { size: '$size', weight: '$weight' }, // Boyut ve gramajlarına göre gruplama
+          totalAmount: { $sum: '$total' }, // Her boyut ve gramajın toplamı
+          totalBoxCount: { $sum: '$boxCount' } // Her boyut ve gramaj için koli sayısının toplamı
+        },
+      },
+      {
+        $group: {
+          _id: '$_id.size', // Boyutlara göre ana gruplama
+          weights: {
+            $push: {
+              weight: '$_id.weight', // Gramajı sakla
+              amount: '$totalAmount', // Adetleri sakla
+              boxCount: '$totalBoxCount' // Koli sayısını sakla
+            },
+          },
+          totalSizeAmount: { $sum: '$totalAmount' }, // Boyutun toplam adedi
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          size: '$_id', // Boyut
+          weights: 1, // Gramaj, adet ve koli bilgisi
+          totalSizeAmount: 1, // Toplam boyut adedi
+        },
+      },
+    ]);
+
+    res.status(200).json(activeStocks);
+  } catch (error) {
+    console.error('Error fetching active stock distribution with weight and box count details:', error);
+    res.status(500).json({ error: 'An error occurred while fetching active stock distribution with weight and box count details.' });
   }
 };

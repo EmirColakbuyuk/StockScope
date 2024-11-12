@@ -5,7 +5,7 @@ const rawSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'active',
-        enum: ['active', 'passive, dummy']
+        enum: ['active', 'passive', 'dummy']
     },
     name: {
         type: String,
@@ -31,6 +31,10 @@ const rawSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    bobinWeight: {
+        type: Number,
+        required: true
+    },
     bobinNumber: {
         type: Number,
         required: true
@@ -51,7 +55,6 @@ const rawSchema = new mongoose.Schema({
         type: String,
         required: false
     },
- 
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -62,14 +65,19 @@ const rawSchema = new mongoose.Schema({
         ref: 'User',
         required: false
     },
-
     soldAt: {
-        type: Date, // Change the type to String to store formatted date
+        type: Date, 
         required: false
     },
-
+    soldNote: {
+        type: String,
+        required: false
+    },
+    customer: {
+        type: String,
+        required: false,
+        default: null
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('RawMaterial', rawSchema);
-
-
